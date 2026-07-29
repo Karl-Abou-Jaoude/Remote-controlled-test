@@ -6,6 +6,7 @@ import Cta from '../../components/Cta.astro';
 import Diff from '../../components/Diff.astro';
 import StickyCta from '../../components/StickyCta.astro';
 import { cases } from '../../data/work';
+import { isPlaceholder } from '../../lib/placeholder';
 import { availability, identity } from '../../data/site';
 
 export function getStaticPaths() {
@@ -13,7 +14,6 @@ export function getStaticPaths() {
 }
 
 const { study } = Astro.props;
-const unresolved = (v: string) => /<[^>]+>/.test(v);
 ---
 
 <Base
@@ -136,7 +136,7 @@ const unresolved = (v: string) => /<[^>]+>/.test(v);
                     <p>“{study.quote.text}”</p>
                   </blockquote>
                   <figcaption class="label mt-5 text-text-muted">
-                    {!unresolved(study.quote.profileUrl) ? (
+                    {!isPlaceholder(study.quote.profileUrl) ? (
                       <a href={study.quote.profileUrl} rel="noopener">
                         {study.quote.name}
                       </a>
@@ -156,7 +156,7 @@ const unresolved = (v: string) => /<[^>]+>/.test(v);
             Book a 20-min call
           </Cta>
           {
-            !unresolved(study.liveUrl) && (
+            !isPlaceholder(study.liveUrl) && (
               <a href={study.liveUrl} rel="noopener" class="label flex min-h-12 items-center">
                 Open the live store →
               </a>

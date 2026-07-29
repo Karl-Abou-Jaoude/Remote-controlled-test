@@ -1,7 +1,7 @@
 ---
 import { Font } from 'astro:assets';
 import '../styles/global.css';
-import { identity, seo, contact, expertise } from '../data/site';
+import { identity, seo, contact, expertise, DEMO_CONTENT } from '../data/site';
 
 interface Props {
   title?: string;
@@ -96,6 +96,17 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': grap
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
 
+    {
+      /*
+        While demo content is active the page must not be indexable. The JSON-LD
+        graph below makes every claim on it machine-readable — invented revenue
+        bands, invented platform work, invented endorsements — and an indexed
+        fabrication about a named brand is far harder to undo than a page nobody
+        crawled. Setting DEMO_CONTENT to false removes this automatically.
+      */
+      DEMO_CONTENT && <meta name="robots" content="noindex, nofollow" />
+    }
+
     <!-- Only the two faces used above the fold are preloaded. The display
          serif is the LCP element, so it is not optional. -->
     <Font cssVariable="--font-fraunces" preload />
@@ -114,7 +125,7 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': grap
 
     <meta name="theme-color" content="#f7f6f3" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#111110" media="(prefers-color-scheme: dark)" />
-    <link rel="sitemap" href="/sitemap-index.xml" />
+    {!DEMO_CONTENT && <link rel="sitemap" href="/sitemap-index.xml" />}
 
     <script type="application/ld+json" is:inline set:html={jsonLd} />
   </head>

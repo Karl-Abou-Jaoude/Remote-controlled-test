@@ -1,5 +1,6 @@
 ---
 import { scope, rateStrip } from '../data/site';
+import { isPlaceholder } from '../lib/placeholder';
 
 /**
  * Arithmetic instead of adjectives, answering "have you done this at my size?"
@@ -14,8 +15,7 @@ import { scope, rateStrip } from '../data/site';
  * Exactly one figure is allowed the largest type size; six equal numerals would
  * be six focal points, which is none.
  */
-const unresolved = (v: string) => /<[^>]+>/.test(v);
-const filled = scope.filter((cell) => !unresolved(cell.value));
+const filled = scope.filter((cell) => !isPlaceholder(cell.value));
 
 if (import.meta.env.PROD && filled.length > 0 && filled.length < 4) {
   throw new Error(

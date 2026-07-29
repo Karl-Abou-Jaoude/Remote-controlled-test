@@ -63,8 +63,8 @@ export const cases: CaseStudy[] = [
   {
     slug: 'mobile-performance-rebuild',
     headline:
-      'Took Halden & Roe’s mobile LCP from 4.6s to 1.8s, and the brand reported mobile conversion moving from 1.38% to 1.61% over the 28 days after launch',
-    brand: 'Halden & Roe',
+      'Took Ravelston Outerwear’s mobile LCP from 4.6s to 1.8s, and the brand reported mobile conversion moving from 1.38% to 1.61% over the 28 days after launch',
+    brand: 'Ravelston Outerwear',
     vertical: 'Premium outerwear',
     region: 'UK + EU, 9 locales',
     gmvBand: '$42M',
@@ -113,8 +113,8 @@ export const cases: CaseStudy[] = [
     quote: {
       text:
         'He told us which half of the app stack to delete before he quoted us for anything new. That conversation paid for the project on its own.',
-      name: 'Priya Raman',
-      title: 'Head of Ecommerce, Halden & Roe',
+      name: 'Rhea Kulkarni',
+      title: 'Head of Ecommerce, Ravelston Outerwear',
       profileUrl: 'https://www.linkedin.com/in/replace-with-real-profile/',
     },
     snippet: {
@@ -186,7 +186,7 @@ export const cases: CaseStudy[] = [
     quote: {
       text:
         'I was sceptical about putting a multi-market cutover in one engineer’s hands. He wrote the rollback plan before he wrote the migration, and we never needed it.',
-      name: 'Tobias Lentz',
+      name: 'Jonas Reinholt',
       title: 'CTO, Volsted Athletic',
       profileUrl: 'https://www.linkedin.com/in/replace-with-real-profile-2/',
     },
@@ -194,8 +194,8 @@ export const cases: CaseStudy[] = [
   {
     slug: 'shopify-plus-replatform',
     headline:
-      'Migrated Marrow Coffee Co. off Magento 2 onto Shopify Plus in 11 weeks, with 1h10m of downtime against a planned 4-hour window',
-    brand: 'Marrow Coffee Co.',
+      'Migrated Thicket Coffee Co. off Magento 2 onto Shopify Plus in 11 weeks, with 1h10m of downtime against a planned 4-hour window',
+    brand: 'Thicket Coffee Co.',
     vertical: 'Coffee subscription',
     region: 'US',
     gmvBand: '$18M',

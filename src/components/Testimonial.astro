@@ -1,4 +1,5 @@
 ---
+import { isPlaceholder } from '../lib/placeholder';
 /**
  * No testimonial ships without a resolvable public profile URL — the link is the
  * trust mechanism and the quote is only the design. An unlinkable quote at this
@@ -19,8 +20,7 @@ interface Props {
 }
 
 const { quote, name, title, company, profileUrl, relationship, tone = 'paper' } = Astro.props;
-const unresolved = (v: string) => /<[^>]+>/.test(v);
-const linkable = !unresolved(profileUrl);
+const linkable = !isPlaceholder(profileUrl);
 ---
 
 <figure class="max-w-[34ch]">

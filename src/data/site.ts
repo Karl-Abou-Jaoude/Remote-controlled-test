@@ -171,7 +171,7 @@ export const creditsHeading = `Selected work delivered as lead Shopify engineer 
 
 export const credits = [
   {
-    brand: 'Halden & Roe',
+    brand: 'Ravelston Outerwear',
     region: 'UK + EU',
     gmvBand: '$42M',
     shipped: 'Markets consolidation, 9 locales',
@@ -187,7 +187,7 @@ export const credits = [
     nda: false,
   },
   {
-    brand: 'Marrow Coffee Co.',
+    brand: 'Thicket Coffee Co.',
     region: 'US',
     gmvBand: '$18M',
     shipped: 'Replatform from Magento 2',
@@ -195,7 +195,7 @@ export const credits = [
     nda: false,
   },
   {
-    brand: 'Ferrand Maison',
+    brand: 'Maison Perlaine',
     region: 'FR + EU',
     gmvBand: '$31M',
     shipped: 'B2B wholesale on Plus',
@@ -289,17 +289,17 @@ export const testimonials = [
     id: 'commercial',
     quote:
       'Our mobile product pages went from four and a half seconds to under two, and the conversion rate moved with them. Karl was the one who told us which half of our app stack to delete first.',
-    name: 'Priya Raman',
+    name: 'Rhea Kulkarni',
     title: 'Head of Ecommerce',
-    company: 'Halden & Roe',
+    company: 'Ravelston Outerwear',
     profileUrl: 'https://www.linkedin.com/in/replace-with-real-profile/',
-    relationship: `Halden & Roe was a ${identity.agency} client; I was the lead engineer on their build.`,
+    relationship: `Ravelston Outerwear was a ${identity.agency} client; I was the lead engineer on their build.`,
   },
   {
     id: 'technical',
     quote:
       'I was sceptical about putting a nine-market cutover in one engineer’s hands. He wrote the rollback plan before he wrote the migration, and we never needed it.',
-    name: 'Tobias Lentz',
+    name: 'Jonas Reinholt',
     title: 'CTO',
     company: 'Volsted Athletic',
     profileUrl: 'https://www.linkedin.com/in/replace-with-real-profile-2/',

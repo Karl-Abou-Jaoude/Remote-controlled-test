@@ -1,11 +1,11 @@
 ---
 import { identity, contact, footer, availability } from '../data/site';
+import { isPlaceholder } from '../lib/placeholder';
 import Cta from './Cta.astro';
 import Diff from './Diff.astro';
 
 const mailtoBody = ['Brand:', 'Timeline:', 'Budget range:', 'What we need:'].join('\n');
 const mailto = `mailto:${identity.email}?subject=${encodeURIComponent('Shopify project enquiry')}&body=${encodeURIComponent(mailtoBody)}`;
-const unresolved = (v: string) => /<[^>]+>/.test(v);
 ---
 
 <!--
@@ -90,7 +90,7 @@ const unresolved = (v: string) => /<[^>]+>/.test(v);
         <p class="label text-text-dim">This page</p>
         <Diff minus={footer.perf.minus} plus={footer.perf.plus} class="mt-4" />
         {
-          !unresolved(footer.perf.proofUrl) ? (
+          !isPlaceholder(footer.perf.proofUrl) ? (
             <a href={footer.perf.proofUrl} rel="noopener" class="label mt-3 inline-block text-text-dim">
               Verify on PageSpeed →
             </a>

@@ -6,8 +6,8 @@ goal: a qualified buyer books a call or sends a store URL.
 > ### ⚠ Demo content is active
 >
 > Every brand, figure, quote and price is **invented** so the site renders
-> complete for review. `Halden & Roe`, `Volsted Athletic`, `Marrow Coffee Co.`,
-> `Ferrand Maison` and `Quillon Supply` are fictional; both testimonials were
+> complete for review. `Ravelston Outerwear`, `Volsted Athletic`, `Thicket Coffee Co.`,
+> `Maison Perlaine` and `Quillon Supply` are fictional; both testimonials were
 > written rather than collected; the case-study metrics are illustrative.
 >
 > **Do not point a live domain at this build.** Invented client work and written
@@ -15,10 +15,17 @@ goal: a qualified buyer books a call or sends a store URL.
 > named brand settles it, and it settles the whole claim set, including the parts
 > that were true.
 >
+> While the flag is set, every page ships `noindex, nofollow` and no sitemap is
+> generated, so nothing fabricated can be crawled — the JSON-LD graph would
+> otherwise make invented revenue and platform claims machine-readable. Demo
+> links (`example.com` storefronts, replace-me profile paths) render as plain text
+> rather than anchors.
+>
 > `npm run check` prints the full inventory on every build. Replace the values in
-> `src/data/site.ts` and `src/data/work.ts`, then set `DEMO_CONTENT = false`.
-> [CONTENT.md](./CONTENT.md) has the order — starting with written permission
-> from the agency before any real brand name goes on the page.
+> `src/data/site.ts` and `src/data/work.ts`, then set `DEMO_CONTENT = false` —
+> that re-enables indexing and the sitemap. [CONTENT.md](./CONTENT.md) has the
+> order, starting with written permission from the agency before any real brand
+> name goes on the page.
 
 ```bash
 npm install

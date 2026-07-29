@@ -1,5 +1,6 @@
 ---
 import { credits, creditsHeading, creditsFootnote } from '../data/site';
+import { isPlaceholder } from '../lib/placeholder';
 
 /**
  * Replaces the logo marquee. An infinite logo scroll is the most templated
@@ -20,8 +21,7 @@ import { credits, creditsHeading, creditsFootnote } from '../data/site';
  * clients ("a $60M UK activewear brand") belong inside a case study where the
  * surrounding constraint narrative carries them, never in this row.
  */
-const unresolved = (v: string) => /<[^>]+>/.test(v);
-const nameable = credits.filter((row) => !unresolved(row.brand));
+const nameable = credits.filter((row) => !isPlaceholder(row.brand));
 const rows = nameable.length >= 3 ? nameable : credits;
 const isPreview = nameable.length < 3;
 ---

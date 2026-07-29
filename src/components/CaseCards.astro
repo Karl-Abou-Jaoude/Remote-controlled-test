@@ -1,5 +1,6 @@
 ---
 import { cases } from '../data/work';
+import { isPlaceholder } from '../lib/placeholder';
 import SectionHead from './SectionHead.astro';
 import Diff from './Diff.astro';
 
@@ -12,7 +13,6 @@ import Diff from './Diff.astro';
  * proof, and everything the hover state reveals is equally revealed by
  * :focus-visible, so the keyboard path is not second class.
  */
-const unresolved = (v: string) => /<[^>]+>/.test(v);
 ---
 
 <section id="cases" aria-labelledby="cases-heading" class="py-20 md:py-28">
@@ -74,7 +74,7 @@ const unresolved = (v: string) => /<[^>]+>/.test(v);
               <a href={`/work/${c.slug}/`} class="label text-accent no-underline">
                 Read the case →
               </a>
-              {!unresolved(c.liveUrl) ? (
+              {!isPlaceholder(c.liveUrl) ? (
                 <a
                   href={c.liveUrl}
                   rel="noopener"

@@ -84,8 +84,10 @@ put it on your strongest number. Exactly one, and note it animates on scroll.
 
 ## 4. The credits table — at least three nameable brands
 
-`site.ts` → `credits`. Currently five **invented** brands: Halden & Roe, Volsted
-Athletic, Marrow Coffee Co., Ferrand Maison, Quillon Supply. These must go before
+`site.ts` → `credits`. Currently five **invented** brands: Ravelston Outerwear, Volsted Athletic,
+Thicket Coffee Co., Maison Perlaine, Quillon Supply — each search-checked against
+real trading companies before use, but *not* against trademark or company
+registers. These must go before
 launch — a fictional brand with a revenue band attached is a specific factual
 claim about a business that does not exist, and if a name turns out to belong to a
 real company it is a claim about a company that never hired you.
@@ -98,8 +100,8 @@ call resolves it, and the resolution reads as an attempted overstatement.
 
 ## 5. Two testimonials — each with a public profile link
 
-`site.ts` → `testimonials`. Currently two **invented people** (Priya Raman,
-Tobias Lentz) with quotes that were written, not collected, and profile links that
+`site.ts` → `testimonials`. Currently two **invented people** (Rhea Kulkarni,
+Jonas Reinholt) with quotes that were written, not collected, and profile links that
 point at `/in/replace-with-real-profile/` so they cannot be mistaken for real.
 Either replace both with real quotes and real links, or delete the section — a
 fabricated endorsement attributed to a named person at a named company is the
@@ -177,6 +179,20 @@ which cuts both ways.
   will actually do, in writing, before a client asks.
 
 ---
+
+## A note on the invented names
+
+The five demo brands and two demo people were web-searched to avoid collisions
+with real companies and notable people — two earlier candidates were rejected for
+exactly that (one sat a single vowel from a real Shopify outerwear brand, another
+inverted the name of a real French wholesale house). That check was general web
+search only: **no trademark or company-registry lookup**, so a name that is clean
+in search can still be a registered mark. They are stand-ins to delete, not names
+to keep.
+
+While `DEMO_CONTENT` is true, every page ships `noindex, nofollow` and no sitemap
+is generated, so nothing fabricated gets crawled. Both switch off automatically
+when you set the flag to false.
 
 ## Before you launch
 
