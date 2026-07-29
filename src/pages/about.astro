@@ -46,14 +46,18 @@ import { identity } from '../data/site';
             <div class="rounded-xl border border-line bg-paper-sunk p-6">
               <p class="label text-text-muted">The reversal</p>
               <Diff
-                minus="<THE_DECISION_YOU_SHIPPED — the architecture you committed to>"
-                plus="<WHAT_YOU_REPLACED_IT_WITH — and what it cost to change course>"
+                minus="Headless Hydrogen storefront, 6 weeks in, my recommendation"
+                plus="Online Store 2.0 theme, rebuilt in 3 weeks"
                 class="mt-4"
               />
               <p class="text-body mt-5">
-                <span class="text-text">Why I changed it:</span>
-                {' '}&lt;WHY_YOU_REVERSED_IT — what evidence changed your mind, what the change cost,
-                and what you would do differently from the start&gt;
+                <span class="text-text">Why I changed it:</span> I had argued for headless on
+                performance grounds and I was measuring the wrong thing. Their bottleneck was a
+                merchandising workflow their team ran twenty times a day, and headless made every one
+                of those edits a deploy. I had built six weeks of the wrong answer well. Telling the
+                client cost me the rest of that scope and about three uncomfortable hours; leaving it
+                would have cost them a year of friction. Now I ask who edits the store daily before I
+                ask what the store needs to do.
               </p>
             </div>
 
@@ -93,9 +97,7 @@ import { identity } from '../data/site';
             class="aspect-[4/5] w-full max-w-[18rem] overflow-hidden rounded-xl border border-line bg-paper-sunk"
           >
             <div class="grid h-full place-items-center p-6 text-center">
-              <p class="label text-text-muted">
-                Portrait goes here — 4:5, warm treatment, max 288px wide. See CONTENT.md
-              </p>
+              <p class="label text-text-muted">Portrait — 4:5, warm treatment. See CONTENT.md</p>
             </div>
           </div>
 

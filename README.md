@@ -3,6 +3,23 @@
 A conversion-first portfolio site for a lead Shopify engineer. One page, one
 goal: a qualified buyer books a call or sends a store URL.
 
+> ### ⚠ Demo content is active
+>
+> Every brand, figure, quote and price is **invented** so the site renders
+> complete for review. `Halden & Roe`, `Volsted Athletic`, `Marrow Coffee Co.`,
+> `Ferrand Maison` and `Quillon Supply` are fictional; both testimonials were
+> written rather than collected; the case-study metrics are illustrative.
+>
+> **Do not point a live domain at this build.** Invented client work and written
+> testimonials are the most checkable claims on a page like this — one email to a
+> named brand settles it, and it settles the whole claim set, including the parts
+> that were true.
+>
+> `npm run check` prints the full inventory on every build. Replace the values in
+> `src/data/site.ts` and `src/data/work.ts`, then set `DEMO_CONTENT = false`.
+> [CONTENT.md](./CONTENT.md) has the order — starting with written permission
+> from the agency before any real brand name goes on the page.
+
 ```bash
 npm install
 npm run dev          # http://localhost:4321
@@ -163,8 +180,10 @@ placement actually produces bookings.
 
 ## Known limits
 
-- The `<PLACEHOLDER>` content is not filled — `npm run check` lists it, and
-  `CONTENT.md` gives the order.
+- **The content is demo data, not fact** — see the warning at the top.
+  `npm run check` lists every fabricated field; `CONTENT.md` gives the order to
+  replace them. `npm run check:strict` fails while `DEMO_CONTENT` is true, so it
+  is safe to wire into a deploy pipeline as a launch gate.
 - Vendor free-tier numbers (Web3Forms caps, Cal.com event types) come from
   research that could not reach those vendors' live pages; re-verify before
   relying on them. `CONTENT.md` lists exactly which.

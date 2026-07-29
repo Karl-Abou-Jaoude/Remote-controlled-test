@@ -71,9 +71,28 @@ for (const file of files) {
   }
 }
 
-/* ---------------- 2. hard failures ---------------- */
+/* ---------------- 2. demo content ----------------
+   Filling the placeholders in makes the site look finished, which is exactly why
+   the guard must get LOUDER at that point rather than going quiet: a page of
+   invented brands and written-not-collected testimonials is far more dangerous
+   than a page of obvious <PLACEHOLDER> tokens, because it can be deployed by
+   accident. This block is the tripwire. */
 
 const siteTs = await readFile(join(SRC, 'data', 'site.ts'), 'utf8');
+const demo = /export const DEMO_CONTENT\s*=\s*true/.test(siteTs);
+
+const DEMO_ITEMS = [
+  'credits[]           five invented brands, regions and GMV bands',
+  'work.ts             three invented case studies, every figure illustrative',
+  'testimonials[]      two invented people; the quotes were written, not collected',
+  'profileUrl          placeholder LinkedIn paths — they resolve to nothing',
+  'liveUrl             example.com placeholders, not production storefronts',
+  'rates               illustrative price bands',
+  'availability        a plausible date, not your real capacity',
+  'footer.perf         plausible numbers — re-run PageSpeed on your own domain',
+  'contact.web3formsKey  intentionally invalid, so the form fails into mailto',
+  'about.astro         the reversal story is written, not yours',
+];
 
 // Availability date must be real and in the future.
 const nextStart = siteTs.match(/nextStart:\s*'([^']+)'/)?.[1];
@@ -169,6 +188,26 @@ if (placeholders.size > 0) {
   );
 }
 
+if (demo) {
+  console.log(`
+╔══════════════════════════════════════════════════════════════════════════════╗
+║  DEMO CONTENT IS ACTIVE — DO NOT POINT A LIVE DOMAIN AT THIS BUILD           ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+  The site renders complete, and none of it is true yet:
+`);
+  for (const item of DEMO_ITEMS) console.log(`    · ${item}`);
+  console.log(`
+  Invented client work and written testimonials are the most checkable claims on
+  a page like this. One email to a named brand settles it, and it settles the
+  whole claim set — including the parts that were true.
+
+  Replace the values in src/data/site.ts and src/data/work.ts, then set
+  DEMO_CONTENT = false. CONTENT.md has the order, starting with written
+  permission from the agency before any real brand name goes on the page.
+`);
+}
+
 if (warnings.length > 0) {
   console.log(`\nWARNINGS (${warnings.length})\n`);
   for (const w of warnings) console.log(`  ! ${w}`);
@@ -181,13 +220,21 @@ if (errors.length > 0) {
   process.exit(1);
 }
 
-if (STRICT && placeholders.size > 0) {
-  console.log(`\n✗ --strict: ${placeholders.size} placeholders still present. Not launch-ready.\n`);
+if (STRICT && (placeholders.size > 0 || demo)) {
+  const why = [
+    placeholders.size > 0 && `${placeholders.size} placeholders still present`,
+    demo && 'DEMO_CONTENT is true',
+  ]
+    .filter(Boolean)
+    .join(', ');
+  console.log(`\n✗ --strict: ${why}. Not launch-ready.\n`);
   process.exit(1);
 }
 
 console.log(
-  placeholders.size === 0
-    ? '\n✓ No placeholders, no unsafe claims. Launch-ready.\n'
-    : '\n✓ No unsafe claims. Placeholders above still need filling before launch.\n',
+  demo
+    ? '\n✓ Structure and claim rules pass. The content itself is demo data — see above.\n'
+    : placeholders.size === 0
+      ? '\n✓ No placeholders, no unsafe claims. Launch-ready.\n'
+      : '\n✓ No unsafe claims. Placeholders above still need filling before launch.\n',
 );

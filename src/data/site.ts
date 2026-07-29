@@ -1,12 +1,16 @@
 /**
  * SINGLE SOURCE OF TRUTH FOR EVERY WORD AND FACT ON THE SITE.
  *
- * Anything in <ANGLE_BRACKETS> is a placeholder only Karl can supply. The site
- * builds and looks right with them in place so it can be deployed and filled in
- * incrementally — but each one is a claim a buyer will read, so none should
- * reach production. `npm run check` lists what is outstanding and fails on the
- * unsafe patterns (a percentage with no baseline, an availability date in the
- * past, an anonymous brand in the credits table).
+ * ⚠ DEMO CONTENT IS ACTIVE. Every brand, figure, quote and price below is
+ * INVENTED so the site renders complete for review and screenshots. The brands
+ * are fictional, the testimonials were written rather than collected, and the
+ * metrics are illustrative. Do not point a live domain at this: publishing
+ * invented client work and invented endorsements as real is the one claim set a
+ * buyer can check, and the one that ends the sale when they do.
+ *
+ * `npm run check` prints exactly what is fabricated on every build. Set
+ * DEMO_CONTENT to false once the values are yours and the guard switches to
+ * enforcing the real rules. CONTENT.md has the order to work through.
  *
  * RULES BAKED IN HERE, all from the research and the adversarial reviews:
  *
@@ -26,6 +30,13 @@
  * 5. Never a percentage without its baseline and measurement window.
  */
 
+/**
+ * Flip to false when every value here and in work.ts is genuinely yours. The
+ * content guard reads this flag, so leaving it true keeps the warning loud on
+ * every build rather than letting demo data go quiet.
+ */
+export const DEMO_CONTENT = true;
+
 export const identity = {
   name: 'Karl Abou Jaoude',
   role: 'Shopify Plus & Headless Commerce Engineer',
@@ -35,35 +46,37 @@ export const identity = {
   location: 'Remote — EU & US time zones',
   agency: 'Qwerty',
   /** Exact, never rounded. Used in the FAQ and about page only. */
-  agencyTenure: '<START_MONTH_YEAR> to <END_MONTH_YEAR>',
-  agencyYearRange: '<YEAR_RANGE>',
+  agencyTenure: 'March 2024 to June 2026',
+  agencyYearRange: '2024–2026',
 } as const;
 
 export const contact = {
-  calLink: '<CAL_COM_USERNAME>/intro-20',
-  calUrl: 'https://cal.com/<CAL_COM_USERNAME>/intro-20',
-  web3formsKey: '<WEB3FORMS_ACCESS_KEY>',
+  calLink: 'karl-abou-jaoude/intro-20',
+  calUrl: 'https://cal.com/karl-abou-jaoude/intro-20',
+  /** Deliberately not a valid key while DEMO_CONTENT is true: a submission fails
+      loudly into the mailto fallback rather than posting quietly into nowhere. */
+  web3formsKey: 'demo-key-not-configured',
   socials: [
-    { label: 'GitHub', url: 'https://github.com/<GITHUB_HANDLE>' },
-    { label: 'LinkedIn', url: 'https://www.linkedin.com/in/<LINKEDIN_HANDLE>/' },
+    { label: 'GitHub', url: 'https://github.com/karlaboujaoude' },
+    { label: 'LinkedIn', url: 'https://www.linkedin.com/in/karlaboujaoude/' },
   ],
 } as const;
 
 export const availability = {
   /** ISO date. `npm run check` fails the build when this is in the past. */
-  nextStart: '<YYYY-MM-DD>',
+  nextStart: '2026-09-14',
   /** Human form of the same date. */
-  nextStartLabel: '<START_DATE>',
+  nextStartLabel: '14 Sep',
   concurrentEngagements: 2,
 } as const;
 
 /** Bands with both ends, never floors — a floor is what every buyer negotiates toward. */
 export const rates = {
-  auditFixed: '<AUDIT_PRICE>',
-  projectLow: '<PROJECT_LOW>',
-  projectHigh: '<PROJECT_HIGH>',
-  retainerLow: '<RETAINER_LOW>',
-  retainerHigh: '<RETAINER_HIGH>',
+  auditFixed: '$3,500',
+  projectLow: '$18k',
+  projectHigh: '$85k',
+  retainerLow: '$9k',
+  retainerHigh: '$16k',
 } as const;
 
 export const seo = {
@@ -110,7 +123,7 @@ export const hero = {
   /** Rendered only at >=768px — the mobile fold cannot afford the extra lines. */
   headlineTail: ' — at checkout, in new markets, and at peak.',
   subhead:
-    'Lead engineer on <N_PLUS_BUILDS> Shopify Plus builds across <N_MARKETS> markets, <N_SOLO_OWNED> of them solo-owned end to end.',
+    'Lead engineer on 14 Shopify Plus builds across 23 markets, 9 of them solo-owned end to end.',
   subheadTail: ' You talk to the person who makes the architecture calls and then ships them.',
   primaryCta: 'Book a 20-min call',
   /** Co-equal on mobile, not a demoted inline link: the lower-friction ask
@@ -135,12 +148,12 @@ export const hero = {
  * ------------------------------------------------------------------ */
 
 export const scope: ReadonlyArray<{ value: string; label: string; emphasis?: boolean }> = [
-  { value: '<N_PLUS_BUILDS>', label: 'Shopify Plus storefronts shipped', emphasis: true },
-  { value: '<N_MARKETS>', label: 'Markets live' },
-  { value: '<N_CURRENCIES>', label: 'Currencies' },
-  { value: '$<GMV>M', label: 'GMV under management' },
-  { value: '<N_ENGINEERS>', label: 'Engineers led' },
-  { value: '<N_BFCM>', label: 'Black Fridays, <N_P1> P1 incidents' },
+  { value: '14', label: 'Shopify Plus storefronts shipped', emphasis: true },
+  { value: '23', label: 'Markets live' },
+  { value: '11', label: 'Currencies' },
+  { value: '$180M', label: 'GMV under management' },
+  { value: '9', label: 'Engineers led' },
+  { value: '3', label: 'Black Fridays, 0 P1 incidents' },
 ];
 
 /* ------------------------------------------------------------------ *
@@ -150,32 +163,50 @@ export const scope: ReadonlyArray<{ value: string; label: string; emphasis?: boo
    a duplicated DOM track, an aria-hidden clone, a pause control and two
    fallback branches. This carries more evidence per pixel, is static, and is
    keyboard- and screen-reader-clean by construction.
+
+   ⚠ DEMO: these five brands are invented. Replace with real, cleared names.
  * ------------------------------------------------------------------ */
 
 export const creditsHeading = `Selected work delivered as lead Shopify engineer at ${identity.agency} (${identity.agencyYearRange})`;
 
 export const credits = [
   {
-    brand: '<BRAND_1>',
-    region: '<REGION_1>',
-    gmvBand: '$<GMV_1>M',
-    shipped: 'Markets consolidation, <N> locales',
+    brand: 'Halden & Roe',
+    region: 'UK + EU',
+    gmvBand: '$42M',
+    shipped: 'Markets consolidation, 9 locales',
     role: 'Lead engineer, solo build',
     nda: false,
   },
   {
-    brand: '<BRAND_2>',
-    region: '<REGION_2>',
-    gmvBand: '$<GMV_2>M',
+    brand: 'Volsted Athletic',
+    region: 'DE + EU',
+    gmvBand: '$65M',
     shipped: 'Checkout extensibility migration',
-    role: 'Lead engineer, <N>-person team',
+    role: 'Lead engineer, 4-person team',
     nda: false,
   },
   {
-    brand: '<BRAND_3>',
-    region: '<REGION_3>',
-    gmvBand: '$<GMV_3>M',
-    shipped: 'Replatform from <SOURCE_PLATFORM>',
+    brand: 'Marrow Coffee Co.',
+    region: 'US',
+    gmvBand: '$18M',
+    shipped: 'Replatform from Magento 2',
+    role: 'Lead engineer, solo build',
+    nda: false,
+  },
+  {
+    brand: 'Ferrand Maison',
+    region: 'FR + EU',
+    gmvBand: '$31M',
+    shipped: 'B2B wholesale on Plus',
+    role: 'Lead engineer, 3-person team',
+    nda: false,
+  },
+  {
+    brand: 'Quillon Supply',
+    region: 'US + CA',
+    gmvBand: '$24M',
+    shipped: 'Theme rebuild, peak readiness',
     role: 'Lead engineer, solo build',
     nda: false,
   },
@@ -198,8 +229,8 @@ export const triage = [
       'Scripts are gone and checkout.liquid is going. If your checkout still runs on either, the work is a migration to Functions, Checkout UI extensions and Web Pixels — done in the right order so discounting and tracking never both break at once.',
     chips: ['Shopify Functions', 'Checkout UI extensions', 'Web Pixels', 'Scripts → Functions'],
     diff: {
-      minus: '<N> Scripts, checkout.liquid, script tags',
-      plus: '<N> Functions, UI extensions, Web Pixels',
+      minus: '12 Scripts, checkout.liquid, 6 script tags',
+      plus: '4 Functions, UI extensions, Web Pixels',
     },
     caseSlug: 'mobile-performance-rebuild',
   },
@@ -210,8 +241,8 @@ export const triage = [
       'Collapsing separate country stores into one Markets setup is a real project, not a switch: redirect map, hreflang, historical order data, and a plan for the SEO you already earned. I will tell you when it is not worth doing.',
     chips: ['Shopify Markets', 'hreflang', 'Multi-currency', 'Data migration'],
     diff: {
-      minus: '<N> expansion stores, <N> themes to maintain',
-      plus: '1 store, <N> markets, one theme',
+      minus: '6 expansion stores, 6 themes to maintain',
+      plus: '1 store, 12 markets, one theme',
     },
     caseSlug: 'markets-consolidation',
   },
@@ -234,8 +265,8 @@ export const triage = [
       'LCP, INP and CLS converted into revenue rather than a score, app bloat removed in dependency order, and a code freeze with a written degradation plan before Black Friday — so the busiest week is the boring one.',
     chips: ['Core Web Vitals', 'App audit', 'Theme architecture', 'BFCM freeze'],
     diff: {
-      minus: 'Mobile LCP <LCP_BEFORE>s, <N> blocking apps',
-      plus: 'Mobile LCP <LCP_AFTER>s, <N> apps removed',
+      minus: 'Mobile LCP 4.6s, 9 blocking apps',
+      plus: 'Mobile LCP 1.8s, 5 apps removed',
     },
     caseSlug: 'mobile-performance-rebuild',
   },
@@ -247,26 +278,32 @@ export const triage = [
    styled blockquote at this density signals that nothing here is checkable.
    The attribution discloses the agency relationship, because implying he was
    their direct vendor would be the misrepresentation.
+
+   ⚠ DEMO: both people are invented and both quotes were written, not collected.
+   The profile links go to a placeholder path on purpose — they must be replaced
+   with real quotes and real profiles, or this section must be removed.
  * ------------------------------------------------------------------ */
 
 export const testimonials = [
   {
     id: 'commercial',
-    quote: '<TESTIMONIAL_QUOTE_1 — should name a number the speaker owns>',
-    name: '<TESTIMONIAL_NAME_1>',
-    title: '<TESTIMONIAL_ROLE_1>',
-    company: '<BRAND_1>',
-    profileUrl: '<TESTIMONIAL_LINKEDIN_1>',
-    relationship: `<BRAND_1> was a ${identity.agency} client; I was the lead engineer on their build.`,
+    quote:
+      'Our mobile product pages went from four and a half seconds to under two, and the conversion rate moved with them. Karl was the one who told us which half of our app stack to delete first.',
+    name: 'Priya Raman',
+    title: 'Head of Ecommerce',
+    company: 'Halden & Roe',
+    profileUrl: 'https://www.linkedin.com/in/replace-with-real-profile/',
+    relationship: `Halden & Roe was a ${identity.agency} client; I was the lead engineer on their build.`,
   },
   {
     id: 'technical',
-    quote: '<TESTIMONIAL_QUOTE_2 — ideally objection-shaped: "I was worried X, but Y">',
-    name: '<TESTIMONIAL_NAME_2>',
-    title: '<TESTIMONIAL_ROLE_2>',
-    company: '<BRAND_2>',
-    profileUrl: '<TESTIMONIAL_LINKEDIN_2>',
-    relationship: `<BRAND_2> was a ${identity.agency} client; I was the lead engineer on their build.`,
+    quote:
+      'I was sceptical about putting a nine-market cutover in one engineer’s hands. He wrote the rollback plan before he wrote the migration, and we never needed it.',
+    name: 'Tobias Lentz',
+    title: 'CTO',
+    company: 'Volsted Athletic',
+    profileUrl: 'https://www.linkedin.com/in/replace-with-real-profile-2/',
+    relationship: `Volsted Athletic was a ${identity.agency} client; I was the lead engineer on their build.`,
   },
 ] as const;
 
@@ -285,11 +322,11 @@ export const objections = [
     answer: 'Everything ships through your GitHub org, from the first commit.',
     fear: '“If you get ill, take another contract, or disappear, does my project stop dead?”',
     detail:
-      'Reviewed PRs into your repo, architecture decisions written as ADRs in /docs, walkthroughs recorded as Looms — all in your account, not mine. <N> engineers I have worked with for years are named in the handover doc with their contact details, and they already have context.',
+      'Reviewed PRs into your repo, architecture decisions written as ADRs in /docs, walkthroughs recorded as Looms — all in your account, not mine. Two engineers I have worked with for years are named in the handover doc with their contact details, and they already have context.',
     artifact: { label: 'Artifact', value: 'ADR + handover doc template in your repo' },
   },
   {
-    answer: 'I take two clients. You get <N> days a week, and I name which days.',
+    answer: 'I take two clients. You get three days a week, and I name which days.',
     fear: '“Most freelancers juggle three to five clients and give each ten hours a week.”',
     detail:
       'In writing, before we start. That is a number you can hold me to, which is more than an adjective like “dedicated” gives you. When I am at capacity I say so and give you a date rather than a maybe.',
@@ -397,11 +434,11 @@ export const booking = {
 export const faq = [
   {
     q: 'Have you done this at my size?',
-    a: 'Judge the scope rather than the calendar: <N_PLUS_BUILDS> Shopify Plus storefronts, <N_MARKETS> markets, $<GMV>M under management, <N_SOLO_OWNED> builds where I was the only engineer on the account. Two years as lead is short in calendar terms, and here is exactly what it contained — every figure is checkable against the case studies, and I will put you on a call with <REFERENCE_NAME> about what it looked like from the client side.',
+    a: 'Judge the scope rather than the calendar: 14 Shopify Plus storefronts, 23 markets, $180M GMV under management, and 9 builds where I was the only engineer on the account. Two years as lead is short in calendar terms, and that is what it contained — every figure is checkable against the case studies, and I will put you on a call with a former client about how it looked from their side.',
   },
   {
     q: 'Are you a Shopify Plus Partner?',
-    a: 'No, and no individual can be: the Plus tier requires five active Plus clients and ten credentialed team members. I am a Shopify Partner with <VERIFIED_SKILLS_LIST>. If a solo engineer tells you they hold Plus Partner status, check it.',
+    a: 'No, and no individual can be: the Plus tier requires five active Plus clients and ten credentialed team members. I am a Shopify Partner with credentials in theme development, custom apps and platform migration. If a solo engineer tells you they hold Plus Partner status, check it.',
   },
   {
     q: 'Isn’t a full-time hire cheaper at my revenue?',
@@ -409,7 +446,7 @@ export const faq = [
   },
   {
     q: 'What happens if you disappear?',
-    a: 'Your code is in your GitHub org from the first commit, decisions are written as ADRs in your repo, and <N> named engineers with existing context are in the handover doc. Continuity is structural here, not a promise.',
+    a: 'Your code is in your GitHub org from the first commit, decisions are written as ADRs in your repo, and two named engineers with existing context are in the handover doc. Continuity is structural here, not a promise.',
   },
   {
     q: 'Who owns the code?',
@@ -417,7 +454,7 @@ export const faq = [
   },
   {
     q: 'Do you disappear in Q4?',
-    a: 'The opposite. Code freeze goes in on <FREEZE_DATE>, I am on call through BFCM, and the degradation plan — what we shed first if traffic overwhelms non-core features — is written and agreed before November.',
+    a: 'The opposite. Code freeze goes in on 7 November, I am on call through BFCM, and the degradation plan — what we shed first if traffic overwhelms non-core features — is written and agreed before November.',
   },
   {
     q: 'Can you talk to my CFO, or only to engineers?',
@@ -451,10 +488,11 @@ export const footer = {
   promise: 'Remote, working across EU and US time zones. I reply within one business day.',
   credit: `Designed & built by ${identity.name}`,
   /** The site's own numbers, diffed against the platform median — the motif
-      applied to itself. Fill from a real PageSpeed run and link it. */
+      applied to itself. Re-run PageSpeed against your deployed domain and put
+      the real figures in; the link resolves live, so a stale number is visible. */
   perf: {
-    minus: '− Shopify mobile median LCP <MEDIAN_LCP>s',
-    plus: '+ This page <THIS_LCP>s · <THIS_JS>KB JS · 0 cookies',
-    proofUrl: '<PAGESPEED_RESULT_URL>',
+    minus: '− Shopify mobile median LCP 3.4s',
+    plus: '+ This page 0.9s · 2KB JS · 0 cookies',
+    proofUrl: 'https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fkarlaboujaoude.com',
   },
 } as const;

@@ -299,15 +299,37 @@ function initCountUp(): void {
 
       const start = performance.now();
       const duration = 600;
+      let settled = false;
+
+      const settle = () => {
+        settled = true;
+        el.textContent = text;
+      };
+
       const tick = (now: number) => {
+        if (settled) return;
         const p = Math.min(1, (now - start) / duration);
         // ease-out quint, matching the CSS easing token
         const eased = 1 - Math.pow(1 - p, 5);
         el.textContent = text.replace(match[0], Math.round(target * eased).toLocaleString());
         if (p < 1) requestAnimationFrame(tick);
-        else el.textContent = text;
+        else settle();
       };
       requestAnimationFrame(tick);
+
+      /*
+        While counting, the element displays a number that is not the real one.
+        requestAnimationFrame pauses in a backgrounded tab, so without these two
+        guards the strip can sit showing "2" where the truth is "14" for as long
+        as the tab stays hidden. On a page whose entire argument is that its
+        figures are checkable, a wrong number on screen is worse than no
+        animation — so it snaps to the real value if the tab is hidden, and a
+        timer backstops it regardless.
+      */
+      addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'hidden') settle();
+      });
+      setTimeout(settle, duration + 200);
     },
     { threshold: 0.4 },
   );
