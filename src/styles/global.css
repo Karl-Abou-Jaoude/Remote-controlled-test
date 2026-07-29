@@ -1,1 +1,230 @@
-@import "tailwindcss";
+@import 'tailwindcss';
+
+/*
+  DESIGN SYSTEM
+  -------------
+  Base is a warm off-white, not near-black. Two reasons, both from research:
+  (1) it differentiates against the wall of #0E0E0E developer portfolios, and
+  (2) the client work being shown is overwhelmingly light-themed, so dark
+  chrome fights the screenshots. Near-black is reserved for full-bleed
+  inversion bands — the cheapest way to make a section feel authored.
+
+  Every colour pair below was measured, not eyeballed. Ratios in the comments
+  are WCAG 2.2 contrast against the stated background.
+*/
+
+@theme {
+  /* --- surfaces --- */
+  --color-paper: #f7f6f3; /* warm off-white base */
+  --color-paper-raised: #ffffff; /* cards on paper */
+  --color-paper-sunk: #f0eee9; /* wells, stripes */
+  --color-ink: #111110; /* inversion band base (never #000) */
+  --color-ink-raised: #1c1b19; /* cards inside an inversion band */
+
+  /* --- text --- */
+  --color-text: #111110; /* on paper — 17.48:1 */
+  --color-text-muted: #5f5b54; /* on paper — 6.25:1 */
+  --color-text-inverse: #f7f6f3; /* on ink — 17.48:1 */
+  --color-text-dim: #a8a49c; /* on ink — 7.61:1 */
+
+  /* --- signature accent (the only chroma on the page) --- */
+  --color-accent: #c13a19; /* on paper — 5.00:1 as text AND as a fill behind paper text */
+  --color-accent-hot: #ff6a3d; /* on ink — 6.64:1 as text AND as a fill behind ink text */
+
+  /* --- lines --- */
+  --color-line: #e2ded7; /* decorative hairlines on paper */
+  --color-line-strong: #928e87; /* form borders / UI boundaries on paper — 3.02:1 */
+  --color-line-ink: #63605a; /* form borders / UI boundaries on ink — 3.02:1 */
+
+  /* --- type families (Astro's font pipeline defines the inner vars) --- */
+  --font-sans: var(--font-geist);
+  --font-display: var(--font-instrument);
+  --font-mono: var(--font-geist-mono);
+
+  /*
+    Fluid type scale. Display sizes carry negative tracking (-0.02 to -0.04em)
+    per the award-portfolio house style; body stays 16–18px at 1.5–1.6.
+  */
+  --text-hero: clamp(3.25rem, 10.5vw, 9rem);
+  --text-hero--line-height: 0.94;
+  --text-hero--letter-spacing: -0.035em;
+
+  --text-display: clamp(2.5rem, 6vw, 5rem);
+  --text-display--line-height: 1;
+  --text-display--letter-spacing: -0.03em;
+
+  --text-title: clamp(1.75rem, 3.2vw, 2.75rem);
+  --text-title--line-height: 1.08;
+  --text-title--letter-spacing: -0.02em;
+
+  --text-lead: clamp(1.125rem, 1.6vw, 1.375rem);
+  --text-lead--line-height: 1.5;
+  --text-lead--letter-spacing: -0.011em;
+
+  --text-body: 1.0625rem;
+  --text-body--line-height: 1.6;
+
+  --text-meta: 0.8125rem;
+  --text-meta--line-height: 1.4;
+  --text-meta--letter-spacing: 0.06em;
+
+  /* --- motion ---
+     150–200ms for UI, capped at 300ms, ease-out for entrances. The overshoot
+     curve is reserved for card transforms — never for text. */
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-overshoot: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --duration-fast: 150ms;
+  --duration-base: 200ms;
+  --duration-slow: 300ms;
+
+  /* --- layout --- */
+  --spacing-gutter: clamp(1.25rem, 5vw, 4rem);
+  --container-page: 84rem;
+}
+
+/* ------------------------------------------------------------------ *
+   BASE
+ * ------------------------------------------------------------------ */
+
+@layer base {
+  html {
+    /* WCAG 2.2 SC 2.4.11 — a sticky header must never obscure an element that
+       was scrolled to and focused via an anchor. */
+    scroll-padding-top: 6rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-paper);
+    color: var(--color-text);
+    font-family: var(--font-sans);
+    font-size: var(--text-body);
+    line-height: 1.6;
+    font-synthesis-weight: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* Two-tone focus ring. One colour cannot hold 3:1 against both the paper
+     sections and the ink bands, so the ring pairs an ink outline with a paper
+     halo, and inverts inside .on-ink. */
+  :focus-visible {
+    outline: 3px solid var(--color-text);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 6px var(--color-paper);
+    border-radius: 2px;
+  }
+
+  .on-ink :focus-visible {
+    outline-color: var(--color-accent-hot);
+    box-shadow: 0 0 0 6px var(--color-ink);
+  }
+
+  :focus:not(:focus-visible) {
+    outline: none;
+  }
+
+  ::selection {
+    background-color: var(--color-accent);
+    color: var(--color-paper);
+  }
+}
+
+/* ------------------------------------------------------------------ *
+   REDUCED MOTION
+   Not a blanket kill: sub-200ms opacity fades aid orientation and stay.
+   Everything that translates, parallaxes, loops or autoplays goes.
+ * ------------------------------------------------------------------ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 150ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .marquee__track {
+    animation: none !important;
+    transform: none !important;
+  }
+
+  .marquee {
+    overflow-x: auto;
+  }
+}
+
+/* ------------------------------------------------------------------ *
+   PRIMITIVES
+ * ------------------------------------------------------------------ */
+
+@utility container-page {
+  width: 100%;
+  max-width: var(--container-page);
+  margin-inline: auto;
+  padding-inline: var(--spacing-gutter);
+}
+
+/* Functional mono: section numbering, metadata labels, stack chips. On an
+   engineer's site mono reads as credibility rather than decoration. */
+@utility label {
+  font-family: var(--font-mono);
+  font-size: var(--text-meta);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+@layer components {
+  /*
+    Scroll reveal. Deliberately NOT applied to the hero, body copy, pricing,
+    form labels or CTAs — NN/g is unambiguous that scroll-triggered animation
+    belongs on secondary supporting content, and a CTA must never animate into
+    existence. The default state here is *visible*: JS opts an element into
+    'pending', so if JS never runs, nothing is ever hidden.
+  */
+  [data-reveal] {
+    opacity: 1;
+    transition:
+      opacity var(--duration-slow) var(--ease-out-quint),
+      transform var(--duration-slow) var(--ease-out-quint);
+  }
+
+  [data-reveal='pending'] {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  .skip-link {
+    position: absolute;
+    left: -9999px;
+  }
+
+  .skip-link:focus {
+    position: fixed;
+    left: 1rem;
+    top: 1rem;
+    z-index: 100;
+    padding: 0.75rem 1rem;
+    background: var(--color-ink);
+    color: var(--color-text-inverse);
+    border-radius: 4px;
+  }
+}

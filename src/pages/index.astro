@@ -1,4 +1,12 @@
 ---
-import "../styles/global.css";
+import Base from '../layouts/Base.astro';
 ---
-<html lang="en"><head><meta charset="utf-8" /><title>scaffold</title></head><body><h1 class="text-3xl font-bold">scaffold ok</h1></body></html>
+<Base>
+  <main id="main" class="container-page py-24">
+    <p class="label text-accent">01 / scaffold</p>
+    <h1 class="font-display text-hero mt-6">Typography and tokens wired.</h1>
+    <p class="text-lead text-text-muted mt-6 max-w-2xl">Body copy in Geist at a fluid lead size.</p>
+    <p class="font-mono text-meta mt-4">MONO / METADATA</p>
+  </main>
+  <script>import '../scripts/enhance';</script>
+</Base>

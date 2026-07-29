@@ -1,0 +1,126 @@
+---
+import { Font } from 'astro:assets';
+import '../styles/global.css';
+import { identity, seo, contact, expertise } from '../data/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+  /** Absolute-from-root path of this page, e.g. '/' or '/work/brand/'. */
+  path?: string;
+  ogImage?: string;
+  ogImageAlt?: string;
+  /** Rendered into the JSON-LD graph as an FAQPage node. */
+  faq?: ReadonlyArray<{ q: string; a: string }>;
+}
+
+const {
+  title = seo.title,
+  description = seo.description,
+  path = '/',
+  ogImage = seo.ogImage,
+  ogImageAlt = seo.ogImageAlt,
+  faq = [],
+} = Astro.props;
+
+const canonical = new URL(path, identity.origin).href;
+const ogImageUrl = new URL(ogImage, identity.origin).href;
+
+/*
+  JSON-LD as a single @graph with entities linked by @id.
+  Deliberate omissions, all researched:
+  - No ProfessionalService node: it is a LocalBusiness subtype expecting a real
+    address, and inventing one is worse than omitting it.
+  - No AggregateRating/Review on our own entity — self-serving review markup
+    violates Google's guidelines and risks a manual action. Testimonials live
+    in the HTML as plainly attributed quotes instead, which converts better.
+  - FAQPage is kept for answer-engine/LLM extraction, not for rich results:
+    Google restricted those to authoritative gov/health sites in Aug 2023.
+*/
+const graph: Record<string, unknown>[] = [
+  {
+    '@type': 'Person',
+    '@id': `${identity.origin}/#person`,
+    name: identity.name,
+    url: `${identity.origin}/`,
+    jobTitle: identity.shortRole,
+    email: `mailto:${identity.email}`,
+    description: seo.description,
+    knowsAbout: [...expertise],
+    sameAs: contact.socials.map((s) => s.url),
+  },
+  {
+    '@type': 'WebSite',
+    '@id': `${identity.origin}/#website`,
+    url: `${identity.origin}/`,
+    name: `${identity.name} — ${identity.shortRole}`,
+    publisher: { '@id': `${identity.origin}/#person` },
+    inLanguage: 'en',
+  },
+  {
+    '@type': 'Service',
+    '@id': `${identity.origin}/#service`,
+    serviceType: 'Shopify Plus development and headless commerce engineering',
+    provider: { '@id': `${identity.origin}/#person` },
+    areaServed: { '@type': 'AdministrativeArea', name: 'Worldwide (remote)' },
+    availableChannel: {
+      '@type': 'ServiceChannel',
+      serviceUrl: contact.calUrl,
+      name: 'Book a 20-minute technical call',
+    },
+  },
+];
+
+if (faq.length > 0) {
+  graph.push({
+    '@type': 'FAQPage',
+    '@id': `${identity.origin}/#faq`,
+    mainEntity: faq.map(({ q, a }) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
+  });
+}
+
+const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': graph });
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+
+    <!-- Only the two faces used above the fold are preloaded. The display
+         serif is the LCP element, so it is not optional. -->
+    <Font cssVariable="--font-instrument" preload />
+    <Font cssVariable="--font-geist" preload />
+    <Font cssVariable="--font-geist-mono" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={ogImageAlt} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <meta name="theme-color" content="#f7f6f3" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#111110" media="(prefers-color-scheme: dark)" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <script type="application/ld+json" is:inline set:html={jsonLd} />
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <slot />
+  </body>
+</html>
