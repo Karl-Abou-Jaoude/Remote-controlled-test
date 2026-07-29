@@ -1,0 +1,37 @@
+---
+import Base from '../layouts/Base.astro';
+import Cta from '../components/Cta.astro';
+import Diff from '../components/Diff.astro';
+import { cases } from '../data/work';
+---
+
+<!--
+  A designed 404 is logged as a scored element by both award juries, carries zero
+  conversion risk, and recovers a lost visitor into the funnel instead of
+  dead-ending them. The motif does the explaining.
+-->
+<Base title="Not found — Karl Abou Jaoude" path="/404/">
+  <main id="main" class="grid min-h-screen place-items-center py-24">
+    <div class="container-page max-w-[--container-text]">
+      <h1 class="display text-display">That URL doesn’t exist. The Shopify work does.</h1>
+
+      <Diff minus={`/${'the-url-you-tried'}`} plus="/#cases" class="mt-8" />
+
+      <ul class="mt-10 grid gap-3 border-t border-line pt-8">
+        {
+          cases.map((c) => (
+            <li>
+              <a href={`/work/${c.slug}/`} class="text-lead">
+                {c.brand} — {c.duration}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+
+      <div class="mt-10">
+        <Cta kind="book" position="404" variant="primary">Book a 20-min call</Cta>
+      </div>
+    </div>
+  </main>
+</Base>

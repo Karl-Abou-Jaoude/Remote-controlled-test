@@ -1,0 +1,55 @@
+---
+import { objections } from '../data/site';
+import SectionHead from './SectionHead.astro';
+
+/**
+ * ONE objection module, not four overlapping ones.
+ *
+ * The ANSWER is the visible heading and the fear is secondary. Leading with a
+ * wall of fears in large type on a black band manufactures the anxiety it claims
+ * to discharge for the majority of readers who never framed hiring one engineer
+ * as risky. Only the three fears that are structurally universal to buying from
+ * one person live here; the rest are opt-in via the FAQ.
+ *
+ * The process artifacts sit inside these answers as the evidence they already
+ * are, rather than as a separate section repeating the same three claims.
+ *
+ * INVERSION BAND 1 of 2. Nothing here animates: this is the densest body copy on
+ * the page at the highest-anxiety moment. The band's arrival is the visual event;
+ * the words render instantly.
+ */
+---
+
+<section
+  id="objections"
+  aria-labelledby="objections-heading"
+  class="band-ink on-ink relative isolate bg-ink py-20 text-text-inverse md:py-28"
+>
+  <!-- Plate edge: inversion reads as a press change rather than a rectangle. -->
+  <span aria-hidden="true" class="absolute inset-x-0 top-0 z-10 h-[3px] bg-accent-hot"></span>
+
+  <div class="container-page relative z-10">
+    <SectionHead index="07" id="objections-heading" tone="ink">
+      Hiring one person instead of an agency
+    </SectionHead>
+
+    <div class="mt-14 grid gap-12 md:gap-14">
+      {
+        objections.map((item) => (
+          <div class="grid gap-5 border-t border-line-ink pt-8 md:grid-cols-12 md:gap-10">
+            <h3 class="display text-title md:col-span-5 md:max-w-[24ch]">{item.answer}</h3>
+
+            <div class="md:col-span-7">
+              <p class="text-meta text-text-dim">{item.fear}</p>
+              <p class="text-body mt-4 max-w-[52ch] text-text-inverse">{item.detail}</p>
+              <p class="label mt-5 flex flex-wrap items-baseline gap-2 text-text-dim">
+                <span class="text-accent-hot">{item.artifact.label}</span>
+                <span>{item.artifact.value}</span>
+              </p>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

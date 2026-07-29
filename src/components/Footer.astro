@@ -1,0 +1,114 @@
+---
+import { identity, contact, footer, availability } from '../data/site';
+import Cta from './Cta.astro';
+import Diff from './Diff.astro';
+
+const mailtoBody = ['Brand:', 'Timeline:', 'Budget range:', 'What we need:'].join('\n');
+const mailto = `mailto:${identity.email}?subject=${encodeURIComponent('Shopify project enquiry')}&body=${encodeURIComponent(mailtoBody)}`;
+const unresolved = (v: string) => /<[^>]+>/.test(v);
+---
+
+<!--
+  The footer repeats the primary CTA rather than ending on a link list: a
+  bottom-of-page CTA is mandatory on a long page, because the reader who got here
+  is the most convinced reader on the site.
+
+  The site's own performance numbers appear as the motif applied to itself — the
+  most direct possible proof for someone selling store performance, and the one
+  claim on the page a buyer can verify in ten seconds with a link.
+
+  Email is a plain clickable address. Obfuscation mostly breaks screen readers and
+  does not stop scrapers, which is a bad trade on a site selling credibility.
+-->
+<footer class="on-ink bg-ink py-20 text-text-inverse md:py-24">
+  <div class="container-page">
+    <div class="grid gap-10 border-b border-line-ink pb-14 lg:grid-cols-12 lg:gap-10">
+      <div class="lg:col-span-7">
+        <h2 class="display text-display max-w-[26ch]">{footer.ctaHeading}</h2>
+        <div class="mt-8">
+          <Cta kind="book" position="footer" variant="inverse">Book a 20-min call</Cta>
+        </div>
+      </div>
+
+      <div class="grid content-start gap-6 lg:col-span-5">
+        <div>
+          <p class="label text-text-dim">Direct</p>
+          <p class="mt-2 flex flex-wrap items-center gap-3">
+            <a href={mailto} class="text-body">{identity.email}</a>
+            <button
+              type="button"
+              data-copy={identity.email}
+              class="label min-h-8 rounded-full border border-line-ink px-3 py-1.5 text-text-dim transition-colors hover:border-text-inverse hover:text-text-inverse"
+              aria-label="Copy email address"
+            >
+              Copy
+            </button>
+            <span data-copy-status role="status" aria-live="polite" class="text-meta text-text-dim"
+            ></span>
+          </p>
+        </div>
+
+        <p class="text-meta text-text-dim">{footer.promise}</p>
+        <p class="label text-text-dim">
+          {availability.concurrentEngagements} slots · earliest start {availability.nextStartLabel}
+        </p>
+      </div>
+    </div>
+
+    <div class="grid gap-10 py-12 lg:grid-cols-12">
+      <nav class="lg:col-span-4" aria-label="Footer">
+        <p class="label text-text-dim">Site</p>
+        <ul class="mt-4 grid gap-2.5">
+          <li><a href="#cases" class="text-body">Work</a></li>
+          <li><a href="#engagements" class="text-body">Pricing</a></li>
+          <li><a href="#faq" class="text-body">FAQ</a></li>
+          <li><a href="/about/" class="text-body">About</a></li>
+          <li><a href="/privacy/" class="text-body">Privacy</a></li>
+        </ul>
+      </nav>
+
+      <div class="lg:col-span-4">
+        <p class="label text-text-dim">Elsewhere</p>
+        <ul class="mt-4 grid gap-2.5">
+          {
+            contact.socials.map((s) => (
+              <li>
+                <a
+                  href={s.url}
+                  rel="noopener"
+                  class="text-body flex min-h-12 items-center"
+                >
+                  {s.label} →
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div class="lg:col-span-4">
+        <p class="label text-text-dim">This page</p>
+        <Diff minus={footer.perf.minus} plus={footer.perf.plus} class="mt-4" />
+        {
+          !unresolved(footer.perf.proofUrl) ? (
+            <a href={footer.perf.proofUrl} rel="noopener" class="label mt-3 inline-block text-text-dim">
+              Verify on PageSpeed →
+            </a>
+          ) : (
+            <p class="label mt-3 text-text-dim">Add a dated PageSpeed link — see CONTENT.md</p>
+          )
+        }
+        <p class="text-meta mt-4 text-text-dim">
+          No cookies, no consent banner, no third-party scripts until you ask for the calendar.
+        </p>
+      </div>
+    </div>
+
+    <div
+      class="flex flex-wrap items-center justify-between gap-4 border-t border-line-ink pt-8 text-text-dim"
+    >
+      <p class="label">{footer.credit}</p>
+      <p class="label">WCAG 2.2 AA · keyboard-complete · honours reduced-motion</p>
+    </div>
+  </div>
+</footer>

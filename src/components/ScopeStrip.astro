@@ -1,0 +1,63 @@
+---
+import { scope, rateStrip } from '../data/site';
+
+/**
+ * Arithmetic instead of adjectives, answering "have you done this at my size?"
+ * before any case study is read — and deliberately containing no tenure number.
+ * A timeline makes the buyer compute his age; a scope strip makes them compute
+ * his reach.
+ *
+ * PROOF FLOOR: only cells with real values render, and the build fails below
+ * four. Anonymous or half-filled proof at this density is worse than less proof
+ * — it reads as a template someone filled in optimistically.
+ *
+ * Exactly one figure is allowed the largest type size; six equal numerals would
+ * be six focal points, which is none.
+ */
+const unresolved = (v: string) => /<[^>]+>/.test(v);
+const filled = scope.filter((cell) => !unresolved(cell.value));
+
+if (import.meta.env.PROD && filled.length > 0 && filled.length < 4) {
+  throw new Error(
+    `ScopeStrip: ${filled.length} real figures. Ship at least 4 or none — a strip with two ` +
+      `numbers and four placeholders reads as an unfinished template. See src/data/site.ts.`,
+  );
+}
+
+// Before any real figures exist the strip still renders, so the layout can be
+// reviewed; check-placeholders keeps it from reaching production.
+const cells = filled.length > 0 ? filled : scope;
+---
+
+<section
+  id="scope"
+  aria-labelledby="scope-heading"
+  class="border-y border-line bg-paper-sunk py-14 md:py-20"
+>
+  <div class="container-page">
+    <h2 id="scope-heading" class="sr-only">Scope</h2>
+
+    <ul class="grid grid-cols-2 gap-x-8 gap-y-10 md:grid-cols-3 lg:grid-cols-6 lg:gap-x-6">
+      {
+        cells.map((cell) => (
+          <li class="lg:border-l lg:border-line lg:pl-4 lg:first:border-l-0 lg:first:pl-0">
+            <p
+              class:list={[
+                'metric',
+                cell.emphasis === true ? 'text-metric' : 'text-title',
+              ]}
+              data-count-up={cell.emphasis === true ? 'true' : undefined}
+            >
+              {cell.value}
+            </p>
+            <p class="label mt-2 text-text-muted">{cell.label}</p>
+          </li>
+        ))
+      }
+    </ul>
+
+    <!-- Mobile gets the rate strip here, since the hero's right column is
+         withheld below the large breakpoint. -->
+    <p class="label mt-12 border-t border-line pt-5 text-text-muted lg:hidden">{rateStrip}</p>
+  </div>
+</section>

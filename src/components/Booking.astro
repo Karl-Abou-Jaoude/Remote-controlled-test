@@ -1,0 +1,105 @@
+---
+import { booking, contact, identity, testimonials } from '../data/site';
+import SectionHead from './SectionHead.astro';
+import TeardownForm from './TeardownForm.astro';
+import Testimonial from './Testimonial.astro';
+
+const technical = testimonials.find((t) => t.id === 'technical');
+const mailtoBody = ['Store URL:', 'Timeline:', 'Budget range:', 'What we need:'].join('\n');
+const mailto = `mailto:${identity.email}?subject=${encodeURIComponent('Shopify project enquiry')}&body=${encodeURIComponent(mailtoBody)}`;
+---
+
+<!--
+  INVERSION BAND 2 of 2, and the page's conversion moment.
+
+  The calendar is behind a facade. An eagerly embedded scheduler is one of the
+  heaviest third parties on the web — main-thread cost measured in seconds — and
+  since total blocking time is a large share of the Lighthouse score, embedding it
+  on load makes a perfect score arithmetically impossible. The facade is a real
+  anchor, so it works with JavaScript off.
+
+  #cal-host reserves its space with an explicit min-height BEFORE the iframe is
+  injected, because injecting an iframe into unreserved space is a guaranteed
+  layout-shift event.
+
+  Below 640px the facade stays a plain link to the hosted booking page: month view
+  is cramped under ~420px and inline embeds reliably auto-scroll the page on load.
+
+  The agenda is published because the thing that stops someone booking with a
+  stranger is not knowing what will happen in the call.
+-->
+<section
+  id="book"
+  aria-labelledby="book-heading"
+  class="band-ink on-ink relative isolate bg-ink py-20 text-text-inverse md:py-28"
+>
+  <span aria-hidden="true" class="absolute inset-x-0 top-0 z-10 h-[3px] bg-accent-hot"></span>
+
+  <div class="container-page relative z-10">
+    <SectionHead index="09" id="book-heading" tone="ink">{booking.heading}</SectionHead>
+
+    <div class="mt-14 grid gap-14 lg:grid-cols-12 lg:gap-10">
+      <div class="lg:col-span-7">
+        <a
+          href={contact.calUrl}
+          data-cal-facade
+          data-cal-link={contact.calLink}
+          data-position="booking-block"
+          class="btn btn--inverse w-full sm:w-auto"
+        >
+          {booking.calFacadeLabel}
+        </a>
+        <p class="label mt-3 text-text-dim">{booking.calMeta}</p>
+
+        <ul class="mt-8 grid gap-3 border-t border-line-ink pt-7">
+          {
+            booking.calAgenda.map((line) => (
+              <li class="text-body flex gap-3 text-text-dim">
+                <span aria-hidden="true" class="text-accent-hot">
+                  →
+                </span>
+                <span>{line}</span>
+              </li>
+            ))
+          }
+        </ul>
+
+        <p class="text-meta mt-6 text-text-dim">You’ll be talking to me. There is no account manager.</p>
+
+        <!-- Space reserved before the embed exists, so the swap costs 0 CLS. -->
+        <div
+          id="cal-host"
+          data-cal-host
+          hidden
+          class="mt-8 min-h-[34rem] overflow-hidden rounded-xl border border-line-ink bg-ink-raised"
+        >
+        </div>
+
+        <div class="mt-10 border-t border-line-ink pt-7">
+          <p class="label text-text-dim">Prefer email?</p>
+          <p class="mt-2 flex flex-wrap items-center gap-3">
+            <a href={mailto} class="text-body text-text-inverse">{identity.email}</a>
+            <button
+              type="button"
+              data-copy={identity.email}
+              class="label min-h-8 rounded-full border border-line-ink px-3 py-1.5 text-text-dim transition-colors hover:border-text-inverse hover:text-text-inverse"
+              aria-label="Copy email address"
+            >
+              Copy
+            </button>
+            <span data-copy-status role="status" aria-live="polite" class="text-meta text-text-dim"
+            ></span>
+          </p>
+          <p class="text-meta mt-2 text-text-dim">
+            The link arrives pre-filled with the four things I need to answer properly.
+          </p>
+        </div>
+      </div>
+
+      <div class="grid gap-12 lg:col-span-5">
+        <TeardownForm />
+        {technical && <Testimonial {...technical} tone="ink" />}
+      </div>
+    </div>
+  </div>
+</section>

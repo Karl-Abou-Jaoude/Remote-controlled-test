@@ -1,0 +1,34 @@
+---
+import Base from '../layouts/Base.astro';
+import Cta from '../components/Cta.astro';
+import { identity } from '../data/site';
+---
+
+<!--
+  The no-JS form redirect target, and the momentum page. What belongs here is
+  certainty: what happens next, when, and a way to skip the wait — which is also
+  the cheapest reduction in no-shows available.
+-->
+<Base title="Got it — Karl Abou Jaoude" path="/thanks/">
+  <main id="main" class="grid min-h-screen place-items-center py-24">
+    <div class="container-page max-w-[--container-text]">
+      <h1 class="display text-display">Got it — it’s on my phone.</h1>
+      <p class="text-lead mt-6 text-text-muted">
+        You’ll hear from me within one business day, usually sooner. If it’s urgent, take a slot
+        directly — that’s faster than waiting on my reply.
+      </p>
+
+      <div class="mt-10">
+        <Cta kind="book" position="thanks" variant="primary" note="20 min · Google Meet">
+          Pick a slot
+        </Cta>
+      </div>
+
+      <p class="text-meta mt-10 border-t border-line pt-8 text-text-muted">
+        Nothing arrived? Email me directly at <a href={`mailto:${identity.email}`}>{identity.email}</a>
+        — occasionally a form service eats a submission, and I would rather hear from you twice than
+        not at all.
+      </p>
+    </div>
+  </main>
+</Base>

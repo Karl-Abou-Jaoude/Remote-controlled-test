@@ -1,0 +1,27 @@
+---
+/**
+ * Section number + heading, in one place so every section aligns identically.
+ *
+ * The optical overhang that flush-left display heads get is deliberately NOT
+ * applied here: this heading is not flush-left — it sits after the mono number —
+ * so an overhang would make it collide with the number rather than correct for it.
+ */
+interface Props {
+  index: string;
+  id: string;
+  tone?: 'paper' | 'ink';
+  class?: string;
+}
+
+const { index, id, tone = 'paper', class: className = '' } = Astro.props;
+---
+
+<div class:list={['flex items-baseline gap-4 md:gap-5', className]}>
+  <span
+    class:list={['label shrink-0', tone === 'ink' ? 'text-accent-hot' : 'text-accent']}
+    aria-hidden="true">{index}</span
+  >
+  <h2 id={id} class="display text-display ml-0 max-w-[30ch]">
+    <slot />
+  </h2>
+</div>

@@ -6,7 +6,8 @@ import tailwindcss from '@tailwindcss/vite';
 export default defineConfig({
   site: 'https://karlaboujaoude.com',
   trailingSlash: 'always',
-  integrations: [sitemap()],
+  // The OG card is a render target, not a page — keep it out of the sitemap.
+  integrations: [sitemap({ filter: (page) => !page.includes('/og/') })],
 
   // One-pager: inline every stylesheet so there are zero render-blocking requests.
   build: { inlineStylesheets: 'always' },
@@ -32,9 +33,17 @@ export default defineConfig({
         ],
       },
     },
+    /*
+      Display face is Fraunces with the WONK axis on. Instrument Serif is the
+      most-deployed free display serif of the last two years and reads as a
+      template at hero size; Fraunces' wonk axis gives genuinely unusual
+      ear/leg forms that stay recognisable at 9rem. The `wonk` subset file
+      carries wght 100-900 + WONK 0-1 (verified with fontTools), and its
+      default weight is 900, so weight is always set explicitly in CSS.
+    */
     {
-      name: 'Instrument Serif',
-      cssVariable: '--font-instrument',
+      name: 'Fraunces',
+      cssVariable: '--font-fraunces',
       provider: fontProviders.local(),
       display: 'swap',
       optimizedFallbacks: true,
@@ -42,9 +51,10 @@ export default defineConfig({
       options: {
         variants: [
           {
-            weight: 400,
+            weight: '100 900',
             style: 'normal',
-            src: ['@fontsource/instrument-serif/files/instrument-serif-latin-400-normal.woff2'],
+            variationSettings: "'WONK' 1",
+            src: ['@fontsource-variable/fraunces/files/fraunces-latin-wonk-normal.woff2'],
           },
         ],
       },

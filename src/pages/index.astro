@@ -1,12 +1,61 @@
 ---
 import Base from '../layouts/Base.astro';
+import Rail from '../components/Rail.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import ScopeStrip from '../components/ScopeStrip.astro';
+import CreditsTable from '../components/CreditsTable.astro';
+import Triage from '../components/Triage.astro';
+import MidProof from '../components/MidProof.astro';
+import CaseCards from '../components/CaseCards.astro';
+import Objections from '../components/Objections.astro';
+import Engagements from '../components/Engagements.astro';
+import Booking from '../components/Booking.astro';
+import Faq from '../components/Faq.astro';
+import Footer from '../components/Footer.astro';
+import StickyCta from '../components/StickyCta.astro';
+import { faq, availability } from '../data/site';
 ---
-<Base>
-  <main id="main" class="container-page py-24">
-    <p class="label text-accent">01 / scaffold</p>
-    <h1 class="font-display text-hero mt-6">Typography and tokens wired.</h1>
-    <p class="text-lead text-text-muted mt-6 max-w-2xl">Body copy in Geist at a fluid lead size.</p>
-    <p class="font-mono text-meta mt-4">MONO / METADATA</p>
+
+<Base path="/" faq={faq.map(({ q, a }) => ({ q, a }))}>
+  <Header />
+
+  <main id="main">
+    <Hero />
+    <ScopeStrip />
+    <CreditsTable />
+    <Triage />
+
+    <!-- Scroll-depth sentinels rather than a scroll listener: a scroll handler is
+         the main INP hazard on a page this long. -->
+    <span data-depth="25" aria-hidden="true" class="block h-px"></span>
+
+    <MidProof />
+    <CaseCards />
+
+    <span data-depth="50" aria-hidden="true" class="block h-px"></span>
+
+    <Objections />
+    <Engagements />
+
+    <span data-depth="75" aria-hidden="true" class="block h-px"></span>
+
+    <Booking />
+    <Faq />
+
+    <span data-depth="90" aria-hidden="true" class="block h-px"></span>
   </main>
-  <script>import '../scripts/enhance';</script>
+
+  <Footer />
+
+  <!-- Fixed, so DOM order is free — and it belongs late. Placed before the header
+       it took the first ten tab stops, pushing the primary CTA behind a list of
+       section numbers for keyboard users. -->
+  <Rail />
+
+  <StickyCta label="Book a 20-min call" note={`Earliest start ${availability.nextStartLabel}`} />
+
+  <script>
+    import '../scripts/enhance';
+  </script>
 </Base>

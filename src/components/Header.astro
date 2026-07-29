@@ -1,0 +1,61 @@
+---
+import { identity } from '../data/site';
+import Cta from './Cta.astro';
+
+/**
+ * Desktop only. Mobile gets the bottom sticky bar instead — a top bar there
+ * costs fold height the hero cannot spare, and thumb reach is at the bottom.
+ *
+ * Two links, not six. Hidden navigation measurably hurts discoverability, but
+ * every extra link on a single-conversion-path page is a leak. There is
+ * deliberately no "Hire me", "Available for work" or "CV" — employment-seeking
+ * language above the fold reframes him as a candidate and collapses the pricing
+ * frame.
+ *
+ * The scroll-reactive background uses a scroll-driven animation, so it costs no
+ * JavaScript and no scroll listener.
+ */
+---
+
+<header
+  data-site-header
+  class="fixed inset-x-0 top-0 z-40 hidden h-16 items-center border-b border-transparent md:flex"
+>
+  <div class="container-page flex items-center justify-between gap-6">
+    <a href="/" class="label no-underline">{identity.name}<span class="text-text-muted"> · Shopify Plus engineer</span></a>
+
+    <nav class="flex items-center gap-7" aria-label="Primary">
+      <a href="#cases" class="label no-underline">Work</a>
+      <a href="#engagements" class="label no-underline">Pricing</a>
+      <Cta kind="book" position="header" variant="secondary" size="compact">Book a 20-min call</Cta>
+    </nav>
+  </div>
+</header>
+
+<style>
+  @supports (animation-timeline: scroll()) {
+    [data-site-header] {
+      background: transparent;
+      animation: header-settle linear both;
+      animation-timeline: scroll();
+      animation-range: 0 80px;
+    }
+
+    @keyframes header-settle {
+      to {
+        background: color-mix(in oklab, var(--color-paper) 92%, transparent);
+        border-bottom-color: var(--color-line);
+        backdrop-filter: saturate(1.2);
+      }
+    }
+  }
+
+  /* Without scroll-driven animation support, commit to the settled state so the
+     bar is always legible over content. */
+  @supports not (animation-timeline: scroll()) {
+    [data-site-header] {
+      background: color-mix(in oklab, var(--color-paper) 92%, transparent);
+      border-bottom-color: var(--color-line);
+    }
+  }
+</style>

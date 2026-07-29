@@ -1,0 +1,111 @@
+---
+import { contact, identity, booking } from '../data/site';
+
+/**
+ * The low-friction path, deliberately co-equal on mobile rather than a demoted
+ * inline link: an interest-based secondary ask produces materially more
+ * qualified opportunities than a meeting request alone. And it carries a
+ * delivery spec — format, turnaround, and what is in it — because an unbacked
+ * "I'll send you some fixes" reads as a euphemism for a sales call.
+ *
+ * Three fields, one of them optional and LABELLED optional rather than
+ * asterisking the required ones. Field count is the single biggest lever on
+ * completion, and there is no name field because the reply goes to an email
+ * address, not a person's first name.
+ *
+ * Web3Forms: no third-party JavaScript, no cookies, and a real action + redirect
+ * so the whole thing works with JavaScript disabled.
+ */
+---
+
+<div>
+  <h3 class="display text-title text-text-inverse">{booking.teardownHeading}</h3>
+  <p class="text-body mt-3 max-w-[46ch] text-text-dim">{booking.teardownProse}</p>
+
+  <form
+    data-inquiry
+    data-email={identity.email}
+    action="https://api.web3forms.com/submit"
+    method="POST"
+    novalidate
+    class="mt-7 grid gap-5"
+  >
+    <input type="hidden" name="access_key" value={contact.web3formsKey} />
+    <input type="hidden" name="subject" value="Store teardown request" />
+    <input type="hidden" name="from_name" value={identity.origin} />
+    <input type="hidden" name="redirect" value={`${identity.origin}/thanks/`} />
+
+    <!-- Honeypot: Web3Forms discards the submission when this is filled. -->
+    <input
+      type="checkbox"
+      name="botcheck"
+      tabindex="-1"
+      aria-hidden="true"
+      autocomplete="off"
+      class="absolute -left-[9999px]"
+    />
+
+    <div class="grid gap-2">
+      <label for="store" class="label text-text-dim">Store URL</label>
+      <input
+        id="store"
+        name="store"
+        type="url"
+        inputmode="url"
+        autocomplete="url"
+        placeholder="https://"
+        required
+        class="text-body min-h-12 rounded-lg border border-line-ink bg-ink-raised px-4 py-3 text-text-inverse placeholder:text-text-dim"
+      />
+    </div>
+
+    <div class="grid gap-2">
+      <label for="email" class="label text-text-dim">Work email</label>
+      <input
+        id="email"
+        name="email"
+        type="email"
+        inputmode="email"
+        autocomplete="email"
+        required
+        aria-describedby="email-hint"
+        class="text-body min-h-12 rounded-lg border border-line-ink bg-ink-raised px-4 py-3 text-text-inverse"
+      />
+      <p id="email-hint" class="text-meta text-text-dim">
+        Goes straight to my phone. I reply within one business day.
+      </p>
+    </div>
+
+    <div class="grid gap-2">
+      <label for="message" class="label text-text-dim">
+        What are you building? <span class="normal-case [font-variant-caps:normal]">(optional)</span>
+      </label>
+      <textarea
+        id="message"
+        name="message"
+        rows="3"
+        placeholder="Plus replatform, <SKU_COUNT> SKUs, <N> markets, live by <QUARTER>"
+        class="text-body rounded-lg border border-line-ink bg-ink-raised px-4 py-3 text-text-inverse placeholder:text-text-dim"
+      ></textarea>
+    </div>
+
+    <button type="submit" class="btn btn--inverse w-full sm:w-auto sm:justify-self-start">
+      {booking.teardownCta}
+    </button>
+
+    <p data-form-status role="status" aria-live="polite" class="text-meta text-text-dim"></p>
+  </form>
+
+  <div
+    data-form-success
+    hidden
+    tabindex="-1"
+    class="mt-7 rounded-xl border border-line-ink bg-ink-raised p-6"
+  >
+    <p class="display text-title text-text-inverse">Got it — it’s on my phone.</p>
+    <p class="text-body mt-3 text-text-dim">
+      You’ll hear from me within one business day, usually sooner. Want to skip the wait? Open the
+      calendar and take a slot.
+    </p>
+  </div>
+</div>

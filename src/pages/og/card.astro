@@ -1,0 +1,47 @@
+---
+import { Font } from 'astro:assets';
+import '../../styles/global.css';
+import { identity } from '../../data/site';
+
+/**
+ * The OG card, rendered as a real page at exactly 1200x630 and screenshotted by
+ * `npm run og`. Building it from the site's own tokens and typeface is why the
+ * share card looks like the site instead of like a separate asset — and it means
+ * changing the palette changes the card.
+ *
+ * This route is excluded from the sitemap; it exists only as a render target.
+ */
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <Font cssVariable="--font-fraunces" preload />
+    <Font cssVariable="--font-geist" preload />
+    <Font cssVariable="--font-geist-mono" />
+    <title>OG card</title>
+  </head>
+  <body>
+    <div
+      id="card"
+      class="flex h-[630px] w-[1200px] flex-col justify-between bg-paper p-[64px]"
+    >
+      <div class="flex items-baseline justify-between">
+        <p class="label text-text-muted">{identity.name}</p>
+        <p class="label text-accent">Shopify Plus · Hydrogen · Checkout</p>
+      </div>
+
+      <p class="display max-w-[20ch] text-[86px] leading-[0.96] tracking-[-0.03em]">
+        I fix the Shopify Plus problems that cost you revenue.
+      </p>
+
+      <div class="flex items-end justify-between">
+        <div class="diff">
+          <p class="diff__minus text-[20px]"><span>−</span><span>Slow, app-bloated, mid-migration</span></p>
+          <p class="diff__plus text-[20px]"><span>+</span><span>Fast, owned, shipped</span></p>
+        </div>
+        <p class="label text-text-muted">{identity.origin.replace('https://', '')}</p>
+      </div>
+    </div>
+  </body>
+</html>

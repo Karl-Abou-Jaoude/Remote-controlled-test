@@ -1,0 +1,43 @@
+---
+import { faq } from '../data/site';
+import SectionHead from './SectionHead.astro';
+
+/**
+ * Native <details>/<summary>: zero JavaScript and correct disclosure semantics
+ * for free. First item open by default.
+ *
+ * This is the only place tenure is discussed. Answering "have you done this at my
+ * size?" earlier in the page would plant the doubt in readers who never had it;
+ * here the buyer has opted in by asking.
+ *
+ * FAQPage JSON-LD ships from the layout as grounding for answer engines, not as a
+ * rich-result play — those were restricted to authoritative gov/health sites.
+ */
+---
+
+<section id="faq" aria-labelledby="faq-heading" class="bg-paper-sunk py-20 md:py-28">
+  <div class="container-page">
+    <SectionHead index="10" id="faq-heading">The questions that decide it</SectionHead>
+
+    <div class="mt-12 border-t border-line">
+      {
+        faq.map((item, i) => (
+          <details name="faq" open={i === 0} class="group border-b border-line">
+            <summary
+              class="flex min-h-12 cursor-pointer items-center justify-between gap-6 py-5 [&::-webkit-details-marker]:hidden [&::marker]:content-none"
+            >
+              <span class="text-lead display pr-4">{item.q}</span>
+              <span
+                aria-hidden="true"
+                class="label shrink-0 text-accent transition-transform duration-[var(--duration-base)] group-open:rotate-45"
+              >
+                +
+              </span>
+            </summary>
+            <p class="text-body max-w-[68ch] pb-7 text-text-muted">{item.a}</p>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>

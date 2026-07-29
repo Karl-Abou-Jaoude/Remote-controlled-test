@@ -1,0 +1,95 @@
+---
+import { cases } from '../data/work';
+import SectionHead from './SectionHead.astro';
+import Diff from './Diff.astro';
+
+/**
+ * Three cards, deliberately asymmetric — the page's one intentional grid break,
+ * so the eye registers a composition rather than another equal row.
+ *
+ * Every card carries a live production URL. Two independent Shopify buyer guides
+ * say near-verbatim: ask for live URLs of stores they built. A screenshot is not
+ * proof, and everything the hover state reveals is equally revealed by
+ * :focus-visible, so the keyboard path is not second class.
+ */
+const unresolved = (v: string) => /<[^>]+>/.test(v);
+---
+
+<section id="cases" aria-labelledby="cases-heading" class="py-20 md:py-28">
+  <div class="container-page">
+    <SectionHead index="06" id="cases-heading">Three builds, in detail</SectionHead>
+
+    <p class="text-lead mt-6 max-w-[54ch] text-text-muted">
+      Each one names the constraint I worked inside, the decisions I made and why, and where the
+      numbers came from. The stores are live — open them.
+    </p>
+
+    <div class="mt-14 grid gap-6 lg:grid-cols-12">
+      {
+        cases.map((c, i) => (
+          <article
+            class:list={[
+              'group flex flex-col gap-6 rounded-xl border border-line bg-paper-raised p-7 transition-transform duration-[var(--duration-base)] ease-[var(--ease-overshoot)] hover:-translate-y-1 focus-within:-translate-y-1 md:p-8',
+              i === 0 ? 'lg:col-span-12' : 'lg:col-span-6',
+            ]}
+          >
+            <div class:list={[i === 0 && 'lg:grid lg:grid-cols-12 lg:gap-10']}>
+              <div class={i === 0 ? 'lg:col-span-7' : ''}>
+                <h3 class:list={['display', i === 0 ? 'text-title' : 'text-[1.375rem] leading-tight']}>
+                  <a href={`/work/${c.slug}/`} class="no-underline hover:underline">
+                    {c.headline}
+                  </a>
+                </h3>
+
+                <dl class="mt-6 grid grid-cols-2 gap-x-6 gap-y-4 border-t border-line pt-5">
+                  <div>
+                    <dt class="label text-text-muted">Brand</dt>
+                    <dd class="text-meta mt-1">
+                      {c.brand} · {c.vertical}
+                    </dd>
+                  </div>
+                  <div>
+                    <dt class="label text-text-muted">Markets & GMV</dt>
+                    <dd class="text-meta mt-1 [font-variant-numeric:tabular-nums]">
+                      {c.region} · {c.gmvBand}
+                    </dd>
+                  </div>
+                  <div>
+                    <dt class="label text-text-muted">Duration</dt>
+                    <dd class="text-meta mt-1">{c.duration}</dd>
+                  </div>
+                  <div>
+                    <dt class="label text-text-muted">What’s mine on this page</dt>
+                    <dd class="text-meta mt-1">{c.role}</dd>
+                  </div>
+                </dl>
+              </div>
+
+              <div class:list={[i === 0 ? 'lg:col-span-5 lg:pt-2' : 'mt-6']}>
+                <Diff minus={c.diff.minus} plus={c.diff.plus} />
+              </div>
+            </div>
+
+            <div class="mt-auto flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-line pt-5">
+              <a href={`/work/${c.slug}/`} class="label text-accent no-underline">
+                Read the case →
+              </a>
+              {!unresolved(c.liveUrl) ? (
+                <a
+                  href={c.liveUrl}
+                  rel="noopener"
+                  class="label flex min-h-12 items-center text-text-muted"
+                  data-position={`case-live-${c.slug}`}
+                >
+                  Open the live store →
+                </a>
+              ) : (
+                <span class="label text-text-muted">Live store URL pending — see CONTENT.md</span>
+              )}
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>

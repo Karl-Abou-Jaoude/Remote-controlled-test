@@ -1,0 +1,92 @@
+---
+import { engagements, agencyLine, availability } from '../data/site';
+import SectionHead from './SectionHead.astro';
+
+/**
+ * Qualify hard: trade volume for lead quality, and set the price anchor before
+ * scope is ever discussed. Rate transparency correlates with materially shorter
+ * sales cycles, and most buyers research independently before making contact.
+ *
+ * Bands with BOTH ends, never floors — a floor is the number every buyer
+ * negotiates toward, and "from $X" tells an enterprise buyer nothing about
+ * whether this is a $3k or an $18k operation.
+ *
+ * Each card carries a real reversal. "You keep the findings document" is not a
+ * reversal — that is the thing the buyer paid for. The diagnostic's guarantee is
+ * falsifiable, and the retainer's first month is cancellable, because a
+ * three-month minimum protects the seller and reads as a trap.
+ *
+ * Nothing here animates. Pricing and service descriptions are exactly the
+ * content that must never be scroll-revealed.
+ */
+const ordered = [...engagements].sort((a, b) => Number(b.flagship) - Number(a.flagship));
+---
+
+<section id="engagements" aria-labelledby="engagements-heading" class="py-20 md:py-28">
+  <div class="container-page">
+    <SectionHead index="08" id="engagements-heading">How this is bought</SectionHead>
+
+    <p class="text-lead mt-6 max-w-[52ch] text-text-muted">
+      Three ways in. If your budget is under the project band, I will say so on the call and point
+      you somewhere better rather than stretch a scope to fit it.
+    </p>
+
+    <div class="mt-14 grid gap-6 lg:grid-cols-12">
+      {
+        ordered.map((offer) => (
+          <article
+            class:list={[
+              'flex flex-col rounded-xl border p-7 md:p-8',
+              offer.flagship
+                ? 'border-text bg-paper-raised lg:col-span-12'
+                : 'border-line bg-paper lg:col-span-6',
+            ]}
+          >
+            <div class="flex flex-wrap items-baseline justify-between gap-3">
+              <h3 class="display text-title">{offer.name}</h3>
+              {offer.flagship && <span class="label text-accent">Most clients start here</span>}
+            </div>
+
+            <p class="metric text-title mt-4 text-accent [overflow-wrap:anywhere]">
+              {offer.price}
+            </p>
+            <p class="label mt-2 text-text-muted">{offer.meta}</p>
+
+            <div class:list={[offer.flagship && 'lg:grid lg:grid-cols-2 lg:gap-10']}>
+              <p class="text-body mt-5 max-w-[46ch] text-text-muted">{offer.prose}</p>
+
+              <ul class="mt-6 grid gap-2.5 lg:content-start">
+                {offer.includes.map((line) => (
+                  <li class="text-body flex gap-3">
+                    <span aria-hidden="true" class="text-accent">
+                      +
+                    </span>
+                    <span>{line}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <p class="text-meta mt-auto flex items-start gap-2 border-t border-line pt-6 text-text-muted">
+              <span aria-hidden="true" class="text-accent">
+                ✓
+              </span>
+              {offer.reversal}
+            </p>
+          </article>
+        ))
+      }
+    </div>
+
+    <p class="text-body mt-10 max-w-[64ch] border-t border-line pt-8 text-text-muted">
+      {agencyLine}
+    </p>
+
+    <p class="label mt-6 flex flex-wrap items-center gap-x-3 gap-y-1 text-text-muted">
+      <span aria-hidden="true" class="inline-block h-1.5 w-1.5 rounded-full bg-accent"></span>
+      <span>{availability.concurrentEngagements} concurrent engagements</span>
+      <span aria-hidden="true">·</span>
+      <span>earliest start {availability.nextStartLabel}</span>
+    </p>
+  </div>
+</section>

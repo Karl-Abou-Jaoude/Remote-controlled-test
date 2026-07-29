@@ -1,0 +1,54 @@
+---
+import Base from '../layouts/Base.astro';
+import { identity } from '../data/site';
+---
+
+<!--
+  Short, specific, and honest. The form collects data, so GDPR Art. 13 basics
+  belong somewhere linkable — and on a site that advertises "no cookies", the
+  privacy page is where that claim gets substantiated rather than asserted.
+-->
+<Base title="Privacy — Karl Abou Jaoude" path="/privacy/">
+  <main id="main" class="py-28">
+    <div class="container-page max-w-[--container-text]">
+      <h1 class="display text-display">Privacy</h1>
+
+      <div class="mt-10 grid gap-8">
+        <section>
+          <h2 class="label text-accent">What this site stores on your device</h2>
+          <p class="text-body mt-3 text-text-muted">
+            Nothing. No cookies, no local storage, no fingerprinting, and no consent banner because
+            there is nothing to consent to. If you open the booking calendar, that embed is loaded
+            from Cal.com at that moment and may set its own storage — which is why it does not load
+            until you ask for it.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="label text-accent">What happens when you send the form</h2>
+          <p class="text-body mt-3 text-text-muted">
+            The form posts to Web3Forms, which relays it to my inbox. I receive your email address,
+            your store URL, and whatever you typed. I use it to reply to you and for nothing else: no
+            newsletter, no CRM sequence, no sharing with anyone.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="label text-accent">How long I keep it</h2>
+          <p class="text-body mt-3 text-text-muted">
+            Enquiries stay in my mail archive. Ask me to delete yours and I will, and I will confirm
+            when it is done. Email <a href={`mailto:${identity.email}`}>{identity.email}</a>.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="label text-accent">Analytics</h2>
+          <p class="text-body mt-3 text-text-muted">
+            If analytics is enabled it is a cookieless, aggregate product — page views, scroll depth
+            and which button was clicked. It cannot identify you and there is no cross-site profile.
+          </p>
+        </section>
+      </div>
+    </div>
+  </main>
+</Base>

@@ -1,0 +1,24 @@
+---
+import { sections } from '../data/site';
+
+/**
+ * The structural spine: a fixed mono rail carrying section numbers.
+ *
+ * One gesture that makes a long page feel authored and navigable rather than a
+ * stack of bands, and it doubles as real navigation. It only renders above
+ * 1360px, where the arithmetic leaves genuine room beside the 76rem container,
+ * so it can never overlap content. Below that the numbers appear inline above
+ * each section heading instead.
+ */
+---
+
+<nav class="rail label no-print" aria-label="Sections">
+  {
+    sections.map(({ id, index, label }) => (
+      <a href={`#${id}`} data-rail-link={id} class="flex items-baseline gap-2">
+        <span>{index}</span>
+        <span class="sr-only">{label}</span>
+      </a>
+    ))
+  }
+</nav>

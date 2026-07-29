@@ -1,0 +1,57 @@
+---
+/**
+ * No testimonial ships without a resolvable public profile URL — the link is the
+ * trust mechanism and the quote is only the design. An unlinkable quote at this
+ * density actively signals that nothing on the page is checkable.
+ *
+ * The attribution discloses the agency relationship. Implying he was the brand's
+ * direct vendor would be the misrepresentation, and a material connection a
+ * reader would want to know about has to be disclosed.
+ */
+interface Props {
+  quote: string;
+  name: string;
+  title: string;
+  company: string;
+  profileUrl: string;
+  relationship: string;
+  tone?: 'paper' | 'ink';
+}
+
+const { quote, name, title, company, profileUrl, relationship, tone = 'paper' } = Astro.props;
+const unresolved = (v: string) => /<[^>]+>/.test(v);
+const linkable = !unresolved(profileUrl);
+---
+
+<figure class="max-w-[34ch]">
+  <blockquote class:list={['display text-title', tone === 'ink' && 'text-text-inverse']}>
+    <p>“{quote}”</p>
+  </blockquote>
+
+  <figcaption
+    class:list={['label mt-6 flex flex-col gap-1', tone === 'ink' ? 'text-text-dim' : 'text-text-muted']}
+  >
+    <span class={tone === 'ink' ? 'text-text-inverse' : 'text-text'}>
+      {
+        linkable ? (
+          <a href={profileUrl} rel="noopener">
+            {name}
+          </a>
+        ) : (
+          name
+        )
+      }
+    </span>
+    <span>{title}, {company}</span>
+    <span class="mt-1 max-w-[38ch] normal-case [font-variant-caps:normal] [letter-spacing:normal]">
+      {relationship}
+    </span>
+    {
+      !linkable && (
+        <span class="mt-1 normal-case text-accent [font-variant-caps:normal]">
+          Needs a public profile link before launch — see CONTENT.md.
+        </span>
+      )
+    }
+  </figcaption>
+</figure>

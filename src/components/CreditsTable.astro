@@ -1,0 +1,80 @@
+---
+import { credits, creditsHeading, creditsFootnote } from '../data/site';
+
+/**
+ * Replaces the logo marquee. An infinite logo scroll is the most templated
+ * component of the era: it costs a duplicated DOM track, an aria-hidden clone, a
+ * visible pause control, a reduced-motion unwrap and a separate mobile branch —
+ * all to render less information than a table. This carries more evidence per
+ * pixel, is fully static, and is keyboard- and screen-reader-clean by
+ * construction, so WCAG 2.2.2 stops applying at all.
+ *
+ * ATTRIBUTION: the heading itself states the contracting relationship, so the
+ * qualifier cannot be missed. "Clients", "Trusted by" and "Worked with" are
+ * forbidden here — each implies a direct relationship he did not hold, and it is
+ * the most checkable misrepresentation in the category. Brand names are text
+ * inside a sentence with the role stated, because text can carry the qualifier
+ * and a logo cannot.
+ *
+ * PROOF FLOOR: nothing renders below three nameable brands. Category-only
+ * clients ("a $60M UK activewear brand") belong inside a case study where the
+ * surrounding constraint narrative carries them, never in this row.
+ */
+const unresolved = (v: string) => /<[^>]+>/.test(v);
+const nameable = credits.filter((row) => !unresolved(row.brand));
+const rows = nameable.length >= 3 ? nameable : credits;
+const isPreview = nameable.length < 3;
+---
+
+<section id="credits" aria-labelledby="credits-heading" class="py-20 md:py-28">
+  <div class="container-page">
+    <h2 id="credits-heading" class="text-title display max-w-[34ch]">{creditsHeading}</h2>
+    <span aria-hidden="true" class="rule-draw mt-8 block h-px w-full bg-line"></span>
+
+    <div class="mt-2 overflow-x-auto">
+      <table class="w-full min-w-[46rem] border-collapse text-left">
+        <caption class="sr-only">
+          Brands, regions, revenue bands and what shipped on each build
+        </caption>
+        <thead>
+          <tr class="border-b border-line">
+            <th scope="col" class="label py-3 pr-6 font-medium text-text-muted">Brand</th>
+            <th scope="col" class="label py-3 pr-6 font-medium text-text-muted">Region</th>
+            <th scope="col" class="label py-3 pr-6 font-medium text-text-muted">GMV band</th>
+            <th scope="col" class="label py-3 pr-6 font-medium text-text-muted">What shipped</th>
+            <th scope="col" class="label py-3 font-medium text-text-muted">My role</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            rows.map((row) => (
+              <tr class="border-b border-line last:border-b-0">
+                <th scope="row" class="text-body py-4 pr-6 font-medium">
+                  {row.brand}
+                  {row.nda && <span class="text-meta block text-text-muted">name under NDA</span>}
+                </th>
+                <td class="text-meta py-4 pr-6 text-text-muted">{row.region}</td>
+                <td class="text-meta py-4 pr-6 text-text-muted [font-variant-numeric:tabular-nums]">
+                  {row.gmvBand}
+                </td>
+                <td class="text-meta py-4 pr-6">{row.shipped}</td>
+                <td class="text-meta py-4 text-text-muted">{row.role}</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <p class="text-meta mt-6 border-t border-line pt-5 text-text-muted">{creditsFootnote}</p>
+
+    {
+      isPreview && (
+        <p class="text-meta mt-3 text-accent">
+          Preview only — this table needs at least three nameable brands before launch. See
+          CONTENT.md.
+        </p>
+      )
+    }
+  </div>
+</section>

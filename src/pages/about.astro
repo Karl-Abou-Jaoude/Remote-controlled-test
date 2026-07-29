@@ -1,0 +1,122 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Cta from '../components/Cta.astro';
+import Diff from '../components/Diff.astro';
+import { identity } from '../data/site';
+---
+
+<!--
+  About is a separate route, deliberately — it is not top-of-funnel warmth. Hiring
+  managers report clicking it once they have decided the work is solid: at that
+  point they are no longer evaluating process, they are evaluating the person.
+  Keeping it off the homepage also keeps the conversion path single.
+
+  It leads with a decision REVERSED, because judgement is what buyers actually
+  mean by "senior", and a reversed decision is the one thing that cannot be
+  faked. Tenure is stated exactly here and never rounded: rounding two years up is
+  checkable in fifteen seconds and would discount every other number on the site.
+
+  Banned in review: "passionate developer who loves clean code", "young but
+  experienced", "self-taught", skill bars, tech-logo grids, any years-of-
+  experience number.
+-->
+<Base
+  title={`About — ${identity.name}, Shopify Plus engineer`}
+  description="How I work, what I decide, and the tenure stated plainly."
+  path="/about/"
+>
+  <Header />
+
+  <main id="main" class="pt-28 pb-20 md:pt-40">
+    <div class="container-page">
+      <div class="grid gap-14 lg:grid-cols-12 lg:gap-12">
+        <div class="lg:col-span-7">
+          <h1 class="display text-display max-w-[26ch]">
+            I run the technical relationship, not just the tickets.
+          </h1>
+
+          <div class="mt-10 grid gap-6 text-body text-text-muted">
+            <p class="text-lead text-text">
+              The most useful thing I can tell you about how I work is a decision I got wrong and
+              reversed.
+            </p>
+
+            <div class="rounded-xl border border-line bg-paper-sunk p-6">
+              <p class="label text-text-muted">The reversal</p>
+              <Diff
+                minus="<THE_DECISION_YOU_SHIPPED — the architecture you committed to>"
+                plus="<WHAT_YOU_REPLACED_IT_WITH — and what it cost to change course>"
+                class="mt-4"
+              />
+              <p class="text-body mt-5">
+                <span class="text-text">Why I changed it:</span>
+                {' '}&lt;WHY_YOU_REVERSED_IT — what evidence changed your mind, what the change cost,
+                and what you would do differently from the start&gt;
+              </p>
+            </div>
+
+            <p>
+              I was the lead Shopify engineer at {identity.agency} from {identity.agencyTenure}. In
+              that time I led builds for large international brands, usually owning the account’s
+              engineering end to end — architecture, the build itself, and the conversations that
+              decide both.
+            </p>
+
+            <p>
+              The parts of the job that are not typing: presenting architecture options to a CFO who
+              is deciding between this and a warehouse system, running a launch go/no-go, taking the
+              escalation at 11pm on Black Friday, and — the one I am most useful for — talking a
+              client out of a six-figure headless project that would not have paid for itself.
+            </p>
+
+            <p>
+              I do the engineering and the technical leadership. I do not do brand or paid media.
+              You will get better people for those, and I will integrate with them properly rather
+              than pretend the gap is not there.
+            </p>
+          </div>
+
+          <div class="mt-12">
+            <Cta kind="book" position="about" variant="primary" note="20 min · no pitch">
+              Book a 20-min call
+            </Cta>
+          </div>
+        </div>
+
+        <aside class="lg:col-span-5">
+          <!-- Small and late. An agency homepage tested as more professional and as
+               having larger clients WITHOUT the founder photo, so the portrait is
+               here rather than in the hero, and it stays small. -->
+          <div
+            class="aspect-[4/5] w-full max-w-[18rem] overflow-hidden rounded-xl border border-line bg-paper-sunk"
+          >
+            <div class="grid h-full place-items-center p-6 text-center">
+              <p class="label text-text-muted">
+                Portrait goes here — 4:5, warm treatment, max 288px wide. See CONTENT.md
+              </p>
+            </div>
+          </div>
+
+          <dl class="mt-8 grid gap-4 border-t border-line pt-6">
+            <div>
+              <dt class="label text-text-muted">Based</dt>
+              <dd class="text-body mt-1">{identity.location}</dd>
+            </div>
+            <div>
+              <dt class="label text-text-muted">Reply time</dt>
+              <dd class="text-body mt-1">One business day</dd>
+            </div>
+            <div>
+              <dt class="label text-text-muted">Not for hire as</dt>
+              <dd class="text-body mt-1">Brand, paid media, or a full-time role</dd>
+            </div>
+          </dl>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <Footer />
+</Base>

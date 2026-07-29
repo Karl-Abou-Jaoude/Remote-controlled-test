@@ -1,0 +1,80 @@
+---
+import { hero, availability, rateStrip } from '../data/site';
+import Cta from './Cta.astro';
+
+/**
+ * The whole offer above the fold, composed for 390×844 FIRST.
+ *
+ * Mobile fold arithmetic is the governing constraint: iOS Safari leaves roughly
+ * 734px of visual viewport, so the headline tail, the subhead tail and the
+ * expanded availability line are all withheld below 768px. The bottom sticky bar
+ * does not paint until the hero CTA has left the viewport, which returns its
+ * 102px to the fold instead of double-counting a CTA that is already on screen.
+ *
+ * The LCP element is the H1 text — no hero image, and no portrait: an agency
+ * homepage tested as more professional and as having larger clients WITHOUT the
+ * founder photo, which is precisely the anxiety a solo engineer must not feed.
+ * Nothing here is JS-dependent and nothing here animates into existence.
+ */
+---
+
+<section id="hero" aria-labelledby="hero-heading" class="relative pt-20 pb-16 md:pt-32 md:pb-24">
+  <div class="container-page">
+    <div class="grid gap-12 lg:grid-cols-12 lg:gap-8">
+      <div class="lg:col-span-8">
+        <h1 id="hero-heading" class="display text-hero">
+          {hero.headline}<span class="hidden md:inline">{hero.headlineTail}</span><span
+            class="md:hidden">.</span
+          >
+        </h1>
+
+        <p class="text-lead mt-7 max-w-[46ch] text-text-muted">
+          {hero.subhead}<span class="hidden md:inline">{hero.subheadTail}</span>
+        </p>
+
+        <div class="mt-9 flex flex-col gap-4 sm:flex-row sm:items-start sm:gap-5">
+          <Cta kind="book" position="hero" variant="primary" note={hero.doubtRemover}>
+            {hero.primaryCta}
+          </Cta>
+          <Cta kind="link" href="#book" position="hero-teardown" variant="secondary">
+            {hero.secondaryCta}
+          </Cta>
+        </div>
+
+        <p class="text-meta mt-6 flex max-w-[46ch] items-start gap-2 text-text-muted">
+          <span aria-hidden="true" class="text-accent">✓</span>{hero.reversal}
+        </p>
+
+        <p class="label mt-8 flex flex-wrap items-center gap-x-3 gap-y-1 text-text-muted">
+          <span aria-hidden="true" class="inline-block h-1.5 w-1.5 rounded-full bg-accent"></span>
+          <span>{availability.concurrentEngagements} slots</span>
+          <span aria-hidden="true">·</span>
+          <span>earliest start {availability.nextStartLabel}</span>
+        </p>
+      </div>
+
+      <!-- Credential block set into the H1's right shoulder, so the fold reads as
+           a composition rather than two stacked rectangles. -->
+      <aside class="lg:col-span-4 lg:pt-3">
+        <dl class="border-t border-line pt-4 lg:border-t-0 lg:border-l lg:pt-0 lg:pl-6">
+          {
+            hero.credentialBlock.map(({ k, v }) => (
+              <div class="flex justify-between gap-4 border-b border-line py-2.5 last:border-b-0 lg:block lg:py-2">
+                <dt class="label text-text-muted">{k}</dt>
+                <dd class="text-meta text-right lg:mt-0.5 lg:text-left">{v}</dd>
+              </div>
+            ))
+          }
+        </dl>
+
+        <!-- Price visible in the first screenful on desktop: a buyer should not
+             scroll 8,000px to discover they are disqualified, and a buyer with
+             real budget should not have to guess the operation's size. -->
+        <p class="label mt-4 hidden text-text-muted lg:block">{rateStrip}</p>
+      </aside>
+    </div>
+  </div>
+
+  <!-- Sentinel: the mobile bar appears only once the hero CTA is gone. -->
+  <span data-hero-end aria-hidden="true" class="block h-px w-full"></span>
+</section>

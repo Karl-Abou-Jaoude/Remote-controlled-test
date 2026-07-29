@@ -1,19 +1,27 @@
 ---
 import { contact } from '../data/site';
 
+/**
+ * Every CTA on the page is this component, so the primary ask is worded
+ * identically everywhere (3–5 instances of the SAME cta, never a competing
+ * second offer) and every click reports the position that produced it — the one
+ * analytics number worth having is which placement produces bookings.
+ *
+ * The booking variant is a real anchor to the hosted booking page: it works with
+ * JavaScript off and before the embed is warm. The inline embed is an upgrade,
+ * never a requirement.
+ */
 interface Props {
-  /**
-   * 'book' renders the Cal.com trigger. It is a real anchor to the booking
-   * page, so it works with JS off and before the embed is warm — the popup is
-   * an upgrade, never a requirement.
-   */
   kind?: 'book' | 'link';
   href?: string;
-  /** Reported with every click so we can see which CTA position produces calls. */
   position: string;
   variant?: 'primary' | 'secondary' | 'inverse';
-  /** Rendered under the button. Sub-button microcopy measurably lifts clicks. */
+  size?: 'default' | 'compact';
+  /** Tone microcopy under the button. */
   note?: string;
+  /** Actual risk reversal — kept distinct from `note`, which is tone. */
+  reversal?: string;
+  full?: boolean;
   class?: string;
 }
 
@@ -22,38 +30,29 @@ const {
   href,
   position,
   variant = 'primary',
+  size = 'default',
   note,
+  reversal,
+  full = false,
   class: className = '',
 } = Astro.props;
 
 const target = kind === 'book' ? contact.calUrl : (href ?? '#');
-
-const base =
-  'group inline-flex items-center justify-center gap-2.5 rounded-full px-7 py-4 ' +
-  'text-[0.95rem] font-medium tracking-[-0.01em] no-underline ' +
-  'transition-[transform,background-color,color] duration-[var(--duration-base)] ' +
-  'ease-[var(--ease-out-quint)] hover:-translate-y-0.5 active:translate-y-0 ' +
-  // WCAG 2.2 SC 2.5.8 — every target clears 24x24px with room to spare.
-  'min-h-12';
-
-const variants = {
-  primary: 'bg-ink text-text-inverse hover:bg-accent',
-  secondary: 'border border-line-strong bg-transparent text-text hover:border-ink hover:bg-paper-sunk',
-  inverse: 'bg-accent-hot text-ink hover:bg-paper hover:text-ink',
-} as const;
+const bookAttrs =
+  kind === 'book' ? { 'data-cal-link': contact.calLink, 'data-cal-trigger': 'true' } : {};
 ---
 
-<span class:list={['inline-flex flex-col items-start gap-2', className]}>
+<span class:list={['flex flex-col gap-2.5', full ? 'w-full' : 'items-start', className]}>
   <a
     href={target}
-    class:list={[base, variants[variant]]}
     data-position={position}
-    {...kind === 'book'
-      ? {
-          'data-cal-link': contact.calLink,
-          'data-cal-config': '{"layout":"month_view"}',
-        }
-      : {}}
+    class:list={[
+      'btn group',
+      `btn--${variant}`,
+      size === 'compact' && 'min-h-10 px-5 py-2 text-[0.875rem]',
+      full && 'w-full',
+    ]}
+    {...bookAttrs}
   >
     <slot />
     <svg
@@ -64,8 +63,20 @@ const variants = {
       stroke-width="1.6"
       aria-hidden="true"
     >
-      <path d="M2 7h10M8 3l4 4-4 4" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M2 7h10M8 3l4 4-4 4" stroke-linecap="round" stroke-linejoin="round"></path>
     </svg>
   </a>
-  {note && <span class="text-meta text-text-muted pl-1">{note}</span>}
+
+  {note && <span class="text-meta max-w-[42ch] text-text-muted">{note}</span>}
+
+  {
+    reversal && (
+      <span class="text-meta flex max-w-[42ch] items-start gap-2 text-text-muted">
+        <span aria-hidden="true" class="text-accent">
+          ✓
+        </span>
+        {reversal}
+      </span>
+    )
+  }
 </span>

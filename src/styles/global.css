@@ -2,24 +2,30 @@
 
 /*
   DESIGN SYSTEM
-  -------------
-  Base is a warm off-white, not near-black. Two reasons, both from research:
-  (1) it differentiates against the wall of #0E0E0E developer portfolios, and
-  (2) the client work being shown is overwhelmingly light-themed, so dark
-  chrome fights the screenshots. Near-black is reserved for full-bleed
-  inversion bands — the cheapest way to make a section feel authored.
+  =============
+  Base is a warm off-white, not near-black: it differentiates against the wall
+  of #0E0E0E developer portfolios, and the client work being shown is
+  overwhelmingly light-themed, so dark chrome fights the screenshots. Near-black
+  is spent exactly twice, as full-bleed inversion bands.
 
-  Every colour pair below was measured, not eyeballed. Ratios in the comments
-  are WCAG 2.2 contrast against the stated background.
+  Every colour pair was measured, not eyeballed. Ratios in comments are WCAG 2.2
+  contrast against the stated background.
+
+  THE MOTIF: the diff. `−` before-state, `+` after-state, in mono, with the
+  glyph carrying the meaning so it never depends on colour. It is what he
+  actually sells (a store before and after his decisions), it costs 0 KB, and it
+  repeats across work-card attribution, case-study decisions, the 404 and the
+  footer's own performance numbers. Borrowed devices — hover-words, logo
+  marquees, blanket fade-ups — were cut in its favour.
 */
 
 @theme {
   /* --- surfaces --- */
-  --color-paper: #f7f6f3; /* warm off-white base */
-  --color-paper-raised: #ffffff; /* cards on paper */
-  --color-paper-sunk: #f0eee9; /* wells, stripes */
-  --color-ink: #111110; /* inversion band base (never #000) */
-  --color-ink-raised: #1c1b19; /* cards inside an inversion band */
+  --color-paper: #f7f6f3;
+  --color-paper-raised: #ffffff;
+  --color-paper-sunk: #f0eee9;
+  --color-ink: #111110;
+  --color-ink-raised: #1c1b19;
 
   /* --- text --- */
   --color-text: #111110; /* on paper — 17.48:1 */
@@ -27,37 +33,56 @@
   --color-text-inverse: #f7f6f3; /* on ink — 17.48:1 */
   --color-text-dim: #a8a49c; /* on ink — 7.61:1 */
 
-  /* --- signature accent (the only chroma on the page) --- */
-  --color-accent: #c13a19; /* on paper — 5.00:1 as text AND as a fill behind paper text */
-  --color-accent-hot: #ff6a3d; /* on ink — 6.64:1 as text AND as a fill behind ink text */
+  /* --- the one signature chroma --- */
+  --color-accent: #c13a19; /* on paper — 5.00:1 as text AND as fill behind paper text */
+  --color-accent-hot: #ff6a3d; /* on ink — 6.64:1 as text AND as fill behind ink text */
+
+  /* --- the diff motif's second, semantic chroma ---
+     Before-state is graphite, not a second red: two warm reds would read as one
+     smear. The − / + glyph carries the meaning; colour only reinforces it. */
+  --color-diff-minus: #6b675f; /* on paper — 5.21:1 */
+  --color-diff-minus-rule: #928e87; /* 2px bar — 3.02:1 */
+  --color-diff-plus: #c13a19;
 
   /* --- lines --- */
-  --color-line: #e2ded7; /* decorative hairlines on paper */
+  --color-line: #e2ded7; /* decorative hairlines */
   --color-line-strong: #928e87; /* form borders / UI boundaries on paper — 3.02:1 */
-  --color-line-ink: #63605a; /* form borders / UI boundaries on ink — 3.02:1 */
+  --color-line-ink: #63605a; /* the same, on ink — 3.02:1 */
 
-  /* --- type families (Astro's font pipeline defines the inner vars) --- */
+  /* --- families --- */
   --font-sans: var(--font-geist);
-  --font-display: var(--font-instrument);
+  --font-display: var(--font-fraunces);
   --font-mono: var(--font-geist-mono);
 
   /*
-    Fluid type scale. Display sizes carry negative tracking (-0.02 to -0.04em)
-    per the award-portfolio house style; body stays 16–18px at 1.5–1.6.
+    LOUDNESS MAP — enforced, not decorative.
+    Exactly one --text-hero on the page (the H1). Exactly one --text-metric (the
+    single strongest figure). Everything else steps down. Fifteen bands at the
+    same volume is the failure this prevents.
   */
-  --text-hero: clamp(3.25rem, 10.5vw, 9rem);
-  --text-hero--line-height: 0.94;
-  --text-hero--letter-spacing: -0.035em;
+  /*
+    Sized against the ACTUAL headline, not a hypothetical short one. The
+    headline trades brevity for specificity (buyer + problem + outcome), and at
+    9vw it ran six lines and pushed the CTA off the fold — which defeats the
+    only job the hero has. Verified at 1440px and 390px with a real render.
+  */
+  --text-hero: clamp(2.5rem, 5.4vw, 4.75rem);
+  --text-hero--line-height: 0.98;
+  --text-hero--letter-spacing: -0.03em;
 
-  --text-display: clamp(2.5rem, 6vw, 5rem);
-  --text-display--line-height: 1;
-  --text-display--letter-spacing: -0.03em;
+  --text-metric: clamp(2.25rem, 4.4vw, 3.5rem);
+  --text-metric--line-height: 0.95;
+  --text-metric--letter-spacing: -0.03em;
 
-  --text-title: clamp(1.75rem, 3.2vw, 2.75rem);
-  --text-title--line-height: 1.08;
-  --text-title--letter-spacing: -0.02em;
+  --text-display: clamp(2rem, 4vw, 3.25rem);
+  --text-display--line-height: 1.02;
+  --text-display--letter-spacing: -0.025em;
 
-  --text-lead: clamp(1.125rem, 1.6vw, 1.375rem);
+  --text-title: clamp(1.5rem, 2.4vw, 2rem);
+  --text-title--line-height: 1.12;
+  --text-title--letter-spacing: -0.018em;
+
+  --text-lead: clamp(1.0625rem, 1.4vw, 1.3125rem);
   --text-lead--line-height: 1.5;
   --text-lead--letter-spacing: -0.011em;
 
@@ -65,12 +90,10 @@
   --text-body--line-height: 1.6;
 
   --text-meta: 0.8125rem;
-  --text-meta--line-height: 1.4;
-  --text-meta--letter-spacing: 0.06em;
+  --text-meta--line-height: 1.45;
+  --text-meta--letter-spacing: 0.02em;
 
-  /* --- motion ---
-     150–200ms for UI, capped at 300ms, ease-out for entrances. The overshoot
-     curve is reserved for card transforms — never for text. */
+  /* --- motion: 150-200ms for UI, 300ms ceiling, ease-out for entrances --- */
   --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-overshoot: cubic-bezier(0.34, 1.56, 0.64, 1);
   --duration-fast: 150ms;
@@ -79,7 +102,8 @@
 
   /* --- layout --- */
   --spacing-gutter: clamp(1.25rem, 5vw, 4rem);
-  --container-page: 84rem;
+  --container-page: 76rem;
+  --container-text: 42rem;
 }
 
 /* ------------------------------------------------------------------ *
@@ -88,8 +112,12 @@
 
 @layer base {
   html {
-    /* WCAG 2.2 SC 2.4.11 — a sticky header must never obscure an element that
-       was scrolled to and focused via an anchor. */
+    /* The palette is measured for one scheme; a forced-dark browser would
+       destroy it, so the scheme is declared rather than left to chance. */
+    color-scheme: only light;
+    scroll-behavior: smooth; /* 0 KB, and honours reduced-motion natively */
+    /* WCAG 2.2 SC 2.4.11 — a sticky header must never obscure a focused,
+       anchor-targeted element. */
     scroll-padding-top: 6rem;
     -webkit-text-size-adjust: 100%;
   }
@@ -101,50 +129,154 @@
     font-size: var(--text-body);
     line-height: 1.6;
     font-synthesis-weight: none;
-    text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
+    caret-color: var(--color-accent);
+    accent-color: var(--color-accent);
+  }
+
+  /* Oldstyle figures in prose, lining tabular figures on anything measured. */
+  p,
+  li,
+  blockquote {
+    font-variant-numeric: oldstyle-nums;
+    text-wrap: pretty;
   }
 
   h1,
   h2,
   h3 {
     text-wrap: balance;
+    font-weight: 400;
   }
 
-  p {
-    text-wrap: pretty;
+  /*
+    Optical overhang on EVERY flush-left display head, not just the H1 —
+    otherwise the corrected one looks aligned and all the others look indented.
+  */
+  .display {
+    font-family: var(--font-display);
+    font-weight: 400;
+    margin-left: -0.05em;
   }
 
-  /* Two-tone focus ring. One colour cannot hold 3:1 against both the paper
-     sections and the ink bands, so the ring pairs an ink outline with a paper
-     halo, and inverts inside .on-ink. */
+  /* Underlines: the second-biggest templated signal after default blue links. */
+  a:where(:not(.btn)) {
+    color: inherit;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.18em;
+    text-decoration-color: color-mix(in oklab, var(--color-accent) 55%, transparent);
+    transition: text-decoration-color var(--duration-fast) linear;
+  }
+
+  a:where(:not(.btn)):hover {
+    text-decoration-thickness: 2px;
+    text-decoration-color: var(--color-accent);
+  }
+
+  ::selection {
+    background: color-mix(in oklab, var(--color-accent) 22%, transparent);
+    color: var(--color-text);
+  }
+
+  ::marker {
+    color: var(--color-accent);
+    font-family: var(--font-mono);
+    font-size: 0.85em;
+  }
+
+  textarea {
+    field-sizing: content;
+  }
+
+  /* Focus as a designed state, two-tone so it holds 3:1 over paper AND ink. */
   :focus-visible {
-    outline: 3px solid var(--color-text);
-    outline-offset: 2px;
-    box-shadow: 0 0 0 6px var(--color-paper);
-    border-radius: 2px;
+    outline: 2px solid var(--color-text);
+    outline-offset: 3px;
+    box-shadow: 0 0 0 5px color-mix(in oklab, var(--color-accent) 30%, transparent);
+    border-radius: 3px;
   }
 
   .on-ink :focus-visible {
     outline-color: var(--color-accent-hot);
-    box-shadow: 0 0 0 6px var(--color-ink);
+    box-shadow: 0 0 0 5px color-mix(in oklab, var(--color-accent-hot) 35%, transparent);
   }
 
   :focus:not(:focus-visible) {
     outline: none;
   }
+}
 
-  ::selection {
-    background-color: var(--color-accent);
-    color: var(--color-paper);
+/* ------------------------------------------------------------------ *
+   MATERIALITY
+   One inline turbulence grain so the paper reads printed rather than
+   framework-default. Under 1 KB, no network request, and it steps aside for
+   anyone who has asked for more contrast.
+ * ------------------------------------------------------------------ */
+
+@layer base {
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    pointer-events: none;
+    mix-blend-mode: multiply;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23g)'/%3E%3C/svg%3E");
+  }
+
+  @media (prefers-contrast: more) {
+    body::before {
+      display: none;
+    }
   }
 }
 
 /* ------------------------------------------------------------------ *
-   REDUCED MOTION
-   Not a blanket kill: sub-200ms opacity fades aid orientation and stay.
-   Everything that translates, parallaxes, loops or autoplays goes.
+   MOTION
+   The whole budget is spent on one material idea — the ink band arriving as a
+   clip-path wipe along the scroll axis, background only, text never hidden.
+   Scroll-driven, so it costs 0 KB of JS and is silently absent where
+   animation-timeline is unsupported. The blanket opacity/translate fade-up
+   that every Tailwind starter ships was deleted deliberately.
  * ------------------------------------------------------------------ */
+
+@layer components {
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .band-ink::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: var(--color-ink);
+        clip-path: inset(0 0 100% 0);
+        animation: band-wipe linear both;
+        animation-timeline: view();
+        animation-range: entry 5% cover 38%;
+      }
+
+      .rule-draw {
+        transform-origin: left center;
+        scale: 0 1;
+        animation: rule-draw linear both;
+        animation-timeline: view();
+        animation-range: entry 12% cover 30%;
+      }
+    }
+  }
+
+  @keyframes band-wipe {
+    to {
+      clip-path: inset(0 0 0 0);
+    }
+  }
+
+  @keyframes rule-draw {
+    to {
+      scale: 1 1;
+    }
+  }
+}
 
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -153,21 +285,6 @@
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 150ms !important;
-    scroll-behavior: auto !important;
-  }
-
-  [data-reveal] {
-    opacity: 1 !important;
-    transform: none !important;
-  }
-
-  .marquee__track {
-    animation: none !important;
-    transform: none !important;
-  }
-
-  .marquee {
-    overflow-x: auto;
   }
 }
 
@@ -182,72 +299,169 @@
   padding-inline: var(--spacing-gutter);
 }
 
-/* Functional mono: section numbering, metadata labels, stack chips. On an
-   engineer's site mono reads as credibility rather than decoration. */
+/*
+  Mono labels use real small caps where the face supports them. `uppercase` plus
+  letter-spacing is exactly what makes a label look generated.
+*/
 @utility label {
   font-family: var(--font-mono);
   font-size: var(--text-meta);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
   font-weight: 500;
+  font-variant-caps: all-small-caps;
+  font-feature-settings: 'c2sc' 1, 'smcp' 1;
+  letter-spacing: 0.07em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Anything measured gets tabular figures so columns of numbers align. */
+@utility metric {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-variant-numeric: tabular-nums lining-nums;
 }
 
 @layer components {
-  /*
-    Scroll reveal. Deliberately NOT applied to the hero, body copy, pricing,
-    form labels or CTAs — NN/g is unambiguous that scroll-triggered animation
-    belongs on secondary supporting content, and a CTA must never animate into
-    existence. The default state here is *visible*: JS opts an element into
-    'pending', so if JS never runs, nothing is ever hidden.
-  */
-  [data-reveal] {
-    opacity: 1;
+  /* ---------------- the diff motif ---------------- */
+  .diff {
+    display: grid;
+    gap: 0.375rem;
+    font-family: var(--font-mono);
+    font-size: var(--text-meta);
+    font-variant-numeric: tabular-nums;
+    line-height: 1.45;
+  }
+
+  .diff > * {
+    display: flex;
+    gap: 0.625rem;
+    padding-left: 0.625rem;
+    border-left: 2px solid transparent;
+  }
+
+  .diff__minus {
+    color: var(--color-diff-minus);
+    border-left-color: var(--color-diff-minus-rule);
+  }
+
+  .diff__plus {
+    color: var(--color-diff-plus);
+    border-left-color: var(--color-diff-plus);
+    font-weight: 500;
+  }
+
+  /* The glyph is real text, not a pseudo-element, so it survives copy/paste
+     and is announced by a screen reader. */
+  .on-ink .diff__minus {
+    color: var(--color-text-dim);
+    border-left-color: var(--color-line-ink);
+  }
+
+  .on-ink .diff__plus {
+    color: var(--color-accent-hot);
+    border-left-color: var(--color-accent-hot);
+  }
+
+  /* ---------------- buttons ---------------- */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.625rem;
+    min-height: 3rem; /* WCAG 2.2 SC 2.5.8 target size, with room */
+    padding: 0.9rem 1.75rem;
+    border-radius: 999px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    text-decoration: none;
     transition:
-      opacity var(--duration-slow) var(--ease-out-quint),
-      transform var(--duration-slow) var(--ease-out-quint);
+      transform var(--duration-fast) var(--ease-out-quint),
+      background-color var(--duration-base) linear,
+      color var(--duration-base) linear,
+      border-color var(--duration-base) linear;
   }
 
-  [data-reveal='pending'] {
-    opacity: 0;
-    transform: translateY(12px);
+  /* A designed pressed state — where motion is actually judged. */
+  .btn:active {
+    transform: translateY(1px) scale(0.995);
   }
 
-  /* Marquee: translate-only animation on an already-laid-out track, so it
-     cannot contribute to CLS. Pauses on hover, on focus-within (keyboard
-     users), and via the explicit control. */
-  .marquee__track {
-    animation: marquee-scroll 42s linear infinite;
-    will-change: transform;
+  .btn--primary {
+    background: var(--color-ink);
+    color: var(--color-text-inverse);
   }
 
-  .marquee:hover .marquee__track,
-  .marquee:focus-within .marquee__track,
-  .marquee[data-paused='true'] .marquee__track {
-    animation-play-state: paused;
+  .btn--primary:hover {
+    background: var(--color-accent);
   }
 
-  @keyframes marquee-scroll {
-    from {
-      transform: translateX(0);
+  .btn--secondary {
+    border: 1px solid var(--color-line-strong);
+    color: var(--color-text);
+  }
+
+  .btn--secondary:hover {
+    border-color: var(--color-text);
+    background: var(--color-paper-sunk);
+  }
+
+  .btn--inverse {
+    background: var(--color-accent-hot);
+    color: var(--color-ink);
+  }
+
+  .btn--inverse:hover {
+    background: var(--color-paper);
+  }
+
+  /* ---------------- the structural spine ----------------
+     A mono rail carrying section numbers. One structural gesture that makes a
+     long page feel authored and navigable. Only shown where the arithmetic
+     leaves real room beside the container, so it can never overlap content. */
+  .rail {
+    display: none;
+  }
+
+  @media (min-width: 1360px) {
+    .rail {
+      position: fixed;
+      top: 50%;
+      left: max(0.75rem, calc((100vw - var(--container-page)) / 2 - 4.75rem));
+      z-index: 30;
+      display: grid;
+      gap: 0.5rem;
+      translate: 0 -50%;
     }
-    to {
-      /* Track plus the gap that follows it — the duplicate takes its place. */
-      transform: translateX(calc(-100% - 4rem));
-    }
-  }
 
-  @media (prefers-reduced-motion: reduce) {
-    .marquee__viewport {
-      flex-wrap: wrap;
-      overflow: visible;
+    /*
+      The rail is fixed and travels over both paper sections and the two ink
+      bands, so no single colour can hold 4.5:1 against everything underneath
+      it. Difference blending against white resolves to near-black over paper
+      and near-white over ink — measured 19:1 and 16:1 respectively — with no
+      JavaScript and no per-section bookkeeping.
+
+      State is carried by weight and a rule rather than by opacity, because
+      dimming the text would drop it under the contrast floor.
+    */
+    .rail a {
+      text-decoration: none;
+      color: #fff;
+      mix-blend-mode: difference;
+      font-weight: 500;
+      transition: font-weight var(--duration-base) linear;
     }
 
-    .marquee__track[aria-hidden='true'] {
-      display: none;
+    .rail a[aria-current='true'] {
+      font-weight: 700;
     }
 
-    .marquee__track {
-      flex-wrap: wrap;
+    .rail a[aria-current='true']::before {
+      content: '';
+      display: inline-block;
+      width: 0.75rem;
+      height: 2px;
+      margin-right: 0.375rem;
+      vertical-align: 0.25em;
+      background: currentColor;
     }
   }
 
@@ -265,5 +479,52 @@
     background: var(--color-ink);
     color: var(--color-text-inverse);
     border-radius: 4px;
+  }
+}
+
+/* ------------------------------------------------------------------ *
+   PRINT
+   The buyer forwards this to a CFO. Drop the fixed chrome, flatten the ink
+   bands so they do not eat a toner cartridge, and expose the live URLs the
+   whole pitch rests on.
+ * ------------------------------------------------------------------ */
+
+@media print {
+  .rail,
+  [data-sticky-cta],
+  [data-site-header],
+  .no-print {
+    display: none !important;
+  }
+
+  .band-ink,
+  .on-ink {
+    background: #fff !important;
+    color: #000 !important;
+  }
+
+  .band-ink::before {
+    display: none !important;
+  }
+
+  body::before {
+    display: none !important;
+  }
+
+  /* Expose reference URLs — the live storefronts are the whole proof — but not on
+     buttons, where an injected URL wrecks the pill and tells a reader nothing
+     they can act on from paper. */
+  a[href^='http']:not(.btn)::after {
+    content: ' (' attr(href) ')';
+    font-size: 0.75em;
+    word-break: break-all;
+  }
+
+  details {
+    display: block;
+  }
+
+  details > summary + * {
+    display: block !important;
   }
 }
