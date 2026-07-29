@@ -212,6 +212,45 @@
     transform: translateY(12px);
   }
 
+  /* Marquee: translate-only animation on an already-laid-out track, so it
+     cannot contribute to CLS. Pauses on hover, on focus-within (keyboard
+     users), and via the explicit control. */
+  .marquee__track {
+    animation: marquee-scroll 42s linear infinite;
+    will-change: transform;
+  }
+
+  .marquee:hover .marquee__track,
+  .marquee:focus-within .marquee__track,
+  .marquee[data-paused='true'] .marquee__track {
+    animation-play-state: paused;
+  }
+
+  @keyframes marquee-scroll {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      /* Track plus the gap that follows it — the duplicate takes its place. */
+      transform: translateX(calc(-100% - 4rem));
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .marquee__viewport {
+      flex-wrap: wrap;
+      overflow: visible;
+    }
+
+    .marquee__track[aria-hidden='true'] {
+      display: none;
+    }
+
+    .marquee__track {
+      flex-wrap: wrap;
+    }
+  }
+
   .skip-link {
     position: absolute;
     left: -9999px;

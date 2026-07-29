@@ -1,0 +1,15 @@
+User-agent: *
+Allow: /
+
+# LLM-mediated discovery is a real inbound channel for independent engineers,
+# so the answer engines are explicitly welcome.
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+Sitemap: https://karlaboujaoude.com/sitemap-index.xml

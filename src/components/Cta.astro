@@ -1,0 +1,71 @@
+---
+import { contact } from '../data/site';
+
+interface Props {
+  /**
+   * 'book' renders the Cal.com trigger. It is a real anchor to the booking
+   * page, so it works with JS off and before the embed is warm — the popup is
+   * an upgrade, never a requirement.
+   */
+  kind?: 'book' | 'link';
+  href?: string;
+  /** Reported with every click so we can see which CTA position produces calls. */
+  position: string;
+  variant?: 'primary' | 'secondary' | 'inverse';
+  /** Rendered under the button. Sub-button microcopy measurably lifts clicks. */
+  note?: string;
+  class?: string;
+}
+
+const {
+  kind = 'book',
+  href,
+  position,
+  variant = 'primary',
+  note,
+  class: className = '',
+} = Astro.props;
+
+const target = kind === 'book' ? contact.calUrl : (href ?? '#');
+
+const base =
+  'group inline-flex items-center justify-center gap-2.5 rounded-full px-7 py-4 ' +
+  'text-[0.95rem] font-medium tracking-[-0.01em] no-underline ' +
+  'transition-[transform,background-color,color] duration-[var(--duration-base)] ' +
+  'ease-[var(--ease-out-quint)] hover:-translate-y-0.5 active:translate-y-0 ' +
+  // WCAG 2.2 SC 2.5.8 — every target clears 24x24px with room to spare.
+  'min-h-12';
+
+const variants = {
+  primary: 'bg-ink text-text-inverse hover:bg-accent',
+  secondary: 'border border-line-strong bg-transparent text-text hover:border-ink hover:bg-paper-sunk',
+  inverse: 'bg-accent-hot text-ink hover:bg-paper hover:text-ink',
+} as const;
+---
+
+<span class:list={['inline-flex flex-col items-start gap-2', className]}>
+  <a
+    href={target}
+    class:list={[base, variants[variant]]}
+    data-position={position}
+    {...kind === 'book'
+      ? {
+          'data-cal-link': contact.calLink,
+          'data-cal-config': '{"layout":"month_view"}',
+        }
+      : {}}
+  >
+    <slot />
+    <svg
+      class="h-3.5 w-3.5 transition-transform duration-[var(--duration-base)] ease-[var(--ease-out-quint)] group-hover:translate-x-1"
+      viewBox="0 0 14 14"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.6"
+      aria-hidden="true"
+    >
+      <path d="M2 7h10M8 3l4 4-4 4" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+  </a>
+  {note && <span class="text-meta text-text-muted pl-1">{note}</span>}
+</span>

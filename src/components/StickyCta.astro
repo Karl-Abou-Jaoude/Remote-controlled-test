@@ -1,0 +1,52 @@
+---
+import { contact } from '../data/site';
+
+/**
+ * Mobile-only sticky bar. Appears once the hero CTA has scrolled out of view,
+ * so a call-to-action is always one thumb-reach away — on mobile the hero CTA
+ * is off screen for the entire rest of the page otherwise.
+ *
+ * Hidden from the accessibility tree until it is actually visible, so it does
+ * not add a duplicate tab stop while off screen.
+ */
+interface Props {
+  label: string;
+  note?: string;
+}
+
+const { label, note } = Astro.props;
+---
+
+<div
+  data-sticky-cta
+  data-visible="false"
+  class="fixed inset-x-0 bottom-0 z-40 border-t border-line bg-paper/95 px-4 py-3 backdrop-blur-sm transition-transform duration-[var(--duration-slow)] ease-[var(--ease-out-quint)] data-[visible=false]:pointer-events-none data-[visible=false]:translate-y-full data-[visible=true]:translate-y-0 md:hidden"
+  aria-hidden="true"
+>
+  <a
+    href={contact.calUrl}
+    data-cal-link={contact.calLink}
+    data-position="sticky-mobile"
+    class="flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-ink px-6 py-3.5 font-medium text-text-inverse no-underline"
+  >
+    {label}
+  </a>
+  {note && <p class="text-meta mt-2 text-center text-text-muted">{note}</p>}
+</div>
+
+<script>
+  // Keep the bar out of the a11y tree and tab order until it is on screen.
+  const bar = document.querySelector<HTMLElement>('[data-sticky-cta]');
+  if (bar) {
+    const sync = () => {
+      const visible = bar.dataset.visible === 'true';
+      bar.setAttribute('aria-hidden', String(!visible));
+      bar.querySelector('a')?.setAttribute('tabindex', visible ? '0' : '-1');
+    };
+    new MutationObserver(sync).observe(bar, {
+      attributes: true,
+      attributeFilter: ['data-visible'],
+    });
+    sync();
+  }
+</script>

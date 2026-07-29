@@ -1,0 +1,68 @@
+---
+/**
+ * Brand strip. Accessibility rules applied, all load-bearing:
+ * - the duplicated track is aria-hidden, or a screen reader announces every
+ *   brand twice;
+ * - WCAG 2.2.2 requires a real pause control for motion running over five
+ *   seconds — a hover-pause is not sufficient for keyboard and touch users;
+ * - under reduced-motion the CSS renders it as a static wrapped row.
+ *
+ * Attribution is honest: these are brands worked on while lead engineer at the
+ * agency, and the heading says so. Implying they were direct clients would be
+ * the kind of claim that loses the sale when checked.
+ */
+interface Props {
+  label: string;
+  brands: ReadonlyArray<string>;
+  tone?: 'paper' | 'ink';
+}
+
+const { label, brands, tone = 'paper' } = Astro.props;
+const track = [...brands];
+---
+
+<div class="marquee group relative" data-paused="false" role="group" aria-label={label}>
+  <div class="marquee__viewport flex gap-16 overflow-hidden">
+    <ul class="marquee__track flex shrink-0 items-center gap-16">
+      {
+        track.map((brand) => (
+          <li
+            class:list={[
+              'font-display text-[clamp(1.5rem,2.6vw,2.25rem)] whitespace-nowrap',
+              tone === 'ink' ? 'text-text-dim' : 'text-text-muted',
+            ]}
+          >
+            {brand}
+          </li>
+        ))
+      }
+    </ul>
+    <ul class="marquee__track flex shrink-0 items-center gap-16" aria-hidden="true">
+      {
+        track.map((brand) => (
+          <li
+            class:list={[
+              'font-display text-[clamp(1.5rem,2.6vw,2.25rem)] whitespace-nowrap',
+              tone === 'ink' ? 'text-text-dim' : 'text-text-muted',
+            ]}
+          >
+            {brand}
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+
+  <button
+    type="button"
+    class:list={[
+      'marquee__pause label absolute top-1/2 right-0 -translate-y-1/2 rounded-full px-3 py-2',
+      'opacity-0 transition-opacity duration-[var(--duration-base)]',
+      'focus-visible:opacity-100 group-hover:opacity-100',
+      tone === 'ink' ? 'bg-ink-raised text-text-dim' : 'bg-paper-raised text-text-muted',
+    ]}
+    aria-pressed="false"
+  >
+    Pause
+  </button>
+</div>
