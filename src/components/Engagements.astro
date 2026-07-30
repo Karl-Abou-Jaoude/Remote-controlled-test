@@ -22,43 +22,41 @@ import SectionHead from './SectionHead.astro';
 const ordered = [...engagements].sort((a, b) => Number(b.flagship) - Number(a.flagship));
 ---
 
-<section id="engagements" aria-labelledby="engagements-heading" class="py-20 md:py-28">
+<section id="engagements" aria-labelledby="engagements-heading" class="py-20 md:py-30">
   <div class="container-page">
     <SectionHead index="08" id="engagements-heading">How this is bought</SectionHead>
 
-    <p class="text-lead mt-6 max-w-[52ch] text-text-muted">
+    <p class="text-body-lead mt-6 max-w-[52ch] text-muted">
       Three ways in. If your budget is under the project band, I will say so on the call and point
       you somewhere better rather than stretch a scope to fit it.
     </p>
 
-    <div class="mt-14 grid gap-6 lg:grid-cols-12">
+    <div class="mt-14 grid gap-10 lg:grid-cols-12">
       {
         ordered.map((offer) => (
           <article
             class:list={[
-              'flex flex-col rounded-xl border p-7 md:p-8',
-              offer.flagship
-                ? 'border-text bg-paper-raised lg:col-span-12'
-                : 'border-line bg-paper lg:col-span-6',
+              'flex flex-col border p-6',
+              offer.flagship ? 'border-on-dark lg:col-span-12' : 'border-hairline lg:col-span-6',
             ]}
           >
             <div class="flex flex-wrap items-baseline justify-between gap-3">
-              <h3 class="display text-title">{offer.name}</h3>
-              {offer.flagship && <span class="label text-accent">Most clients start here</span>}
+              <h3 class="display text-display-md uppercase text-on-dark">{offer.name}</h3>
+              {offer.flagship && <span class="label text-on-dark">Most clients start here</span>}
             </div>
 
-            <p class="metric text-title mt-4 text-accent [overflow-wrap:anywhere]">
+            <p class="metric text-display-md mt-4 text-on-dark [overflow-wrap:anywhere]">
               {offer.price}
             </p>
-            <p class="label mt-2 text-text-muted">{offer.meta}</p>
+            <p class="label mt-2 text-muted">{offer.meta}</p>
 
             <div class:list={[offer.flagship && 'lg:grid lg:grid-cols-2 lg:gap-10']}>
-              <p class="text-body mt-5 max-w-[46ch] text-text-muted">{offer.prose}</p>
+              <p class="text-body-md mt-5 max-w-[46ch] text-muted">{offer.prose}</p>
 
               <ul class="mt-6 grid gap-2.5 lg:content-start">
                 {offer.includes.map((line) => (
-                  <li class="text-body flex gap-3">
-                    <span aria-hidden="true" class="text-accent">
+                  <li class="text-body-md flex gap-3">
+                    <span aria-hidden="true" class="text-on-dark">
                       +
                     </span>
                     <span>{line}</span>
@@ -67,8 +65,8 @@ const ordered = [...engagements].sort((a, b) => Number(b.flagship) - Number(a.fl
               </ul>
             </div>
 
-            <p class="text-meta mt-auto flex items-start gap-2 border-t border-line pt-6 text-text-muted">
-              <span aria-hidden="true" class="text-accent">
+            <p class="text-body-sm mt-auto flex items-start gap-2 border-t border-hairline pt-6 text-muted">
+              <span aria-hidden="true" class="text-on-dark">
                 ✓
               </span>
               {offer.reversal}
@@ -78,12 +76,12 @@ const ordered = [...engagements].sort((a, b) => Number(b.flagship) - Number(a.fl
       }
     </div>
 
-    <p class="text-body mt-10 max-w-[64ch] border-t border-line pt-8 text-text-muted">
+    <p class="text-body-md mt-10 max-w-[64ch] border-t border-hairline pt-8 text-muted">
       {agencyLine}
     </p>
 
-    <p class="label mt-6 flex flex-wrap items-center gap-x-3 gap-y-1 text-text-muted">
-      <span aria-hidden="true" class="inline-block h-1.5 w-1.5 rounded-full bg-accent"></span>
+    <p class="label mt-6 flex flex-wrap items-center gap-x-3 gap-y-1 text-muted">
+      <span aria-hidden="true" class="inline-block h-1.5 w-1.5 rounded-full bg-on-dark"></span>
       <span>{availability.concurrentEngagements} concurrent engagements</span>
       <span aria-hidden="true">·</span>
       <span>earliest start {availability.nextStartLabel}</span>

@@ -33,25 +33,25 @@ import { identity } from '../data/site';
     <div class="container-page">
       <div class="grid gap-14 lg:grid-cols-12 lg:gap-12">
         <div class="lg:col-span-7">
-          <h1 class="display text-display max-w-[26ch]">
+          <h1 class="display text-display-lg max-w-[26ch] uppercase text-on-dark">
             I run the technical relationship, not just the tickets.
           </h1>
 
-          <div class="mt-10 grid gap-6 text-body text-text-muted">
-            <p class="text-lead text-text">
+          <div class="mt-10 grid gap-6 text-body-md text-muted">
+            <p class="text-body-lead text-body-strong">
               The most useful thing I can tell you about how I work is a decision I got wrong and
               reversed.
             </p>
 
-            <div class="rounded-xl border border-line bg-paper-sunk p-6">
-              <p class="label text-text-muted">The reversal</p>
+            <div class="border border-hairline bg-surface-card p-6">
+              <p class="label text-muted">The reversal</p>
               <Diff
                 minus="Headless Hydrogen storefront, 6 weeks in, my recommendation"
                 plus="Online Store 2.0 theme, rebuilt in 3 weeks"
                 class="mt-4"
               />
-              <p class="text-body mt-5">
-                <span class="text-text">Why I changed it:</span> I had argued for headless on
+              <p class="text-body-md mt-5">
+                <span class="text-on-dark">Why I changed it:</span> I had argued for headless on
                 performance grounds and I was measuring the wrong thing. Their bottleneck was a
                 merchandising workflow their team ran twenty times a day, and headless made every one
                 of those edits a deploy. I had built six weeks of the wrong answer well. Telling the
@@ -94,25 +94,25 @@ import { identity } from '../data/site';
                having larger clients WITHOUT the founder photo, so the portrait is
                here rather than in the hero, and it stays small. -->
           <div
-            class="aspect-[4/5] w-full max-w-[18rem] overflow-hidden rounded-xl border border-line bg-paper-sunk"
+            class="aspect-[4/5] w-full max-w-[18rem] overflow-hidden border border-hairline bg-surface-card"
           >
             <div class="grid h-full place-items-center p-6 text-center">
-              <p class="label text-text-muted">Portrait — 4:5, warm treatment. See CONTENT.md</p>
+              <p class="label text-muted">Portrait — 4:5, warm treatment. See CONTENT.md</p>
             </div>
           </div>
 
-          <dl class="mt-8 grid gap-4 border-t border-line pt-6">
+          <dl class="mt-8 grid gap-4 border-t border-hairline pt-6">
             <div>
-              <dt class="label text-text-muted">Based</dt>
-              <dd class="text-body mt-1">{identity.location}</dd>
+              <dt class="label text-muted">Based</dt>
+              <dd class="text-body-md mt-1">{identity.location}</dd>
             </div>
             <div>
-              <dt class="label text-text-muted">Reply time</dt>
-              <dd class="text-body mt-1">One business day</dd>
+              <dt class="label text-muted">Reply time</dt>
+              <dd class="text-body-md mt-1">One business day</dd>
             </div>
             <div>
-              <dt class="label text-text-muted">Not for hire as</dt>
-              <dd class="text-body mt-1">Brand, paid media, or a full-time role</dd>
+              <dt class="label text-muted">Not for hire as</dt>
+              <dd class="text-body-md mt-1">Brand, paid media, or a full-time role</dd>
             </div>
           </dl>
         </aside>

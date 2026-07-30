@@ -16,22 +16,24 @@ import { identity } from '../../data/site';
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <Font cssVariable="--font-fraunces" preload />
-    <Font cssVariable="--font-geist" preload />
+    <Font cssVariable="--font-saira" preload />
+    <Font cssVariable="--font-garamond" preload />
     <Font cssVariable="--font-geist-mono" />
     <title>OG card</title>
   </head>
   <body>
     <div
       id="card"
-      class="flex h-[630px] w-[1200px] flex-col justify-between bg-paper p-[64px]"
+      class="flex h-[630px] w-[1200px] flex-col justify-between bg-canvas p-[64px]"
     >
       <div class="flex items-baseline justify-between">
-        <p class="label text-text-muted">{identity.name}</p>
-        <p class="label text-accent">Shopify Plus · Hydrogen · Checkout</p>
+        <p class="label text-muted">{identity.name}</p>
+        <p class="label text-on-dark">Shopify Plus · Hydrogen · Checkout</p>
       </div>
 
-      <p class="display max-w-[20ch] text-[86px] leading-[0.96] tracking-[-0.03em]">
+      <p
+        class="display max-w-[22ch] text-[72px] uppercase leading-[0.96] tracking-[0.0625em] text-on-dark"
+      >
         I fix the Shopify Plus problems that cost you revenue.
       </p>
 
@@ -40,7 +42,7 @@ import { identity } from '../../data/site';
           <p class="diff__minus text-[20px]"><span>−</span><span>Slow, app-bloated, mid-migration</span></p>
           <p class="diff__plus text-[20px]"><span>+</span><span>Fast, owned, shipped</span></p>
         </div>
-        <p class="label text-text-muted">{identity.origin.replace('https://', '')}</p>
+        <p class="label text-muted">{identity.origin.replace('https://', '')}</p>
       </div>
     </div>
   </body>

@@ -16,22 +16,21 @@ interface Props {
   company: string;
   profileUrl: string;
   relationship: string;
-  tone?: 'paper' | 'ink';
 }
 
-const { quote, name, title, company, profileUrl, relationship, tone = 'paper' } = Astro.props;
+const { quote, name, title, company, profileUrl, relationship } = Astro.props;
 const linkable = !isPlaceholder(profileUrl);
 ---
 
 <figure class="max-w-[34ch]">
-  <blockquote class:list={['display text-title', tone === 'ink' && 'text-text-inverse']}>
+  {/* A quote is prose, so it stays in the serif Text face rather than stepping
+      up to the Display face — the trinity split does not bend for emphasis. */}
+  <blockquote class="text-body-lead text-on-dark">
     <p>“{quote}”</p>
   </blockquote>
 
-  <figcaption
-    class:list={['label mt-6 flex flex-col gap-1', tone === 'ink' ? 'text-text-dim' : 'text-text-muted']}
-  >
-    <span class={tone === 'ink' ? 'text-text-inverse' : 'text-text'}>
+  <figcaption class="mt-6 flex flex-col gap-1">
+    <span class="label text-on-dark">
       {
         linkable ? (
           <a href={profileUrl} rel="noopener">
@@ -42,13 +41,11 @@ const linkable = !isPlaceholder(profileUrl);
         )
       }
     </span>
-    <span>{title}, {company}</span>
-    <span class="mt-1 max-w-[38ch] normal-case [font-variant-caps:normal] [letter-spacing:normal]">
-      {relationship}
-    </span>
+    <span class="label text-muted">{title}, {company}</span>
+    <span class="text-body-sm mt-2 max-w-[38ch] text-muted">{relationship}</span>
     {
       !linkable && (
-        <span class="mt-1 normal-case text-accent [font-variant-caps:normal]">
+        <span class="text-body-sm mt-1 text-on-dark">
           Needs a public profile link before launch — see CONTENT.md.
         </span>
       )

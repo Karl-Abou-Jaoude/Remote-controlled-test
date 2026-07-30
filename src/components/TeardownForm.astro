@@ -19,8 +19,8 @@ import { contact, identity, booking } from '../data/site';
 ---
 
 <div>
-  <h3 class="display text-title text-text-inverse">{booking.teardownHeading}</h3>
-  <p class="text-body mt-3 max-w-[46ch] text-text-dim">{booking.teardownProse}</p>
+  <h3 class="display text-display-md uppercase text-on-dark">{booking.teardownHeading}</h3>
+  <p class="text-body-md mt-3 max-w-[46ch] text-muted">{booking.teardownProse}</p>
 
   <form
     data-inquiry
@@ -46,7 +46,7 @@ import { contact, identity, booking } from '../data/site';
     />
 
     <div class="grid gap-2">
-      <label for="store" class="label text-text-dim">Store URL</label>
+      <label for="store" class="label text-muted">Store URL</label>
       <input
         id="store"
         name="store"
@@ -55,12 +55,12 @@ import { contact, identity, booking } from '../data/site';
         autocomplete="url"
         placeholder="https://"
         required
-        class="text-body min-h-12 rounded-lg border border-line-ink bg-ink-raised px-4 py-3 text-text-inverse placeholder:text-text-dim"
+        class="text-body-md min-h-12 border-b border-hairline-ui bg-transparent px-0 py-3 text-on-dark placeholder:text-muted"
       />
     </div>
 
     <div class="grid gap-2">
-      <label for="email" class="label text-text-dim">Work email</label>
+      <label for="email" class="label text-muted">Work email</label>
       <input
         id="email"
         name="email"
@@ -69,41 +69,41 @@ import { contact, identity, booking } from '../data/site';
         autocomplete="email"
         required
         aria-describedby="email-hint"
-        class="text-body min-h-12 rounded-lg border border-line-ink bg-ink-raised px-4 py-3 text-text-inverse"
+        class="text-body-md min-h-12 border-b border-hairline-ui bg-transparent px-0 py-3 text-on-dark"
       />
-      <p id="email-hint" class="text-meta text-text-dim">
+      <p id="email-hint" class="text-body-sm text-muted">
         Goes straight to my phone. I reply within one business day.
       </p>
     </div>
 
     <div class="grid gap-2">
-      <label for="message" class="label text-text-dim">
-        What are you building? <span class="normal-case [font-variant-caps:normal]">(optional)</span>
+      <label for="message" class="label text-muted">
+        What are you building? <span class="normal-case">(optional)</span>
       </label>
       <textarea
         id="message"
         name="message"
         rows="3"
         placeholder="Plus replatform, 4,000 SKUs, 6 markets, live by Q1"
-        class="text-body rounded-lg border border-line-ink bg-ink-raised px-4 py-3 text-text-inverse placeholder:text-text-dim"
+        class="text-body-md border-b border-hairline-ui bg-transparent px-0 py-3 text-on-dark placeholder:text-muted"
       ></textarea>
     </div>
 
-    <button type="submit" class="btn btn--inverse w-full sm:w-auto sm:justify-self-start">
+    <button type="submit" class="btn w-full sm:w-auto sm:justify-self-start">
       {booking.teardownCta}
     </button>
 
-    <p data-form-status role="status" aria-live="polite" class="text-meta text-text-dim"></p>
+    <p data-form-status role="status" aria-live="polite" class="text-body-sm text-muted"></p>
   </form>
 
   <div
     data-form-success
     hidden
     tabindex="-1"
-    class="mt-7 rounded-xl border border-line-ink bg-ink-raised p-6"
+    class="mt-7 border border-hairline bg-surface-card p-6"
   >
-    <p class="display text-title text-text-inverse">Got it — it’s on my phone.</p>
-    <p class="text-body mt-3 text-text-dim">
+    <p class="text-body-lead text-on-dark">Got it — it’s on my phone.</p>
+    <p class="text-body-md mt-3 text-muted">
       You’ll hear from me within one business day, usually sooner. Want to skip the wait? Open the
       calendar and take a slot.
     </p>

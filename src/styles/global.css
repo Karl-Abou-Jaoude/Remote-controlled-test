@@ -3,95 +3,142 @@
 /*
   DESIGN SYSTEM
   =============
-  Base is a warm off-white, not near-black: it differentiates against the wall
-  of #0E0E0E developer portfolios, and the client work being shown is
-  overwhelmingly light-themed, so dark chrome fights the screenshots. Near-black
-  is spent exactly twice, as full-bleed inversion bands.
+  Pure black canvas, white type, no accent colour. There is no light mode. The
+  system's discipline is total monochrome: emphasis comes from size, tracking
+  and case, never from colour or weight.
+
+  Three faces, split absolutely — Display for headlines and the wordmark, a
+  serif Text face for running prose, Monospace for buttons, nav and captions.
+  Crossing the split is what breaks the voice, so it never happens.
+
+  Nothing is bold. Every face sits at weight 400. Nothing is rounded except
+  buttons, which are pills. Nothing casts a shadow.
 
   Every colour pair was measured, not eyeballed. Ratios in comments are WCAG 2.2
-  contrast against the stated background.
+  contrast against --color-canvas unless stated otherwise.
 
   THE MOTIF: the diff. `−` before-state, `+` after-state, in mono, with the
   glyph carrying the meaning so it never depends on colour. It is what he
   actually sells (a store before and after his decisions), it costs 0 KB, and it
   repeats across work-card attribution, case-study decisions, the 404 and the
-  footer's own performance numbers. Borrowed devices — hover-words, logo
-  marquees, blanket fade-ups — were cut in its favour.
+  footer's own performance numbers. In a monochrome system it reads as grey
+  before, white after — the glyph still does the work.
 */
 
 @theme {
-  /* --- surfaces --- */
-  --color-paper: #f7f6f3;
-  --color-paper-raised: #ffffff;
-  --color-paper-sunk: #f0eee9;
-  --color-ink: #111110;
-  --color-ink-raised: #1c1b19;
-
-  /* --- text --- */
-  --color-text: #111110; /* on paper — 17.48:1 */
-  --color-text-muted: #5f5b54; /* on paper — 6.25:1 */
-  --color-text-inverse: #f7f6f3; /* on ink — 17.48:1 */
-  --color-text-dim: #a8a49c; /* on ink — 7.61:1 */
-
-  /* --- the one signature chroma --- */
-  --color-accent: #c13a19; /* on paper — 5.00:1 as text AND as fill behind paper text */
-  --color-accent-hot: #ff6a3d; /* on ink — 6.64:1 as text AND as fill behind ink text */
-
-  /* --- the diff motif's second, semantic chroma ---
-     Before-state is graphite, not a second red: two warm reds would read as one
-     smear. The − / + glyph carries the meaning; colour only reinforces it. */
-  --color-diff-minus: #6b675f; /* on paper — 5.21:1 */
-  --color-diff-minus-rule: #928e87; /* 2px bar — 3.02:1 */
-  --color-diff-plus: #c13a19;
+  /* --- surfaces ---
+     Even the "raised" tones stay within a whisker of black. There is no
+     contrast jump between a card and the page; the hairline does that job. */
+  --color-canvas: #000000;
+  --color-surface-soft: #0d0d0d; /* dense/quiet bands */
+  --color-surface-card: #141414; /* cards */
 
   /* --- lines --- */
-  --color-line: #e2ded7; /* decorative hairlines */
-  --color-line-strong: #928e87; /* form borders / UI boundaries on paper — 3.02:1 */
-  --color-line-ink: #63605a; /* the same, on ink — 3.02:1 */
+  --color-hairline: #262626; /* decorative dividers — visible but quiet */
+  /*
+    DEVIATION, deliberate. The reference system's heavier divider is #3a3a3a,
+    which is 2.0:1 against the canvas — below the 3:1 WCAG 2.2 SC 1.4.11
+    requires for the boundary of a control. Input underlines and any other UI
+    boundary use this instead; purely decorative rules still use --color-hairline.
+  */
+  --color-hairline-ui: #6e6e6e; /* 3.51:1 — form + UI boundaries */
 
-  /* --- families --- */
-  --font-sans: var(--font-geist);
-  --font-display: var(--font-fraunces);
+  /* --- text --- */
+  --color-on-dark: #ffffff; /* 21:1 — headlines, primary text, CTA outlines */
+  --color-body: #cccccc; /* 16.1:1 — running prose, slightly cooler than white */
+  --color-body-strong: #e6e6e6; /* 18.4:1 — lead paragraphs */
+  --color-muted: #999999; /* 6.9:1 — captions, metadata, secondary */
+  /*
+    DEVIATION, deliberate. The reference system puts legal and copyright lines
+    at #666666, which is 3.4:1 — below AA for text. Raised to the nearest tone
+    that clears 4.5:1; indistinguishable at this size.
+  */
+  --color-muted-soft: #767676; /* 4.54:1 — legal, copyright */
+
+  /*
+    The only non-monochrome value in the system, reserved for anchors sitting
+    inside running prose. It appears rarely and nowhere else.
+  */
+  --color-link: #c3d9f3; /* 11.9:1 */
+
+  /* --- families: the trinity, aliased from the faces astro.config.mjs loads --- */
+  --font-display: var(--font-saira);
+  --font-text: var(--font-garamond);
   --font-mono: var(--font-geist-mono);
 
   /*
     LOUDNESS MAP — enforced, not decorative.
-    Exactly one --text-hero on the page (the H1). Exactly one --text-metric (the
-    single strongest figure). Everything else steps down. Fifteen bands at the
-    same volume is the failure this prevents.
+    Exactly one --text-display-xl on the page (the H1). Everything else steps
+    down. Fifteen bands at the same volume is the failure this prevents.
+
+    Tracking is expressed in em, not px, so it survives the responsive clamps —
+    and the whole display scale reduces to a single value. 4px at 64, 3px at 48,
+    2px at 32 and 1.5px at 24 are all 0.0625em. One number carries the
+    engineered-precision rhythm across every headline size.
+
+    The lower clamp bound is the mobile step the system calls for (64 → 32px).
   */
+  --text-display-xl: clamp(2rem, 5.4vw, 4rem);
+  --text-display-xl--line-height: 1.1;
+  --text-display-xl--letter-spacing: 0.0625em;
+
+  --text-display-lg: clamp(1.75rem, 4vw, 3rem);
+  --text-display-lg--line-height: 1.15;
+  --text-display-lg--letter-spacing: 0.0625em;
+
+  --text-display-md: clamp(1.5rem, 2.6vw, 2rem);
+  --text-display-md--line-height: 1.2;
+  --text-display-md--letter-spacing: 0.0625em;
+
+  --text-display-sm: 1.5rem;
+  --text-display-sm--line-height: 1.3;
+  --text-display-sm--letter-spacing: 0.0625em;
+
+  /* The widest tracking in the system, and the only place it goes this far. */
+  --text-wordmark: 0.875rem;
+  --text-wordmark--line-height: 1;
+  --text-wordmark--letter-spacing: 0.4286em;
+
   /*
-    Sized against the ACTUAL headline, not a hypothetical short one. The
-    headline trades brevity for specificity (buyer + problem + outcome), and at
-    9vw it ran six lines and pushed the CTA off the fold — which defeats the
-    only job the hero has. Verified at 1440px and 390px with a real render.
+    Listing rows and questions. Display face, but sentence case — an all-caps
+    sentence of any length is hostile to read, so uppercase is reserved for
+    genuine headlines at the display sizes above.
   */
-  --text-hero: clamp(2.5rem, 5.4vw, 4.75rem);
-  --text-hero--line-height: 0.98;
-  --text-hero--letter-spacing: -0.03em;
+  --text-title-md: 1.25rem;
+  --text-title-md--line-height: 1.3;
+  --text-title-md--letter-spacing: 0.05em;
 
-  --text-metric: clamp(2.25rem, 4.4vw, 3.5rem);
-  --text-metric--line-height: 0.95;
-  --text-metric--letter-spacing: -0.03em;
+  --text-title-sm: 1rem;
+  --text-title-sm--line-height: 1.3;
+  --text-title-sm--letter-spacing: 0.09375em;
 
-  --text-display: clamp(2rem, 4vw, 3.25rem);
-  --text-display--line-height: 1.02;
-  --text-display--letter-spacing: -0.025em;
+  /*
+    DEVIATION, deliberate. The reference caption is 11px. Here the caption token
+    also carries load-bearing metadata — rates, availability, credential values,
+    nav — rather than photo captions floating over imagery, so it sits at 12px.
+    Tracking rescaled to hold the same 2px optical gap.
+  */
+  --text-caption: 0.75rem;
+  --text-caption--line-height: 1.4;
+  --text-caption--letter-spacing: 0.1667em;
 
-  --text-title: clamp(1.5rem, 2.4vw, 2rem);
-  --text-title--line-height: 1.12;
-  --text-title--letter-spacing: -0.018em;
+  --text-button: 0.875rem;
+  --text-button--line-height: 1;
+  --text-button--letter-spacing: 0.1786em;
 
-  --text-lead: clamp(1.0625rem, 1.4vw, 1.3125rem);
-  --text-lead--line-height: 1.5;
-  --text-lead--letter-spacing: -0.011em;
+  /*
+    Body sizes are the serif, sentence case, no tracking. A lead paragraph stays
+    in the Text face rather than stepping up to the Display face: the trinity
+    rule is that paragraphs are never set in Display, and a lead is a paragraph.
+  */
+  --text-body-lead: 1.25rem;
+  --text-body-lead--line-height: 1.5;
 
-  --text-body: 1.0625rem;
-  --text-body--line-height: 1.6;
+  --text-body-md: 1rem;
+  --text-body-md--line-height: 1.5;
 
-  --text-meta: 0.8125rem;
-  --text-meta--line-height: 1.45;
-  --text-meta--letter-spacing: 0.02em;
+  --text-body-sm: 0.875rem;
+  --text-body-sm--line-height: 1.5;
 
   /* --- motion: 150-200ms for UI, 300ms ceiling, ease-out for entrances --- */
   --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
@@ -102,7 +149,7 @@
 
   /* --- layout --- */
   --spacing-gutter: clamp(1.25rem, 5vw, 4rem);
-  --container-page: 76rem;
+  --container-page: 80rem;
   --container-text: 42rem;
 }
 
@@ -112,9 +159,9 @@
 
 @layer base {
   html {
-    /* The palette is measured for one scheme; a forced-dark browser would
-       destroy it, so the scheme is declared rather than left to chance. */
-    color-scheme: only light;
+    /* The system has no light mode. A forced-light browser would invert a
+       palette measured in one direction only, so the scheme is declared. */
+    color-scheme: only dark;
     scroll-behavior: smooth; /* 0 KB, and honours reduced-motion natively */
     /* WCAG 2.2 SC 2.4.11 — a sticky header must never obscure a focused,
        anchor-targeted element. */
@@ -123,15 +170,16 @@
   }
 
   body {
-    background-color: var(--color-paper);
-    color: var(--color-text);
-    font-family: var(--font-sans);
-    font-size: var(--text-body);
-    line-height: 1.6;
+    background-color: var(--color-canvas);
+    color: var(--color-body);
+    font-family: var(--font-text);
+    font-size: var(--text-body-md);
+    line-height: 1.5;
+    /* No face here has a bold cut, and none may be faked into one. */
     font-synthesis-weight: none;
     -webkit-font-smoothing: antialiased;
-    caret-color: var(--color-accent);
-    accent-color: var(--color-accent);
+    caret-color: var(--color-on-dark);
+    accent-color: var(--color-on-dark);
   }
 
   /* Oldstyle figures in prose, lining tabular figures on anything measured. */
@@ -150,13 +198,12 @@
   }
 
   /*
-    Optical overhang on EVERY flush-left display head, not just the H1 —
-    otherwise the corrected one looks aligned and all the others look indented.
+    The Display face. Uppercase is applied at the call site rather than here,
+    because the same face sets listing rows and questions in sentence case.
   */
   .display {
     font-family: var(--font-display);
     font-weight: 400;
-    margin-left: -0.05em;
   }
 
   /* Underlines: the second-biggest templated signal after default blue links. */
@@ -164,22 +211,22 @@
     color: inherit;
     text-decoration-thickness: 1px;
     text-underline-offset: 0.18em;
-    text-decoration-color: color-mix(in oklab, var(--color-accent) 55%, transparent);
+    text-decoration-color: color-mix(in oklab, var(--color-on-dark) 40%, transparent);
     transition: text-decoration-color var(--duration-fast) linear;
   }
 
   a:where(:not(.btn)):hover {
     text-decoration-thickness: 2px;
-    text-decoration-color: var(--color-accent);
+    text-decoration-color: var(--color-on-dark);
   }
 
   ::selection {
-    background: color-mix(in oklab, var(--color-accent) 22%, transparent);
-    color: var(--color-text);
+    background: color-mix(in oklab, var(--color-on-dark) 25%, transparent);
+    color: var(--color-on-dark);
   }
 
   ::marker {
-    color: var(--color-accent);
+    color: var(--color-muted);
     font-family: var(--font-mono);
     font-size: 0.85em;
   }
@@ -188,17 +235,16 @@
     field-sizing: content;
   }
 
-  /* Focus as a designed state, two-tone so it holds 3:1 over paper AND ink. */
+  /*
+    Focus as a designed state. White on the canvas is 21:1, so the two-tone
+    treatment the old alternating palette needed is gone, and so is the tinted
+    glow — there is no accent left to tint it with. Square, like everything
+    that is not a button.
+  */
   :focus-visible {
-    outline: 2px solid var(--color-text);
+    outline: 2px solid var(--color-on-dark);
     outline-offset: 3px;
-    box-shadow: 0 0 0 5px color-mix(in oklab, var(--color-accent) 30%, transparent);
-    border-radius: 3px;
-  }
-
-  .on-ink :focus-visible {
-    outline-color: var(--color-accent-hot);
-    box-shadow: 0 0 0 5px color-mix(in oklab, var(--color-accent-hot) 35%, transparent);
+    border-radius: 0;
   }
 
   :focus:not(:focus-visible) {
@@ -207,54 +253,18 @@
 }
 
 /* ------------------------------------------------------------------ *
-   MATERIALITY
-   One inline turbulence grain so the paper reads printed rather than
-   framework-default. Under 1 KB, no network request, and it steps aside for
-   anyone who has asked for more contrast.
- * ------------------------------------------------------------------ */
-
-@layer base {
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    z-index: 60;
-    pointer-events: none;
-    mix-blend-mode: multiply;
-    opacity: 0.035;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23g)'/%3E%3C/svg%3E");
-  }
-
-  @media (prefers-contrast: more) {
-    body::before {
-      display: none;
-    }
-  }
-}
-
-/* ------------------------------------------------------------------ *
    MOTION
-   The whole budget is spent on one material idea — the ink band arriving as a
-   clip-path wipe along the scroll axis, background only, text never hidden.
-   Scroll-driven, so it costs 0 KB of JS and is silently absent where
-   animation-timeline is unsupported. The blanket opacity/translate fade-up
-   that every Tailwind starter ships was deleted deliberately.
+   The budget is spent on one gesture: a hairline drawing itself along the
+   scroll axis. Scroll-driven, so it costs 0 KB of JS and is silently absent
+   where animation-timeline is unsupported.
+
+   The clip-path band wipe that used to live here is gone with the bands it
+   revealed — on a single black canvas there is no inversion left to stage.
  * ------------------------------------------------------------------ */
 
 @layer components {
   @supports (animation-timeline: view()) {
     @media (prefers-reduced-motion: no-preference) {
-      .band-ink::before {
-        content: '';
-        position: absolute;
-        inset: 0;
-        background: var(--color-ink);
-        clip-path: inset(0 0 100% 0);
-        animation: band-wipe linear both;
-        animation-timeline: view();
-        animation-range: entry 5% cover 38%;
-      }
-
       .rule-draw {
         transform-origin: left center;
         scale: 0 1;
@@ -262,12 +272,6 @@
         animation-timeline: view();
         animation-range: entry 12% cover 30%;
       }
-    }
-  }
-
-  @keyframes band-wipe {
-    to {
-      clip-path: inset(0 0 0 0);
     }
   }
 
@@ -300,16 +304,16 @@
 }
 
 /*
-  Mono labels use real small caps where the face supports them. `uppercase` plus
-  letter-spacing is exactly what makes a label look generated.
+  Mono captions: uppercase with wide tracking. This is the machined-precision
+  voice — labels, metadata, dates, nav. Never a paragraph.
 */
 @utility label {
   font-family: var(--font-mono);
-  font-size: var(--text-meta);
-  font-weight: 500;
-  font-variant-caps: all-small-caps;
-  font-feature-settings: 'c2sc' 1, 'smcp' 1;
-  letter-spacing: 0.07em;
+  font-size: var(--text-caption);
+  line-height: 1.4;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.1667em;
   font-variant-numeric: tabular-nums;
 }
 
@@ -321,12 +325,15 @@
 }
 
 @layer components {
-  /* ---------------- the diff motif ---------------- */
+  /* ---------------- the diff motif ----------------
+     Monochrome: before is grey, after is white. The −/+ glyph is real text, not
+     a pseudo-element, so it survives copy/paste and is announced by a screen
+     reader — the meaning never rests on the tone alone. */
   .diff {
     display: grid;
     gap: 0.375rem;
     font-family: var(--font-mono);
-    font-size: var(--text-meta);
+    font-size: var(--text-body-sm);
     font-variant-numeric: tabular-nums;
     line-height: 1.45;
   }
@@ -339,45 +346,48 @@
   }
 
   .diff__minus {
-    color: var(--color-diff-minus);
-    border-left-color: var(--color-diff-minus-rule);
+    color: var(--color-muted);
+    border-left-color: var(--color-hairline-ui);
   }
 
   .diff__plus {
-    color: var(--color-diff-plus);
-    border-left-color: var(--color-diff-plus);
-    font-weight: 500;
+    color: var(--color-on-dark);
+    border-left-color: var(--color-on-dark);
   }
 
-  /* The glyph is real text, not a pseudo-element, so it survives copy/paste
-     and is announced by a screen reader. */
-  .on-ink .diff__minus {
-    color: var(--color-text-dim);
-    border-left-color: var(--color-line-ink);
-  }
-
-  .on-ink .diff__plus {
-    color: var(--color-accent-hot);
-    border-left-color: var(--color-accent-hot);
-  }
-
-  /* ---------------- buttons ---------------- */
+  /* ---------------- buttons ----------------
+     The signature CTA: fully transparent with a 1px white outline, and the only
+     rounded element in the system. Filling it solid would read as off-brand. */
   .btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 0.625rem;
-    min-height: 3rem; /* WCAG 2.2 SC 2.5.8 target size, with room */
-    padding: 0.9rem 1.75rem;
+    gap: 0.75rem;
+    min-height: 3rem; /* WCAG 2.2 SC 2.5.8 target size, with room over the 44px floor */
+    padding: 0.875rem 2rem;
+    border: 1px solid var(--color-on-dark);
     border-radius: 999px;
-    font-weight: 500;
-    letter-spacing: -0.01em;
+    background: transparent;
+    color: var(--color-on-dark);
+    font-family: var(--font-mono);
+    font-size: var(--text-button);
+    font-weight: 400;
+    letter-spacing: 0.1786em;
+    text-transform: uppercase;
     text-decoration: none;
     transition:
       transform var(--duration-fast) var(--ease-out-quint),
       background-color var(--duration-base) linear,
-      color var(--duration-base) linear,
       border-color var(--duration-base) linear;
+  }
+
+  /*
+    Hover lifts the fill barely off transparent rather than flooding it white:
+    the pill has to stay transparent, but a control with no hover feedback at
+    all is worse than a brand deviation this small.
+  */
+  .btn:hover {
+    background: color-mix(in oklab, var(--color-on-dark) 10%, transparent);
   }
 
   /* A designed pressed state — where motion is actually judged. */
@@ -385,32 +395,23 @@
     transform: translateY(1px) scale(0.995);
   }
 
-  .btn--primary {
-    background: var(--color-ink);
-    color: var(--color-text-inverse);
+  /*
+    The quiet variant is the inline text-link treatment: same mono uppercase
+    voice, no pill, no outline. Used where a second CTA sits beside the primary
+    one and must not compete with it.
+  */
+  .btn--quiet {
+    border-color: transparent;
+    padding-inline: 0;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.4em;
+    text-decoration-color: var(--color-hairline-ui);
   }
 
-  .btn--primary:hover {
-    background: var(--color-accent);
-  }
-
-  .btn--secondary {
-    border: 1px solid var(--color-line-strong);
-    color: var(--color-text);
-  }
-
-  .btn--secondary:hover {
-    border-color: var(--color-text);
-    background: var(--color-paper-sunk);
-  }
-
-  .btn--inverse {
-    background: var(--color-accent-hot);
-    color: var(--color-ink);
-  }
-
-  .btn--inverse:hover {
-    background: var(--color-paper);
+  .btn--quiet:hover {
+    background: transparent;
+    text-decoration-color: var(--color-on-dark);
   }
 
   /* ---------------- the structural spine ----------------
@@ -433,32 +434,26 @@
     }
 
     /*
-      The rail is fixed and travels over both paper sections and the two ink
-      bands, so no single colour can hold 4.5:1 against everything underneath
-      it. Difference blending against white resolves to near-black over paper
-      and near-white over ink — measured 19:1 and 16:1 respectively — with no
-      JavaScript and no per-section bookkeeping.
-
-      State is carried by weight and a rule rather than by opacity, because
-      dimming the text would drop it under the contrast floor.
+      The rail used to blend against a page that alternated light and dark. With
+      one surface underneath it there is nothing to blend, so it is simply grey
+      going white — and since the system has no bold, the active state is
+      carried by tone and the rule rather than by weight.
     */
     .rail a {
       text-decoration: none;
-      color: #fff;
-      mix-blend-mode: difference;
-      font-weight: 500;
-      transition: font-weight var(--duration-base) linear;
+      color: var(--color-muted);
+      transition: color var(--duration-base) linear;
     }
 
     .rail a[aria-current='true'] {
-      font-weight: 700;
+      color: var(--color-on-dark);
     }
 
     .rail a[aria-current='true']::before {
       content: '';
       display: inline-block;
       width: 0.75rem;
-      height: 2px;
+      height: 1px;
       margin-right: 0.375rem;
       vertical-align: 0.25em;
       background: currentColor;
@@ -476,20 +471,38 @@
     top: 1rem;
     z-index: 100;
     padding: 0.75rem 1rem;
-    background: var(--color-ink);
-    color: var(--color-text-inverse);
-    border-radius: 4px;
+    background: var(--color-canvas);
+    color: var(--color-on-dark);
+    border: 1px solid var(--color-on-dark);
+    border-radius: 0;
   }
 }
 
 /* ------------------------------------------------------------------ *
    PRINT
-   The buyer forwards this to a CFO. Drop the fixed chrome, flatten the ink
-   bands so they do not eat a toner cartridge, and expose the live URLs the
-   whole pitch rests on.
+   The buyer forwards this to a CFO. A full-bleed black page would eat a toner
+   cartridge, so the whole thing inverts to black-on-white, the fixed chrome
+   goes, and the live URLs the pitch rests on are exposed.
  * ------------------------------------------------------------------ */
 
 @media print {
+  html {
+    color-scheme: only light;
+  }
+
+  body {
+    background: #fff !important;
+    color: #000 !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    background-color: transparent !important;
+    color: #000 !important;
+    border-color: #bbb !important;
+  }
+
   .rail,
   [data-sticky-cta],
   [data-site-header],
@@ -497,18 +510,8 @@
     display: none !important;
   }
 
-  .band-ink,
-  .on-ink {
-    background: #fff !important;
-    color: #000 !important;
-  }
-
-  .band-ink::before {
-    display: none !important;
-  }
-
-  body::before {
-    display: none !important;
+  .btn {
+    border-color: #000 !important;
   }
 
   /* Expose reference URLs — the live storefronts are the whole proof — but not on

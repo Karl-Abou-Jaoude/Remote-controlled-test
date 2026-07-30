@@ -26,34 +26,36 @@ const { study } = Astro.props;
   <main id="main">
     <article class="pt-28 pb-20 md:pt-40">
       <div class="container-page">
-        <nav aria-label="Breadcrumb" class="label text-text-muted">
+        <nav aria-label="Breadcrumb" class="label text-muted">
           <a href="/">Home</a> <span aria-hidden="true">/</span>
           <a href="/#cases">Work</a> <span aria-hidden="true">/</span>
           <span aria-current="page">{study.brand}</span>
         </nav>
 
-        <h1 class="display text-hero mt-8 max-w-[24ch]">{study.headline}</h1>
+        <h1 class="display text-display-xl mt-8 max-w-[24ch] uppercase text-on-dark">
+          {study.headline}
+        </h1>
 
         <dl
-          class="mt-12 grid grid-cols-2 gap-x-8 gap-y-6 border-y border-line py-8 md:grid-cols-4"
+          class="mt-12 grid grid-cols-2 gap-x-8 gap-y-6 border-y border-hairline py-8 md:grid-cols-4"
         >
           <div>
-            <dt class="label text-text-muted">Brand</dt>
-            <dd class="text-body mt-1.5">{study.brand} · {study.vertical}</dd>
+            <dt class="label text-muted">Brand</dt>
+            <dd class="text-body-md mt-1.5">{study.brand} · {study.vertical}</dd>
           </div>
           <div>
-            <dt class="label text-text-muted">Markets & GMV</dt>
-            <dd class="text-body mt-1.5 [font-variant-numeric:tabular-nums]">
+            <dt class="label text-muted">Markets & GMV</dt>
+            <dd class="text-body-md mt-1.5 [font-variant-numeric:tabular-nums]">
               {study.region} · {study.gmvBand}
             </dd>
           </div>
           <div>
-            <dt class="label text-text-muted">Duration</dt>
-            <dd class="text-body mt-1.5">{study.duration}</dd>
+            <dt class="label text-muted">Duration</dt>
+            <dd class="text-body-md mt-1.5">{study.duration}</dd>
           </div>
           <div>
-            <dt class="label text-text-muted">What’s mine on this page</dt>
-            <dd class="text-body mt-1.5">{study.role}</dd>
+            <dt class="label text-muted">What’s mine on this page</dt>
+            <dd class="text-body-md mt-1.5">{study.role}</dd>
           </div>
         </dl>
 
@@ -62,22 +64,22 @@ const { study } = Astro.props;
             <!-- The constraint first. Anyone can ship when nothing is in the way;
                  this is the section an experienced buyer actually judges. -->
             <section aria-labelledby="constraint">
-              <h2 id="constraint" class="label text-accent">The constraint</h2>
-              <p class="text-lead mt-4 max-w-[60ch]">{study.constraint}</p>
+              <h2 id="constraint" class="label text-on-dark">The constraint</h2>
+              <p class="text-body-lead mt-4 max-w-[60ch] text-body-strong">{study.constraint}</p>
             </section>
 
             <section aria-labelledby="decisions" class="mt-14">
-              <h2 id="decisions" class="label text-accent">The decisions</h2>
+              <h2 id="decisions" class="label text-on-dark">The decisions</h2>
               <ol class="mt-6 grid gap-8">
                 {
                   study.decisions.map((d, i) => (
-                    <li class="border-t border-line pt-6">
-                      <p class="label text-text-muted">
-                        {String(i + 1).padStart(2, '0')}
+                    <li class="border-t border-hairline pt-6">
+                      <p class="label text-muted">{String(i + 1).padStart(2, '0')}</p>
+                      <p class="display text-title-md mt-2 max-w-[40ch] text-on-dark">
+                        {d.decision}
                       </p>
-                      <p class="display text-title mt-2 max-w-[40ch]">{d.decision}</p>
-                      <p class="text-body mt-3 max-w-[58ch] text-text-muted">
-                        <span class="text-text">Because</span> {d.because}
+                      <p class="text-body-md mt-3 max-w-[58ch] text-muted">
+                        <span class="text-on-dark">Because</span> {d.because}
                       </p>
                     </li>
                   ))
@@ -88,10 +90,10 @@ const { study } = Astro.props;
             {
               study.snippet && (
                 <section aria-labelledby="snippet" class="mt-14">
-                  <h2 id="snippet" class="label text-accent">One real piece of it</h2>
-                  <p class="text-meta mt-3 text-text-muted">{study.snippet.caption}</p>
+                  <h2 id="snippet" class="label text-on-dark">One real piece of it</h2>
+                  <p class="text-body-sm mt-3 text-muted">{study.snippet.caption}</p>
                   <pre
-                    class="mt-4 overflow-x-auto rounded-xl border border-line bg-ink p-5 text-[0.8125rem] leading-relaxed text-text-inverse"
+                    class="text-body-sm mt-4 overflow-x-auto border border-hairline bg-surface-card p-5 font-mono leading-relaxed text-on-dark"
                   ><code>{study.snippet.code}</code></pre>
                 </section>
               )
@@ -99,31 +101,31 @@ const { study } = Astro.props;
           </div>
 
           <aside class="lg:col-span-5">
-            <div class="rounded-xl border border-line bg-paper-sunk p-7">
-              <h2 class="label text-text-muted">Before → after</h2>
+            <div class="border border-hairline bg-surface-card p-6">
+              <h2 class="label text-muted">Before → after</h2>
               <Diff minus={study.diff.minus} plus={study.diff.plus} class="mt-4" />
             </div>
 
             <section aria-labelledby="metrics" class="mt-8">
-              <h2 id="metrics" class="label text-accent">The numbers, and where they came from</h2>
+              <h2 id="metrics" class="label text-on-dark">The numbers, and where they came from</h2>
               <div class="mt-5 grid gap-6">
                 {
                   study.metrics.map((m) => (
-                    <div class="border-t border-line pt-5">
-                      <p class="label text-text-muted">{m.label}</p>
-                      <p class="metric text-title mt-2">
-                        <span class="text-text-muted">{m.before}</span>
-                        <span aria-hidden="true" class="text-accent"> → </span>
+                    <div class="border-t border-hairline pt-5">
+                      <p class="label text-muted">{m.label}</p>
+                      <p class="metric text-display-md mt-2 text-on-dark">
+                        <span class="text-muted">{m.before}</span>
+                        <span aria-hidden="true" class="text-muted"> → </span>
                         <span>{m.after}</span>
                       </p>
-                      <p class="text-meta mt-2 text-text-muted">
+                      <p class="text-body-sm mt-2 text-muted">
                         {m.window} · measured with {m.instrument}
                       </p>
                     </div>
                   ))
                 }
               </div>
-              <p class="text-meta mt-6 text-text-muted">
+              <p class="text-body-sm mt-6 text-muted">
                 Figures as reported by the brand from their own instrumentation. No percentage on
                 this page appears without its baseline and its measurement window.
               </p>
@@ -131,11 +133,11 @@ const { study } = Astro.props;
 
             {
               study.quote && (
-                <figure class="mt-10 border-t border-line pt-8">
-                  <blockquote class="display text-title max-w-[30ch]">
+                <figure class="mt-10 border-t border-hairline pt-8">
+                  <blockquote class="text-body-lead max-w-[30ch] text-on-dark">
                     <p>“{study.quote.text}”</p>
                   </blockquote>
-                  <figcaption class="label mt-5 text-text-muted">
+                  <figcaption class="label mt-5 text-muted">
                     {!isPlaceholder(study.quote.profileUrl) ? (
                       <a href={study.quote.profileUrl} rel="noopener">
                         {study.quote.name}
@@ -151,13 +153,17 @@ const { study } = Astro.props;
           </aside>
         </div>
 
-        <div class="mt-16 flex flex-wrap items-center gap-6 border-t border-line pt-10">
+        <div class="mt-16 flex flex-wrap items-center gap-6 border-t border-hairline pt-10">
           <Cta kind="book" position={`case-${study.slug}`} variant="primary">
             Book a 20-min call
           </Cta>
           {
             !isPlaceholder(study.liveUrl) && (
-              <a href={study.liveUrl} rel="noopener" class="label flex min-h-12 items-center">
+              <a
+                href={study.liveUrl}
+                rel="noopener"
+                class="label flex min-h-12 items-center text-on-dark"
+              >
                 Open the live store →
               </a>
             )

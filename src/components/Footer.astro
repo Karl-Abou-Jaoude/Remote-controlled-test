@@ -20,36 +20,37 @@ const mailto = `mailto:${identity.email}?subject=${encodeURIComponent('Shopify p
   Email is a plain clickable address. Obfuscation mostly breaks screen readers and
   does not stop scrapers, which is a bad trade on a site selling credibility.
 -->
-<footer class="on-ink bg-ink py-20 text-text-inverse md:py-24">
+<footer class="border-t border-hairline py-20 md:py-28">
   <div class="container-page">
-    <div class="grid gap-10 border-b border-line-ink pb-14 lg:grid-cols-12 lg:gap-10">
+    <div class="grid gap-10 border-b border-hairline pb-14 lg:grid-cols-12 lg:gap-10">
       <div class="lg:col-span-7">
-        <h2 class="display text-display max-w-[26ch]">{footer.ctaHeading}</h2>
+        <h2 class="display text-display-lg max-w-[26ch] uppercase text-on-dark">
+          {footer.ctaHeading}
+        </h2>
         <div class="mt-8">
-          <Cta kind="book" position="footer" variant="inverse">Book a 20-min call</Cta>
+          <Cta kind="book" position="footer" variant="primary">Book a 20-min call</Cta>
         </div>
       </div>
 
       <div class="grid content-start gap-6 lg:col-span-5">
         <div>
-          <p class="label text-text-dim">Direct</p>
+          <p class="label text-muted">Direct</p>
           <p class="mt-2 flex flex-wrap items-center gap-3">
-            <a href={mailto} class="text-body">{identity.email}</a>
+            <a href={mailto} class="text-body-md">{identity.email}</a>
             <button
               type="button"
               data-copy={identity.email}
-              class="label min-h-8 rounded-full border border-line-ink px-3 py-1.5 text-text-dim transition-colors hover:border-text-inverse hover:text-text-inverse"
+              class="label min-h-8 rounded-full border border-hairline-ui px-3 py-1.5 text-muted transition-colors hover:border-on-dark hover:text-on-dark"
               aria-label="Copy email address"
             >
               Copy
             </button>
-            <span data-copy-status role="status" aria-live="polite" class="text-meta text-text-dim"
-            ></span>
+            <span data-copy-status role="status" aria-live="polite" class="label text-muted"></span>
           </p>
         </div>
 
-        <p class="text-meta text-text-dim">{footer.promise}</p>
-        <p class="label text-text-dim">
+        <p class="text-body-sm text-muted">{footer.promise}</p>
+        <p class="label text-muted">
           {availability.concurrentEngagements} slots · earliest start {availability.nextStartLabel}
         </p>
       </div>
@@ -57,27 +58,23 @@ const mailto = `mailto:${identity.email}?subject=${encodeURIComponent('Shopify p
 
     <div class="grid gap-10 py-12 lg:grid-cols-12">
       <nav class="lg:col-span-4" aria-label="Footer">
-        <p class="label text-text-dim">Site</p>
+        <p class="label text-muted">Site</p>
         <ul class="mt-4 grid gap-2.5">
-          <li><a href="#cases" class="text-body">Work</a></li>
-          <li><a href="#engagements" class="text-body">Pricing</a></li>
-          <li><a href="#faq" class="text-body">FAQ</a></li>
-          <li><a href="/about/" class="text-body">About</a></li>
-          <li><a href="/privacy/" class="text-body">Privacy</a></li>
+          <li><a href="#cases" class="text-body-md">Work</a></li>
+          <li><a href="#engagements" class="text-body-md">Pricing</a></li>
+          <li><a href="#faq" class="text-body-md">FAQ</a></li>
+          <li><a href="/about/" class="text-body-md">About</a></li>
+          <li><a href="/privacy/" class="text-body-md">Privacy</a></li>
         </ul>
       </nav>
 
       <div class="lg:col-span-4">
-        <p class="label text-text-dim">Elsewhere</p>
+        <p class="label text-muted">Elsewhere</p>
         <ul class="mt-4 grid gap-2.5">
           {
             contact.socials.map((s) => (
               <li>
-                <a
-                  href={s.url}
-                  rel="noopener"
-                  class="text-body flex min-h-12 items-center"
-                >
+                <a href={s.url} rel="noopener" class="text-body-md flex min-h-12 items-center">
                   {s.label} →
                 </a>
               </li>
@@ -87,25 +84,25 @@ const mailto = `mailto:${identity.email}?subject=${encodeURIComponent('Shopify p
       </div>
 
       <div class="lg:col-span-4">
-        <p class="label text-text-dim">This page</p>
+        <p class="label text-muted">This page</p>
         <Diff minus={footer.perf.minus} plus={footer.perf.plus} class="mt-4" />
         {
           !isPlaceholder(footer.perf.proofUrl) ? (
-            <a href={footer.perf.proofUrl} rel="noopener" class="label mt-3 inline-block text-text-dim">
+            <a href={footer.perf.proofUrl} rel="noopener" class="label mt-3 inline-block text-muted">
               Verify on PageSpeed →
             </a>
           ) : (
-            <p class="label mt-3 text-text-dim">Add a dated PageSpeed link — see CONTENT.md</p>
+            <p class="label mt-3 text-muted">Add a dated PageSpeed link — see CONTENT.md</p>
           )
         }
-        <p class="text-meta mt-4 text-text-dim">
+        <p class="text-body-sm mt-4 text-muted">
           No cookies, no consent banner, no third-party scripts until you ask for the calendar.
         </p>
       </div>
     </div>
 
     <div
-      class="flex flex-wrap items-center justify-between gap-4 border-t border-line-ink pt-8 text-text-dim"
+      class="flex flex-wrap items-center justify-between gap-4 border-t border-hairline pt-8 text-muted-soft"
     >
       <p class="label">{footer.credit}</p>
       <p class="label">WCAG 2.2 AA · keyboard-complete · honours reduced-motion</p>

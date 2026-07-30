@@ -107,10 +107,10 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': grap
       DEMO_CONTENT && <meta name="robots" content="noindex, nofollow" />
     }
 
-    <!-- Only the two faces used above the fold are preloaded. The display
-         serif is the LCP element, so it is not optional. -->
-    <Font cssVariable="--font-fraunces" preload />
-    <Font cssVariable="--font-geist" preload />
+    <!-- Only the two faces used above the fold are preloaded. The Display face
+         sets the H1, which is the LCP element, so it is not optional. -->
+    <Font cssVariable="--font-saira" preload />
+    <Font cssVariable="--font-garamond" preload />
     <Font cssVariable="--font-geist-mono" />
 
     <meta property="og:type" content="website" />
@@ -123,8 +123,9 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': grap
     <meta property="og:image:alt" content={ogImageAlt} />
     <meta name="twitter:card" content="summary_large_image" />
 
-    <meta name="theme-color" content="#f7f6f3" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#111110" media="(prefers-color-scheme: dark)" />
+    <!-- One canvas, both schemes: the system has no light mode, so the browser
+         chrome matches the page rather than the visitor's preference. -->
+    <meta name="theme-color" content="#000000" />
     {!DEMO_CONTENT && <link rel="sitemap" href="/sitemap-index.xml" />}
 
     <script type="application/ld+json" is:inline set:html={jsonLd} />

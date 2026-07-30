@@ -12,8 +12,8 @@ import { identity } from '../data/site';
 <Base title="Got it — Karl Abou Jaoude" path="/thanks/">
   <main id="main" class="grid min-h-screen place-items-center py-24">
     <div class="container-page max-w-[--container-text]">
-      <h1 class="display text-display">Got it — it’s on my phone.</h1>
-      <p class="text-lead mt-6 text-text-muted">
+      <h1 class="display text-display-lg uppercase text-on-dark">Got it — it’s on my phone.</h1>
+      <p class="text-body-lead mt-6 text-body-strong">
         You’ll hear from me within one business day, usually sooner. If it’s urgent, take a slot
         directly — that’s faster than waiting on my reply.
       </p>
@@ -24,8 +24,8 @@ import { identity } from '../data/site';
         </Cta>
       </div>
 
-      <p class="text-meta mt-10 border-t border-line pt-8 text-text-muted">
-        Nothing arrived? Email me directly at <a href={`mailto:${identity.email}`}>{identity.email}</a>
+      <p class="text-body-sm mt-10 border-t border-hairline pt-8 text-muted">
+        Nothing arrived? Email me directly at <a href={`mailto:${identity.email}`} class="text-link">{identity.email}</a>
         — occasionally a form service eats a submission, and I would rather hear from you twice than
         not at all.
       </p>

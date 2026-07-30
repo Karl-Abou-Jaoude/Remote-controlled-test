@@ -26,10 +26,12 @@ const rows = nameable.length >= 3 ? nameable : credits;
 const isPreview = nameable.length < 3;
 ---
 
-<section id="credits" aria-labelledby="credits-heading" class="py-20 md:py-28">
+<section id="credits" aria-labelledby="credits-heading" class="py-20 md:py-30">
   <div class="container-page">
-    <h2 id="credits-heading" class="text-title display max-w-[34ch]">{creditsHeading}</h2>
-    <span aria-hidden="true" class="rule-draw mt-8 block h-px w-full bg-line"></span>
+    <h2 id="credits-heading" class="text-display-md display max-w-[34ch] uppercase">
+      {creditsHeading}
+    </h2>
+    <span aria-hidden="true" class="rule-draw mt-8 block h-px w-full bg-hairline"></span>
 
     <div class="mt-2 overflow-x-auto">
       <table class="w-full min-w-[46rem] border-collapse text-left">
@@ -37,28 +39,28 @@ const isPreview = nameable.length < 3;
           Brands, regions, revenue bands and what shipped on each build
         </caption>
         <thead>
-          <tr class="border-b border-line">
-            <th scope="col" class="label py-3 pr-6 font-medium text-text-muted">Brand</th>
-            <th scope="col" class="label py-3 pr-6 font-medium text-text-muted">Region</th>
-            <th scope="col" class="label py-3 pr-6 font-medium text-text-muted">GMV band</th>
-            <th scope="col" class="label py-3 pr-6 font-medium text-text-muted">What shipped</th>
-            <th scope="col" class="label py-3 font-medium text-text-muted">My role</th>
+          <tr class="border-b border-hairline">
+            <th scope="col" class="label py-3 pr-6 text-muted">Brand</th>
+            <th scope="col" class="label py-3 pr-6 text-muted">Region</th>
+            <th scope="col" class="label py-3 pr-6 text-muted">GMV band</th>
+            <th scope="col" class="label py-3 pr-6 text-muted">What shipped</th>
+            <th scope="col" class="label py-3 text-muted">My role</th>
           </tr>
         </thead>
         <tbody>
           {
             rows.map((row) => (
-              <tr class="border-b border-line last:border-b-0">
-                <th scope="row" class="text-body py-4 pr-6 font-medium">
+              <tr class="border-b border-hairline last:border-b-0">
+                <th scope="row" class="text-body-md py-4 pr-6 text-on-dark">
                   {row.brand}
-                  {row.nda && <span class="text-meta block text-text-muted">name under NDA</span>}
+                  {row.nda && <span class="text-body-sm block text-muted">name under NDA</span>}
                 </th>
-                <td class="text-meta py-4 pr-6 text-text-muted">{row.region}</td>
-                <td class="text-meta py-4 pr-6 text-text-muted [font-variant-numeric:tabular-nums]">
+                <td class="text-body-sm py-4 pr-6 text-muted">{row.region}</td>
+                <td class="text-body-sm py-4 pr-6 text-muted [font-variant-numeric:tabular-nums]">
                   {row.gmvBand}
                 </td>
-                <td class="text-meta py-4 pr-6">{row.shipped}</td>
-                <td class="text-meta py-4 text-text-muted">{row.role}</td>
+                <td class="text-body-sm py-4 pr-6">{row.shipped}</td>
+                <td class="text-body-sm py-4 text-muted">{row.role}</td>
               </tr>
             ))
           }
@@ -66,11 +68,11 @@ const isPreview = nameable.length < 3;
       </table>
     </div>
 
-    <p class="text-meta mt-6 border-t border-line pt-5 text-text-muted">{creditsFootnote}</p>
+    <p class="text-body-sm mt-6 border-t border-hairline pt-5 text-muted">{creditsFootnote}</p>
 
     {
       isPreview && (
-        <p class="text-meta mt-3 text-accent">
+        <p class="text-body-sm mt-3 text-on-dark">
           Preview only — this table needs at least three nameable brands before launch. See
           CONTENT.md.
         </p>

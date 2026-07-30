@@ -142,7 +142,7 @@ export const hero = {
 
 /* ------------------------------------------------------------------ *
    SCOPE STRIP — arithmetic instead of adjectives.
-   `emphasis: true` marks the ONE figure allowed to render at --text-metric.
+   `emphasis: true` marks the ONE figure allowed to render at --text-display-lg.
    Six equal numerals is six focal points, which is none.
    ScopeStrip.astro renders only filled cells and fails the build below four.
  * ------------------------------------------------------------------ */

@@ -15,7 +15,13 @@ interface Props {
   kind?: 'book' | 'link';
   href?: string;
   position: string;
-  variant?: 'primary' | 'secondary' | 'inverse';
+  /**
+   * `primary` is the transparent outlined pill — the signature CTA. `quiet` is
+   * the same mono voice with no pill, for a second action that must not compete
+   * with the primary one. There is no filled variant: a solid button reads as
+   * off-brand in this system.
+   */
+  variant?: 'primary' | 'quiet';
   size?: 'default' | 'compact';
   /** Tone microcopy under the button. */
   note?: string;
@@ -48,31 +54,28 @@ const bookAttrs =
     data-position={position}
     class:list={[
       'btn group',
-      `btn--${variant}`,
-      size === 'compact' && 'min-h-10 px-5 py-2 text-[0.875rem]',
+      // `.btn` alone IS the primary treatment, so only the quiet variant needs a
+      // modifier — emitting `btn--primary` would be a class with no rule behind it.
+      variant !== 'primary' && `btn--${variant}`,
+      size === 'compact' && 'min-h-10 px-5 py-2',
       full && 'w-full',
     ]}
     {...bookAttrs}
   >
     <slot />
-    <svg
-      class="h-3.5 w-3.5 transition-transform duration-[var(--duration-base)] ease-[var(--ease-out-quint)] group-hover:translate-x-1"
-      viewBox="0 0 14 14"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="1.6"
+    <span
       aria-hidden="true"
+      class="inline-block transition-transform duration-[var(--duration-base)] ease-[var(--ease-out-quint)] group-hover:translate-x-1"
+      >→</span
     >
-      <path d="M2 7h10M8 3l4 4-4 4" stroke-linecap="round" stroke-linejoin="round"></path>
-    </svg>
   </a>
 
-  {note && <span class="text-meta max-w-[42ch] text-text-muted">{note}</span>}
+  {note && <span class="text-body-sm max-w-[42ch] text-muted">{note}</span>}
 
   {
     reversal && (
-      <span class="text-meta flex max-w-[42ch] items-start gap-2 text-text-muted">
-        <span aria-hidden="true" class="text-accent">
+      <span class="text-body-sm flex max-w-[42ch] items-start gap-2 text-muted">
+        <span aria-hidden="true" class="text-on-dark">
           ✓
         </span>
         {reversal}

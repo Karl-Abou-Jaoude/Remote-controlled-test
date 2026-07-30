@@ -18,50 +18,69 @@ export default defineConfig({
   // Fonts are resolved from the installed @fontsource* packages (no runtime CDN,
   // no third-party connection). `optimizedFallbacks` derives metric-matched
   // fallback faces from the real font metrics, so the swap costs 0 CLS.
+  /*
+    THE TRINITY. The design system runs three faces with an absolute split:
+    Display for headlines and the wordmark, a serif Text face for running body
+    copy, Monospace for buttons, nav and captions. Never crossed.
+
+    Bugatti's own three faces are licensed and unavailable, so these are the
+    documented substitutes. Preserving the three-family split matters more than
+    matching the exact typeface.
+
+    Every face is loaded at weight 400 only — the system has no bold role, and
+    emphasis comes from size, tracking and case instead. Nothing here can
+    synthesise a heavier weight (`font-synthesis-weight: none` in global.css).
+  */
   fonts: [
+    /*
+      Display: Saira Condensed at a wide positive tracking. Only the static 400
+      is installed rather than the variable family — with no weight axis in use,
+      a variable file would ship extra axis data for a single instance.
+    */
     {
-      name: 'Geist',
-      cssVariable: '--font-geist',
+      name: 'Saira Condensed',
+      cssVariable: '--font-saira',
       provider: fontProviders.local(),
       display: 'swap',
       optimizedFallbacks: true,
-      fallbacks: ['system-ui', 'sans-serif'],
+      fallbacks: ['-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
       options: {
         variants: [
           {
-            weight: '400 700',
+            weight: '400',
             style: 'normal',
-            src: ['@fontsource-variable/geist/files/geist-latin-wght-normal.woff2'],
+            src: ['@fontsource/saira-condensed/files/saira-condensed-latin-400-normal.woff2'],
           },
         ],
       },
     },
     /*
-      Display face is Fraunces with the WONK axis on. Instrument Serif is the
-      most-deployed free display serif of the last two years and reads as a
-      template at hero size; Fraunces' wonk axis gives genuinely unusual
-      ear/leg forms that stay recognisable at 9rem. The `wonk` subset file
-      carries wght 100-900 + WONK 0-1 (verified with fontTools), and its
-      default weight is 900, so weight is always set explicitly in CSS.
+      Text: EB Garamond. The serif body voice is what separates this system from
+      the all-sans luxury crowd — it signals slow-reading, considered prose.
     */
     {
-      name: 'Fraunces',
-      cssVariable: '--font-fraunces',
+      name: 'EB Garamond',
+      cssVariable: '--font-garamond',
       provider: fontProviders.local(),
       display: 'swap',
       optimizedFallbacks: true,
-      fallbacks: ['Georgia', 'serif'],
+      fallbacks: ['Garamond', 'Times New Roman', 'serif'],
       options: {
         variants: [
           {
-            weight: '100 900',
+            weight: '400',
             style: 'normal',
-            variationSettings: "'WONK' 1",
-            src: ['@fontsource-variable/fraunces/files/fraunces-latin-wonk-normal.woff2'],
+            src: ['@fontsource-variable/eb-garamond/files/eb-garamond-latin-wght-normal.woff2'],
           },
         ],
       },
     },
+    /*
+      Monospace: Geist Mono, kept from the previous system. It is already a
+      neutral machined grotesque, which is exactly the register the mono slot
+      calls for; swapping it for JetBrains Mono would cost a download to land in
+      the same place.
+    */
     {
       name: 'Geist Mono',
       cssVariable: '--font-geist-mono',
@@ -72,7 +91,7 @@ export default defineConfig({
       options: {
         variants: [
           {
-            weight: '400 500',
+            weight: '400',
             style: 'normal',
             src: ['@fontsource-variable/geist-mono/files/geist-mono-latin-wght-normal.woff2'],
           },

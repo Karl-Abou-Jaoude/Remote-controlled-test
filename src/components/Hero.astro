@@ -22,13 +22,13 @@ import Cta from './Cta.astro';
   <div class="container-page">
     <div class="grid gap-12 lg:grid-cols-12 lg:gap-8">
       <div class="lg:col-span-8">
-        <h1 id="hero-heading" class="display text-hero">
+        <h1 id="hero-heading" class="display text-display-xl uppercase">
           {hero.headline}<span class="hidden md:inline">{hero.headlineTail}</span><span
             class="md:hidden">.</span
           >
         </h1>
 
-        <p class="text-lead mt-7 max-w-[46ch] text-text-muted">
+        <p class="text-body-lead mt-7 max-w-[46ch] text-muted">
           {hero.subhead}<span class="hidden md:inline">{hero.subheadTail}</span>
         </p>
 
@@ -36,17 +36,17 @@ import Cta from './Cta.astro';
           <Cta kind="book" position="hero" variant="primary" note={hero.doubtRemover}>
             {hero.primaryCta}
           </Cta>
-          <Cta kind="link" href="#book" position="hero-teardown" variant="secondary">
+          <Cta kind="link" href="#book" position="hero-teardown" variant="quiet">
             {hero.secondaryCta}
           </Cta>
         </div>
 
-        <p class="text-meta mt-6 flex max-w-[46ch] items-start gap-2 text-text-muted">
-          <span aria-hidden="true" class="text-accent">✓</span>{hero.reversal}
+        <p class="text-body-sm mt-6 flex max-w-[46ch] items-start gap-2 text-muted">
+          <span aria-hidden="true" class="text-on-dark">✓</span>{hero.reversal}
         </p>
 
-        <p class="label mt-8 flex flex-wrap items-center gap-x-3 gap-y-1 text-text-muted">
-          <span aria-hidden="true" class="inline-block h-1.5 w-1.5 rounded-full bg-accent"></span>
+        <p class="label mt-8 flex flex-wrap items-center gap-x-3 gap-y-1 text-muted">
+          <span aria-hidden="true" class="inline-block h-1.5 w-1.5 rounded-full bg-on-dark"></span>
           <span>{availability.concurrentEngagements} slots</span>
           <span aria-hidden="true">·</span>
           <span>earliest start {availability.nextStartLabel}</span>
@@ -56,12 +56,12 @@ import Cta from './Cta.astro';
       <!-- Credential block set into the H1's right shoulder, so the fold reads as
            a composition rather than two stacked rectangles. -->
       <aside class="lg:col-span-4 lg:pt-3">
-        <dl class="border-t border-line pt-4 lg:border-t-0 lg:border-l lg:pt-0 lg:pl-6">
+        <dl class="border-t border-hairline pt-4 lg:border-t-0 lg:border-l lg:pt-0 lg:pl-6">
           {
             hero.credentialBlock.map(({ k, v }) => (
-              <div class="flex justify-between gap-4 border-b border-line py-2.5 last:border-b-0 lg:block lg:py-2">
-                <dt class="label text-text-muted">{k}</dt>
-                <dd class="text-meta text-right lg:mt-0.5 lg:text-left">{v}</dd>
+              <div class="flex justify-between gap-4 border-b border-hairline py-2.5 last:border-b-0 lg:block lg:py-2">
+                <dt class="label text-muted">{k}</dt>
+                <dd class="text-body-sm text-right lg:mt-0.5 lg:text-left">{v}</dd>
               </div>
             ))
           }
@@ -70,7 +70,7 @@ import Cta from './Cta.astro';
         <!-- Price visible in the first screenful on desktop: a buyer should not
              scroll 8,000px to discover they are disqualified, and a buyer with
              real budget should not have to guess the operation's size. -->
-        <p class="label mt-4 hidden text-text-muted lg:block">{rateStrip}</p>
+        <p class="label mt-4 hidden text-muted lg:block">{rateStrip}</p>
       </aside>
     </div>
   </div>

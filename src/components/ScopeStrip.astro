@@ -32,7 +32,7 @@ const cells = filled.length > 0 ? filled : scope;
 <section
   id="scope"
   aria-labelledby="scope-heading"
-  class="border-y border-line bg-paper-sunk py-14 md:py-20"
+  class="border-y border-hairline bg-surface-soft py-16 md:py-24"
 >
   <div class="container-page">
     <h2 id="scope-heading" class="sr-only">Scope</h2>
@@ -40,17 +40,17 @@ const cells = filled.length > 0 ? filled : scope;
     <ul class="grid grid-cols-2 gap-x-8 gap-y-10 md:grid-cols-3 lg:grid-cols-6 lg:gap-x-6">
       {
         cells.map((cell) => (
-          <li class="lg:border-l lg:border-line lg:pl-4 lg:first:border-l-0 lg:first:pl-0">
+          <li class="lg:border-l lg:border-hairline lg:pl-4 lg:first:border-l-0 lg:first:pl-0">
             <p
               class:list={[
                 'metric',
-                cell.emphasis === true ? 'text-metric' : 'text-title',
+                cell.emphasis === true ? 'text-display-lg' : 'text-display-md',
               ]}
               data-count-up={cell.emphasis === true ? 'true' : undefined}
             >
               {cell.value}
             </p>
-            <p class="label mt-2 text-text-muted">{cell.label}</p>
+            <p class="label mt-2 text-muted">{cell.label}</p>
           </li>
         ))
       }
@@ -58,6 +58,6 @@ const cells = filled.length > 0 ? filled : scope;
 
     <!-- Mobile gets the rate strip here, since the hero's right column is
          withheld below the large breakpoint. -->
-    <p class="label mt-12 border-t border-line pt-5 text-text-muted lg:hidden">{rateStrip}</p>
+    <p class="label mt-12 border-t border-hairline pt-5 text-muted lg:hidden">{rateStrip}</p>
   </div>
 </section>

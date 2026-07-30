@@ -10,7 +10,7 @@ const mailto = `mailto:${identity.email}?subject=${encodeURIComponent('Shopify p
 ---
 
 <!--
-  INVERSION BAND 2 of 2, and the page's conversion moment.
+  The page's conversion moment.
 
   The calendar is behind a facade. An eagerly embedded scheduler is one of the
   heaviest third parties on the web — main-thread cost measured in seconds — and
@@ -31,12 +31,10 @@ const mailto = `mailto:${identity.email}?subject=${encodeURIComponent('Shopify p
 <section
   id="book"
   aria-labelledby="book-heading"
-  class="band-ink on-ink relative isolate bg-ink py-20 text-text-inverse md:py-28"
+  class="border-y border-hairline py-20 md:py-30"
 >
-  <span aria-hidden="true" class="absolute inset-x-0 top-0 z-10 h-[3px] bg-accent-hot"></span>
-
-  <div class="container-page relative z-10">
-    <SectionHead index="09" id="book-heading" tone="ink">{booking.heading}</SectionHead>
+  <div class="container-page">
+    <SectionHead index="09" id="book-heading">{booking.heading}</SectionHead>
 
     <div class="mt-14 grid gap-14 lg:grid-cols-12 lg:gap-10">
       <div class="lg:col-span-7">
@@ -45,17 +43,17 @@ const mailto = `mailto:${identity.email}?subject=${encodeURIComponent('Shopify p
           data-cal-facade
           data-cal-link={contact.calLink}
           data-position="booking-block"
-          class="btn btn--inverse w-full sm:w-auto"
+          class="btn w-full sm:w-auto"
         >
           {booking.calFacadeLabel}
         </a>
-        <p class="label mt-3 text-text-dim">{booking.calMeta}</p>
+        <div class="label mt-3 text-muted">{booking.calMeta}</div>
 
-        <ul class="mt-8 grid gap-3 border-t border-line-ink pt-7">
+        <ul class="mt-8 grid gap-3 border-t border-hairline pt-7">
           {
             booking.calAgenda.map((line) => (
-              <li class="text-body flex gap-3 text-text-dim">
-                <span aria-hidden="true" class="text-accent-hot">
+              <li class="text-body-md flex gap-3 text-muted">
+                <span aria-hidden="true" class="text-on-dark">
                   →
                 </span>
                 <span>{line}</span>
@@ -64,33 +62,33 @@ const mailto = `mailto:${identity.email}?subject=${encodeURIComponent('Shopify p
           }
         </ul>
 
-        <p class="text-meta mt-6 text-text-dim">You’ll be talking to me. There is no account manager.</p>
+        <p class="text-body-sm mt-6 text-muted">You’ll be talking to me. There is no account manager.</p>
 
         <!-- Space reserved before the embed exists, so the swap costs 0 CLS. -->
         <div
           id="cal-host"
           data-cal-host
           hidden
-          class="mt-8 min-h-[34rem] overflow-hidden rounded-xl border border-line-ink bg-ink-raised"
+          class="mt-8 min-h-[34rem] overflow-hidden border border-hairline bg-surface-card"
         >
         </div>
 
-        <div class="mt-10 border-t border-line-ink pt-7">
-          <p class="label text-text-dim">Prefer email?</p>
+        <div class="mt-10 border-t border-hairline pt-7">
+          <div class="label text-muted">Prefer email?</div>
           <p class="mt-2 flex flex-wrap items-center gap-3">
-            <a href={mailto} class="text-body text-text-inverse">{identity.email}</a>
+            <a href={mailto} class="text-body-md text-on-dark">{identity.email}</a>
             <button
               type="button"
               data-copy={identity.email}
-              class="label min-h-8 rounded-full border border-line-ink px-3 py-1.5 text-text-dim transition-colors hover:border-text-inverse hover:text-text-inverse"
+              class="label min-h-8 rounded-full border border-hairline-ui px-3 py-1.5 text-muted transition-colors hover:border-on-dark hover:text-on-dark"
               aria-label="Copy email address"
             >
               Copy
             </button>
-            <span data-copy-status role="status" aria-live="polite" class="text-meta text-text-dim"
+            <span data-copy-status role="status" aria-live="polite" class="text-body-sm text-muted"
             ></span>
           </p>
-          <p class="text-meta mt-2 text-text-dim">
+          <p class="text-body-sm mt-2 text-muted">
             The link arrives pre-filled with the four things I need to answer properly.
           </p>
         </div>
@@ -98,7 +96,7 @@ const mailto = `mailto:${identity.email}?subject=${encodeURIComponent('Shopify p
 
       <div class="grid gap-12 lg:col-span-5">
         <TeardownForm />
-        {technical && <Testimonial {...technical} tone="ink" />}
+        {technical && <Testimonial {...technical} />}
       </div>
     </div>
   </div>
