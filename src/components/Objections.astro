@@ -23,17 +23,17 @@ import SectionHead from './SectionHead.astro';
 <section
   id="objections"
   aria-labelledby="objections-heading"
-  class="band-ink on-ink relative isolate bg-ink py-20 text-text-inverse md:py-28"
+  class="band-ink on-ink relative isolate bg-ink py-16 text-text-inverse md:py-24"
 >
   <!-- Plate edge: inversion reads as a press change rather than a rectangle. -->
-  <span aria-hidden="true" class="absolute inset-x-0 top-0 z-10 h-[3px] bg-accent-hot"></span>
+  <span aria-hidden="true" class="stripe absolute inset-x-0 top-0 z-10"></span>
 
   <div class="container-page relative z-10">
-    <SectionHead index="07" id="objections-heading" tone="ink">
+    <SectionHead index="07" id="objections-heading">
       Hiring one person instead of an agency
     </SectionHead>
 
-    <div class="mt-14 grid gap-12 md:gap-14">
+    <div class="mt-16 grid gap-12 md:gap-16">
       {
         objections.map((item) => (
           <div class="grid gap-5 border-t border-line-ink pt-8 md:grid-cols-12 md:gap-10">
@@ -43,7 +43,7 @@ import SectionHead from './SectionHead.astro';
               <p class="text-meta text-text-dim">{item.fear}</p>
               <p class="text-body mt-4 max-w-[52ch] text-text-inverse">{item.detail}</p>
               <p class="label mt-5 flex flex-wrap items-baseline gap-2 text-text-dim">
-                <span class="text-accent-hot">{item.artifact.label}</span>
+                <span class="text-text-inverse">{item.artifact.label}</span>
                 <span>{item.artifact.value}</span>
               </p>
             </div>

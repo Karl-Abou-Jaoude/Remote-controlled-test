@@ -107,10 +107,10 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': grap
       DEMO_CONTENT && <meta name="robots" content="noindex, nofollow" />
     }
 
-    <!-- Only the two faces used above the fold are preloaded. The display
-         serif is the LCP element, so it is not optional. -->
-    <Font cssVariable="--font-fraunces" preload />
-    <Font cssVariable="--font-geist" preload />
+    <!-- One text face carries the whole system, so it is the only preload that
+         matters: the LCP element is the H1, set in it. Mono is used below the
+         fold only (the diff motif and the case-study code block). -->
+    <Font cssVariable="--font-inter" preload />
     <Font cssVariable="--font-geist-mono" />
 
     <meta property="og:type" content="website" />
@@ -123,8 +123,7 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': grap
     <meta property="og:image:alt" content={ogImageAlt} />
     <meta name="twitter:card" content="summary_large_image" />
 
-    <meta name="theme-color" content="#f7f6f3" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#111110" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#000000" />
     {!DEMO_CONTENT && <link rel="sitemap" href="/sitemap-index.xml" />}
 
     <script type="application/ld+json" is:inline set:html={jsonLd} />

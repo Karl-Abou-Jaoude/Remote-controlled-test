@@ -18,7 +18,7 @@ import Cta from './Cta.astro';
  */
 ---
 
-<section id="hero" aria-labelledby="hero-heading" class="relative pt-20 pb-16 md:pt-32 md:pb-24">
+<section id="hero" aria-labelledby="hero-heading" class="relative pt-24 pb-16 md:pt-40 md:pb-24">
   <div class="container-page">
     <div class="grid gap-12 lg:grid-cols-12 lg:gap-8">
       <div class="lg:col-span-8">
@@ -28,11 +28,11 @@ import Cta from './Cta.astro';
           >
         </h1>
 
-        <p class="text-lead mt-7 max-w-[46ch] text-text-muted">
+        <p class="text-lead mt-6 max-w-[46ch] text-text-muted">
           {hero.subhead}<span class="hidden md:inline">{hero.subheadTail}</span>
         </p>
 
-        <div class="mt-9 flex flex-col gap-4 sm:flex-row sm:items-start sm:gap-5">
+        <div class="mt-10 flex flex-col gap-4 sm:flex-row sm:items-start sm:gap-5">
           <Cta kind="book" position="hero" variant="primary" note={hero.doubtRemover}>
             {hero.primaryCta}
           </Cta>
@@ -45,8 +45,8 @@ import Cta from './Cta.astro';
           <span aria-hidden="true" class="text-accent">✓</span>{hero.reversal}
         </p>
 
-        <p class="label mt-8 flex flex-wrap items-center gap-x-3 gap-y-1 text-text-muted">
-          <span aria-hidden="true" class="inline-block h-1.5 w-1.5 rounded-full bg-accent"></span>
+        <p class="label mt-10 flex flex-wrap items-center gap-x-3 gap-y-1 text-text-muted">
+          <span aria-hidden="true" class="inline-block h-1.5 w-1.5 bg-accent"></span>
           <span>{availability.concurrentEngagements} slots</span>
           <span aria-hidden="true">·</span>
           <span>earliest start {availability.nextStartLabel}</span>

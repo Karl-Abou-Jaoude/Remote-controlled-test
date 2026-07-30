@@ -24,7 +24,7 @@ const linkable = !isPlaceholder(profileUrl);
 ---
 
 <figure class="max-w-[34ch]">
-  <blockquote class:list={['display text-title', tone === 'ink' && 'text-text-inverse']}>
+  <blockquote class:list={['text-title font-normal', tone === 'ink' ? 'text-text-inverse' : 'text-text']}>
     <p>“{quote}”</p>
   </blockquote>
 

@@ -28,7 +28,7 @@ import { contact, identity, booking } from '../data/site';
     action="https://api.web3forms.com/submit"
     method="POST"
     novalidate
-    class="mt-7 grid gap-5"
+    class="mt-8 grid gap-6"
   >
     <input type="hidden" name="access_key" value={contact.web3formsKey} />
     <input type="hidden" name="subject" value="Store teardown request" />
@@ -55,7 +55,7 @@ import { contact, identity, booking } from '../data/site';
         autocomplete="url"
         placeholder="https://"
         required
-        class="text-body min-h-12 rounded-lg border border-line-ink bg-ink-raised px-4 py-3 text-text-inverse placeholder:text-text-dim"
+        class="text-body min-h-12 border border-line-strong bg-ink-raised px-4 py-3 text-text-inverse placeholder:text-text-dim"
       />
     </div>
 
@@ -69,7 +69,7 @@ import { contact, identity, booking } from '../data/site';
         autocomplete="email"
         required
         aria-describedby="email-hint"
-        class="text-body min-h-12 rounded-lg border border-line-ink bg-ink-raised px-4 py-3 text-text-inverse"
+        class="text-body min-h-12 border border-line-strong bg-ink-raised px-4 py-3 text-text-inverse"
       />
       <p id="email-hint" class="text-meta text-text-dim">
         Goes straight to my phone. I reply within one business day.
@@ -85,7 +85,7 @@ import { contact, identity, booking } from '../data/site';
         name="message"
         rows="3"
         placeholder="Plus replatform, 4,000 SKUs, 6 markets, live by Q1"
-        class="text-body rounded-lg border border-line-ink bg-ink-raised px-4 py-3 text-text-inverse placeholder:text-text-dim"
+        class="text-body border border-line-strong bg-ink-raised px-4 py-3 text-text-inverse placeholder:text-text-dim"
       ></textarea>
     </div>
 
@@ -100,7 +100,7 @@ import { contact, identity, booking } from '../data/site';
     data-form-success
     hidden
     tabindex="-1"
-    class="mt-7 rounded-xl border border-line-ink bg-ink-raised p-6"
+    class="mt-8 border border-line-ink bg-ink-raised p-6"
   >
     <p class="display text-title text-text-inverse">Got it — it’s on my phone.</p>
     <p class="text-body mt-3 text-text-dim">

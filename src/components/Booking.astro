@@ -31,14 +31,14 @@ const mailto = `mailto:${identity.email}?subject=${encodeURIComponent('Shopify p
 <section
   id="book"
   aria-labelledby="book-heading"
-  class="band-ink on-ink relative isolate bg-ink py-20 text-text-inverse md:py-28"
+  class="band-ink on-ink relative isolate bg-ink py-16 text-text-inverse md:py-24"
 >
-  <span aria-hidden="true" class="absolute inset-x-0 top-0 z-10 h-[3px] bg-accent-hot"></span>
+  <span aria-hidden="true" class="stripe absolute inset-x-0 top-0 z-10"></span>
 
   <div class="container-page relative z-10">
-    <SectionHead index="09" id="book-heading" tone="ink">{booking.heading}</SectionHead>
+    <SectionHead index="09" id="book-heading">{booking.heading}</SectionHead>
 
-    <div class="mt-14 grid gap-14 lg:grid-cols-12 lg:gap-10">
+    <div class="mt-16 grid gap-16 lg:grid-cols-12 lg:gap-10">
       <div class="lg:col-span-7">
         <a
           href={contact.calUrl}
@@ -55,7 +55,7 @@ const mailto = `mailto:${identity.email}?subject=${encodeURIComponent('Shopify p
           {
             booking.calAgenda.map((line) => (
               <li class="text-body flex gap-3 text-text-dim">
-                <span aria-hidden="true" class="text-accent-hot">
+                <span aria-hidden="true" class="text-text-inverse">
                   →
                 </span>
                 <span>{line}</span>
@@ -71,7 +71,7 @@ const mailto = `mailto:${identity.email}?subject=${encodeURIComponent('Shopify p
           id="cal-host"
           data-cal-host
           hidden
-          class="mt-8 min-h-[34rem] overflow-hidden rounded-xl border border-line-ink bg-ink-raised"
+          class="mt-8 min-h-[34rem] overflow-hidden border border-line-ink bg-ink-raised"
         >
         </div>
 
@@ -82,7 +82,7 @@ const mailto = `mailto:${identity.email}?subject=${encodeURIComponent('Shopify p
             <button
               type="button"
               data-copy={identity.email}
-              class="label min-h-8 rounded-full border border-line-ink px-3 py-1.5 text-text-dim transition-colors hover:border-text-inverse hover:text-text-inverse"
+              class="label min-h-12 border border-line-strong px-4 py-2 text-text-dim transition-colors hover:border-text-inverse hover:text-text-inverse"
               aria-label="Copy email address"
             >
               Copy

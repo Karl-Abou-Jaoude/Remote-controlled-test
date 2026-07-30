@@ -15,49 +15,32 @@ export default defineConfig({
   // One-pager: inline every stylesheet so there are zero render-blocking requests.
   build: { inlineStylesheets: 'always' },
 
-  // Fonts are resolved from the installed @fontsource* packages (no runtime CDN,
-  // no third-party connection). `optimizedFallbacks` derives metric-matched
-  // fallback faces from the real font metrics, so the swap costs 0 CLS.
+  /*
+    Fonts are resolved from the installed @fontsource* packages (no runtime CDN,
+    no third-party connection). `optimizedFallbacks` derives metric-matched
+    fallback faces from the real font metrics, so the swap costs 0 CLS.
+
+    One text face in two cuts carries the whole system: Inter at 700 for
+    UPPERCASE display, nav labels and button text, and at 300 (Light) for body
+    and secondary copy. That weight gap is the editorial signature, so the
+    variable range is declared 100-900 and weight is always set explicitly in
+    CSS. Geist Mono is kept for exactly two things: the diff motif and the
+    case-study code block.
+  */
   fonts: [
     {
-      name: 'Geist',
-      cssVariable: '--font-geist',
+      name: 'Inter',
+      cssVariable: '--font-inter',
       provider: fontProviders.local(),
       display: 'swap',
       optimizedFallbacks: true,
-      fallbacks: ['system-ui', 'sans-serif'],
-      options: {
-        variants: [
-          {
-            weight: '400 700',
-            style: 'normal',
-            src: ['@fontsource-variable/geist/files/geist-latin-wght-normal.woff2'],
-          },
-        ],
-      },
-    },
-    /*
-      Display face is Fraunces with the WONK axis on. Instrument Serif is the
-      most-deployed free display serif of the last two years and reads as a
-      template at hero size; Fraunces' wonk axis gives genuinely unusual
-      ear/leg forms that stay recognisable at 9rem. The `wonk` subset file
-      carries wght 100-900 + WONK 0-1 (verified with fontTools), and its
-      default weight is 900, so weight is always set explicitly in CSS.
-    */
-    {
-      name: 'Fraunces',
-      cssVariable: '--font-fraunces',
-      provider: fontProviders.local(),
-      display: 'swap',
-      optimizedFallbacks: true,
-      fallbacks: ['Georgia', 'serif'],
+      fallbacks: ['-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
       options: {
         variants: [
           {
             weight: '100 900',
             style: 'normal',
-            variationSettings: "'WONK' 1",
-            src: ['@fontsource-variable/fraunces/files/fraunces-latin-wonk-normal.woff2'],
+            src: ['@fontsource-variable/inter/files/inter-latin-wght-normal.woff2'],
           },
         ],
       },

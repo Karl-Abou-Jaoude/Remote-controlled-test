@@ -32,15 +32,15 @@ const cells = filled.length > 0 ? filled : scope;
 <section
   id="scope"
   aria-labelledby="scope-heading"
-  class="border-y border-line bg-paper-sunk py-14 md:py-20"
+  class="bg-paper py-16 md:py-24"
 >
   <div class="container-page">
     <h2 id="scope-heading" class="sr-only">Scope</h2>
 
-    <ul class="grid grid-cols-2 gap-x-8 gap-y-10 md:grid-cols-3 lg:grid-cols-6 lg:gap-x-6">
+    <ul class="grid grid-cols-2 gap-px bg-line md:grid-cols-3 lg:grid-cols-6">
       {
         cells.map((cell) => (
-          <li class="lg:border-l lg:border-line lg:pl-4 lg:first:border-l-0 lg:first:pl-0">
+          <li class="bg-paper-sunk p-6">
             <p
               class:list={[
                 'metric',

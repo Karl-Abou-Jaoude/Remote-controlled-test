@@ -24,7 +24,7 @@ const { study } = Astro.props;
   <Header />
 
   <main id="main">
-    <article class="pt-28 pb-20 md:pt-40">
+    <article class="pt-24 pb-16 md:pt-40 md:pb-24">
       <div class="container-page">
         <nav aria-label="Breadcrumb" class="label text-text-muted">
           <a href="/">Home</a> <span aria-hidden="true">/</span>
@@ -91,7 +91,7 @@ const { study } = Astro.props;
                   <h2 id="snippet" class="label text-accent">One real piece of it</h2>
                   <p class="text-meta mt-3 text-text-muted">{study.snippet.caption}</p>
                   <pre
-                    class="mt-4 overflow-x-auto rounded-xl border border-line bg-ink p-5 text-[0.8125rem] leading-relaxed text-text-inverse"
+                    class="mt-4 overflow-x-auto border border-line bg-ink p-5 text-[0.8125rem] leading-relaxed text-text-inverse"
                   ><code>{study.snippet.code}</code></pre>
                 </section>
               )
@@ -99,7 +99,7 @@ const { study } = Astro.props;
           </div>
 
           <aside class="lg:col-span-5">
-            <div class="rounded-xl border border-line bg-paper-sunk p-7">
+            <div class="border border-line bg-paper-raised p-6">
               <h2 class="label text-text-muted">Before → after</h2>
               <Diff minus={study.diff.minus} plus={study.diff.plus} class="mt-4" />
             </div>
@@ -132,7 +132,7 @@ const { study } = Astro.props;
             {
               study.quote && (
                 <figure class="mt-10 border-t border-line pt-8">
-                  <blockquote class="display text-title max-w-[30ch]">
+                  <blockquote class="text-title font-normal max-w-[30ch]">
                     <p>“{study.quote.text}”</p>
                   </blockquote>
                   <figcaption class="label mt-5 text-text-muted">

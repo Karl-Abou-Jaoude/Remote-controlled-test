@@ -22,7 +22,7 @@ import SectionHead from './SectionHead.astro';
 const ordered = [...engagements].sort((a, b) => Number(b.flagship) - Number(a.flagship));
 ---
 
-<section id="engagements" aria-labelledby="engagements-heading" class="py-20 md:py-28">
+<section id="engagements" aria-labelledby="engagements-heading" class="py-16 md:py-24">
   <div class="container-page">
     <SectionHead index="08" id="engagements-heading">How this is bought</SectionHead>
 
@@ -31,12 +31,12 @@ const ordered = [...engagements].sort((a, b) => Number(b.flagship) - Number(a.fl
       you somewhere better rather than stretch a scope to fit it.
     </p>
 
-    <div class="mt-14 grid gap-6 lg:grid-cols-12">
+    <div class="mt-16 grid gap-6 lg:grid-cols-12">
       {
         ordered.map((offer) => (
           <article
             class:list={[
-              'flex flex-col rounded-xl border p-7 md:p-8',
+              'flex flex-col border p-6',
               offer.flagship
                 ? 'border-text bg-paper-raised lg:col-span-12'
                 : 'border-line bg-paper lg:col-span-6',
@@ -47,7 +47,7 @@ const ordered = [...engagements].sort((a, b) => Number(b.flagship) - Number(a.fl
               {offer.flagship && <span class="label text-accent">Most clients start here</span>}
             </div>
 
-            <p class="metric text-title mt-4 text-accent [overflow-wrap:anywhere]">
+            <p class="metric text-title mt-4 [overflow-wrap:anywhere]">
               {offer.price}
             </p>
             <p class="label mt-2 text-text-muted">{offer.meta}</p>
@@ -83,7 +83,7 @@ const ordered = [...engagements].sort((a, b) => Number(b.flagship) - Number(a.fl
     </p>
 
     <p class="label mt-6 flex flex-wrap items-center gap-x-3 gap-y-1 text-text-muted">
-      <span aria-hidden="true" class="inline-block h-1.5 w-1.5 rounded-full bg-accent"></span>
+      <span aria-hidden="true" class="inline-block h-1.5 w-1.5 bg-accent"></span>
       <span>{availability.concurrentEngagements} concurrent engagements</span>
       <span aria-hidden="true">·</span>
       <span>earliest start {availability.nextStartLabel}</span>

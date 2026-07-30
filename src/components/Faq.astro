@@ -15,18 +15,18 @@ import SectionHead from './SectionHead.astro';
  */
 ---
 
-<section id="faq" aria-labelledby="faq-heading" class="bg-paper-sunk py-20 md:py-28">
+<section id="faq" aria-labelledby="faq-heading" class="bg-paper-sunk py-16 md:py-24">
   <div class="container-page">
     <SectionHead index="10" id="faq-heading">The questions that decide it</SectionHead>
 
-    <div class="mt-12 border-t border-line">
+    <div class="mt-16 border-t border-line">
       {
         faq.map((item, i) => (
           <details name="faq" open={i === 0} class="group border-b border-line">
             <summary
               class="flex min-h-12 cursor-pointer items-center justify-between gap-6 py-5 [&::-webkit-details-marker]:hidden [&::marker]:content-none"
             >
-              <span class="text-lead display pr-4">{item.q}</span>
+              <span class="text-lead pr-4 font-normal text-text">{item.q}</span>
               <span
                 aria-hidden="true"
                 class="label shrink-0 text-accent transition-transform duration-[var(--duration-base)] group-open:rotate-45"
